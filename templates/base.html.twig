@@ -101,14 +101,29 @@
 
 </header>
 
+<div class="container">
 
-<!-------------------------------------------DEBUT FOOTER------------------------------------------------>
+    <!-------------------------- POUR AFFICHER LES MESSAGES FLASH() ---------------------------------------->
+    {#{% for type, flashes in app.session.flashBag.all %}#}
+        {#{% for message in flashes %}#}
+            {# pour la classe alert-danger de bootstrap #}
+            {#{% if type == 'error' %}#}
+                {#{% set type = 'danger' %}#}
+            {#{% endif %}#}
+            {#<div class="alert alert-{{ type }} mt-2">#}
+                {#{{ message | raw }}#}
+            {#</div>#}
+        {#{% endfor %}#}
+    {#{% endfor %}#}
 
-<!-------------------------------------------FIN FOOTER------------------------------------------------>
+    {% block body %}
 
+    {% endblock %}
+</div>
 
-{% block body %}{% endblock %}
-
+<footer>
+    <p>un test de footer</p>
+</footer>
 
 <!---------------------------------------------------------------------------------------------------------->
 <!-------------------------------SCRIPT JAVASCRIPT/JQUERY/BOOTSTRAP----------------------------------------->
