@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
 
-    <!---------------------------------------META-------------------------------------------->
-
-
-    <title>{% block title %}Serial-Watchers{% endblock %}</title>
-    {% block stylesheets %}
+        <!---------------------------------------META-------------------------------------------->
 
 
-        <!---------------------------------------STYLESHEET-------------------------------------------->
-        <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
-    {% endblock %}
-</head>
-<body>
-{% block body %}
+        <title>{% block title %}Serial-Watchers{% endblock %}</title>
+        {% block stylesheets %}
+
+
+            <!---------------------------------------STYLESHEET-------------------------------------------->
+            <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
+        {% endblock %}
+    </head>
+    <body>
     <!-------------------------------------------HEADER---------------------------------------------->
 
     <header>
@@ -118,12 +117,9 @@
 
 
 
+    {% block body %}{% endblock %}
 
 
-
-{% endblock %}
-
-</body>
 
 <!---------------------------------------------------------------------------------------------------------->
 <!-------------------------------SCRIPT JAVASCRIPT/JQUERY/BOOTSTRAP----------------------------------------->
@@ -141,4 +137,5 @@
 
     <script src="{{ asset('lib/bootstrap/bootstrap.min.js') }}"></script>
 {% endblock %}
+    </body>
 </html>

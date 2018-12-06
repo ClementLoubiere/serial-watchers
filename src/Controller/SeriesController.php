@@ -5,10 +5,15 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class SeriesController
+ * @package App\Controller
+ * @Route("/series")
+ */
 class SeriesController extends AbstractController
 {
     /**
-     * @Route("/gestion_series", name="gestion_series")
+     * @Route("/")
      */
     public function index()
     {
