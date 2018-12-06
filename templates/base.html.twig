@@ -1,108 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
 
-        <!---------------------------------------META-------------------------------------------->
-
-
-        <title>{% block title %}Serial-Watchers{% endblock %}</title>
-        {% block stylesheets %}
+    <!---------------------------------------META-------------------------------------------->
 
 
-            <!---------------------------------------STYLESHEET-------------------------------------------->
-            <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
-        {% endblock %}
-    </head>
-    <body>
-    <!-------------------------------------------HEADER---------------------------------------------->
+    <title>{% block title %}Serial-Watchers{% endblock %}</title>
+    {% block stylesheets %}
 
-    <header>
-        <!------------------------------------ DEBUT HEADER------------------------------------------->
-        <!--LOGO LIEN INDEX-------------------------------------------->
-        <a class="navbar-brand" href="index.html">logo</a>
 
-        <!----------------------------------- DEBUT  MENU ADMIN------------------------------------------>
+        <!---------------------------------------STYLESHEET-------------------------------------------->
+        <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+<!-------------------------------------------HEADER---------------------------------------------->
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="container navbar-nav">
-                <a class="navbar-brand" style="color:white">
-                    Admin
-                </a>
-                <div class="navbar-collapse">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="">
-                                Gestion utilisateur
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">
-                                Gestion serie
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">
-                                Gestion boutique
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<header>
+    <!------------------------------------ DEBUT HEADER------------------------------------------->
+    <!--LOGO LIEN INDEX-------------------------------------------->
+    <a class="navbar-brand" href="index.html">logo</a>
 
+    <!----------------------------------- DEBUT  MENU ADMIN------------------------------------------>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container navbar-nav">
+            <a class="navbar-brand" style="color:white">
+                Admin
+            </a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="">
+                            Gestion utilisateur
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">
+                            Gestion serie
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">
+                            Gestion boutique
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-        <!------------------------------------ FIN  MENU ADMIN-------------------------------------------->
-        <!--------------------------- DEBUT MENU INTERFACE UTILISATEUR------------------------------------->
 
-
-        <!--INSCRIPTION -------------------------------------------->
-        <div class="navbar-collapse">
-            <li class="nav-item">
-                <a href="" class="nav-link">
-                    Inscription
-                </a>
-            </li>
-            <!--CONNEXION-------------------------------------------->
-            <li class="nav-item">
-                <a href="" class="nav-link">
-                    Connexion
-                </a>
-            </li>
         </div>
+    </nav>
+    <!------------------------------------ FIN  MENU ADMIN-------------------------------------------->
+    <!--------------------------- DEBUT MENU INTERFACE UTILISATEUR------------------------------------->
 
 
-        <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
-            <ul class="navbar-nav mr-auto">
-                <!--PROFIL -------------------------------------------->
-                <li class="nav-item active">
-                    <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
-                </li>
-                <!--MES SERIES -------------------------------------------->
-                <li class="nav-item">
-                    <a class="nav-link" href="">Mes series</a>
-                </li>
-                <!--TOUTES LES SERIES -------------------------------------------->
-                <li class="nav-item">
-                    <a class="nav-link" href="">Toutes les series</a>
-                </li>
-                <!--BOUTIQUE -------------------------------------------->
-                <li class="nav-item">
-                    <a class="nav-link" href="">Boutique</a>
-                </li>
-            </ul>
-        </nav>
-        <!---------------------------------- FIN MENU INTERFACE UTILISATEUR------------------------------------->
+    <!--INSCRIPTION -------------------------------------------->
+    <div class="navbar-collapse">
+        <li class="nav-item">
+            <a href="" class="nav-link">
+                Inscription
+            </a>
+        </li>
+        <!--CONNEXION-------------------------------------------->
+        <li class="nav-item">
+            <a href="" class="nav-link">
+                Connexion
+            </a>
+        </li>
+    </div>
 
 
-        <!-------------------------------------------FIN HEADER------------------------------------------------>
+    <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top">
+        <ul class="navbar-nav mr-auto">
+            <!--PROFIL -------------------------------------------->
+            <li class="nav-item active">
+                <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
+            </li>
+            <!--MES SERIES -------------------------------------------->
+            <li class="nav-item">
+                <a class="nav-link" href="">Mes series</a>
+            </li>
+            <!--TOUTES LES SERIES -------------------------------------------->
+            <li class="nav-item">
+                <a class="nav-link" href="">Toutes les series</a>
+            </li>
+            <!--BOUTIQUE -------------------------------------------->
+            <li class="nav-item">
+                <a class="nav-link" href="">Boutique</a>
+            </li>
+        </ul>
+    </nav>
+    <!---------------------------------- FIN MENU INTERFACE UTILISATEUR------------------------------------->
 
-    </header>
 
+    <!-------------------------------------------FIN HEADER------------------------------------------------>
 
-
-
-
-
+</header>
 
 
 <!-------------------------------------------DEBUT FOOTER------------------------------------------------>
@@ -110,15 +104,7 @@
 <!-------------------------------------------FIN FOOTER------------------------------------------------>
 
 
-
-
-
-
-
-
-
-    {% block body %}{% endblock %}
-
+{% block body %}{% endblock %}
 
 
 <!---------------------------------------------------------------------------------------------------------->
@@ -137,5 +123,5 @@
 
     <script src="{{ asset('lib/bootstrap/bootstrap.min.js') }}"></script>
 {% endblock %}
-    </body>
+</body>
 </html>

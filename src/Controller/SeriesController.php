@@ -17,7 +17,7 @@ class SeriesController extends AbstractController
      */
     public function index()
     {
-        return $this->render('gestion_series/index.html.twig', [
+        return $this->render('gestion-series/index.html.twig', [
             'controller_name' => 'SeriesController',
         ]);
     }

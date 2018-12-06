@@ -8,7 +8,13 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin")
+ * Class UserController
+ * @package App\Controller\Admin
+ */
 class UserController
 {
 
