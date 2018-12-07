@@ -9,7 +9,7 @@ security:
         db:
             # les utilisateurs sont les entités User
             entity:
-                class: App\entity\User
+                class: App\Entity\User
                 # L'identifiant est l'email
                 property: email
 
@@ -26,11 +26,24 @@ security:
             # http_basic: true
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: true
+            form_login:
+                # route du formulaire de login
+                login_path: app_security_login
+                check_path: app_security_login
+
+            logout:
+                # route définie dans config/routes.yaml
+                path: app_security_logout
+                #route de la redirection après déconnexion
+                target: app_index_index
+
+            provider: db
+
+            pattern: ^/
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
