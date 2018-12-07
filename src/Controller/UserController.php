@@ -43,34 +43,19 @@ class UserController extends AbstractController
 
     // FONCTION EDITION PROFIL
 
+    /**
+     * @Route("/profil")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
 
-    public function editProfil(Request $request, $id)
+    public function profil()
     {
 
 
-        //Création de l'entité Manager:
-
-        $em = $this->getDoctrine()->getManager();
-        // Appel de la class utilisateur:
-
-        $repository = $em->getRepository(User::class);
-
-        $profil = null;
 
 
-        //création :
+        return $this->render('profil.html.twig', [
 
-        if (is_null($id)) {
-
-            $profil = $this->getUser();
-
-
-        }
-
-
-        return $this->render('user/profil.html.twig', [
-
-            'profil' => $profil
 
         ]);
 
