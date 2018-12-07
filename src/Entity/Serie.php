@@ -18,7 +18,7 @@ class Serie
 
     /**
      *
-     * @ORM\Column(type="string)
+     * @ORM\Column(type="string")
      */
     private $name;
 
@@ -46,7 +46,7 @@ class Serie
 
 
     /**
-     * @ORM\Column(type="datetime("d/m/Y")
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
