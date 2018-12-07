@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
- * Class UserController
+ * Class SecurityController
  * @package App\Controller\Admin
  */
 class UserController
