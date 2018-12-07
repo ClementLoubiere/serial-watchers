@@ -79,14 +79,7 @@ class UserController extends AbstractController
 
 
     //fonction liste serie
-    public function Listes(Serie $serie)
-    {
 
-
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
-        $serie = $repository->findBy([], [
-            'id'=>]);
 
         //création liste series utilisateur
 
@@ -97,7 +90,7 @@ class UserController extends AbstractController
         //suppression listes series utilisateur
 
 
-    }
+
 
 
     //fonction suivi serie
@@ -105,11 +98,7 @@ class UserController extends AbstractController
 
     //fonction abonnement
 
-return $this->render('user/profil.html.twig', [
 
-'series' => $series
-
-]);
 }
 
 
