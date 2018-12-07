@@ -18,29 +18,38 @@ class User
 
     /**
      * @ORM\Column(type="string", length=25)
+     * Assert\NotBlank("message="Le pseudo est obligatoire")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * Assert\NotBlank(message="Le nom est obligatoire")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * Assert\NotBlank("message="Le prénom est obligatoire")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * Assert\NotBlank("message="L'adresse email est obligatoire")
+     * @Assert\Email("L'email n'est pas valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      */
     private $password;
-
+    /**
+     * @ORM\colum,(type="string",length=20)
+     */
+    private $role= 'ROLE_USER';
     /**
      * @ORM\Column(type="string", length=20)
      */
@@ -55,6 +64,29 @@ class User
      * @ORM\Column(type="string", length=45)
      */
     private $status;
+
+    /**
+     * @var profil
+     */
+    private $profil;
+
+    /**
+     * @return profil
+     */
+    public function getProfil(): profil
+    {
+        return $this->profil;
+    }
+
+    /**
+     * @param profil $profil
+     * @return User
+     */
+    public function setProfil(profil $profil): User
+    {
+        $this->profil = $profil;
+        return $this;
+    }
 
     public function getId(): ?int
     {
