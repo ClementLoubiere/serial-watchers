@@ -1,7 +1,19 @@
 security:
+    #encodage du mot de passe pour User
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        db:
+            # les utilisateurs sont les entités User
+            entity:
+                class: App\entity\User
+                # L'identifiant est l'email
+                property: email
+
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
