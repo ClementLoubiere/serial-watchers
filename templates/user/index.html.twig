@@ -1,100 +1,108 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
-
-{% block body %}
 
 
 
-    {#********************** DEBUT SIDE BAR CONNECTION UTILISATEUR*********************#}
 
 
+    {% block body %}
 
-    {#********************** FIN SIDE BAR CONNECTION UTILISATEUR*********************#}
+        {#-------------------------------------------------------------------------------#}
+        {#--------------------------------SIDEBAR PROFIL---------------------------------#}
+        {#-------------------------------------------------------------------------------#}
 
 
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <!-- avatar de l'utilisateur -->
-                <a href="#">
-                    Pseudo de l'utilisateur
-                </a>
-            </li>
-            <li>
-                <a href="#">Connexion</a>
-            </li>
-            <li>
-                <a href="#">Mon compte</a>
-            </li>
-            <li>
-                <a href="#">Mes series</a>
-            </li>
+        <div id="wrapper">
 
-        </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-    <!--************************************************************************ -->
-    <!--************************************************************************ -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            logo avatar
+                        </a>
+                        <p>
+                            Pseudo utilisateur
+                        </p>
+                    </li>
+                    <li>
+                        <a href="#">Mon compte</a>
+                    </li>
+                    <li>
+                        <a href="#">Tableau de Bord</a>
+                    </li>
+                    <li>
+                        <a href="#">Mes series</a>
+                    </li>
 
-            <div class="row">
-                <!--******** DEBUT BLOC "mes listes" ******** -->
-                <div class="col-6">
-                    <!--lien vers ma liste -->
-                    <div class="card" id="nameliste">
-                        <!--image de la liste -->
-                        <img>
-                        <!--lien vers ma liste -->
-                        <a></a>
-                    </div>
-                </div>
-                <!--******** FIN BLOC "mes listes" ******** -->
-                <!--******** DEBUT BLOC "Mes abonnements " ******** -->
-                <div class="col-6">
-                    <!--lien vers ma liste -->
-                    <div class="card" id="nameliste">
-                        <!--image de la liste -->
-                        <img>
-                        <!--lien vers ma liste -->
-                        <a></a>
-                    </div>
-                </div>
-                <!--******** FIN BLOC "abonnement" ******** -->
-
+                </ul>
             </div>
+            <!-- /#sidebar-wrapper -->
+            {#-------------------------------------------------------------------------------#}
+            {#-----------------------------PAGE CONTENT PROFIL-------------------------------#}
+            {#-------------------------------------------------------------------------------#}
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <!-- /#page-content-Mes Favoris/Mes playlists -->
+                    <div class="row">
+                        <!-- /#page-content-Mes Favoris -->
+                        <div class="col-6">
 
-<!--************************************************************************ -->
-<!--************************************************************************ -->
+                        </div>
+                        <!-- /#page-content-Mes playslists -->
+                        <div class="col-6">
 
-            <div class="row">
- <!--******** DEBUT BLOC "F" ******** -->
-                <div class="col-6">
+                        </div>
+                    </div>
 
 
+                    <!-- /#page-content- -->
+                    <div class="row">
+                        <!-- /#page-content-tableau de bord -->
+                        <div class="col-6">
+
+                        </div>
+                        <!-- /#page-content-Mon agenda -->
+                        <div class="col-6">
+
+                        </div>
+                    </div>
+
+
+
+                    <h1>Simple Sidebar</h1>
+                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
                 </div>
-                <!--******** FIN BLOC "ME" ******** -->
-
-
-                <!--******** DEBUT BLOC "Agenda" ******** -->
-                <div class="col-6">
-                    <!--lien vers ma liste -->
-
-                </div>
-                <!--******** FIN BLOC "Agenda" ******** -->
-
             </div>
+            <!-- /#page-content-wrapper -->
+
         </div>
-    </div>
-    <!-- /#page-content-wrapper -->
-    <!--************************************************************************ -->
-    <!--************************************************************************ -->
+        <!-- /#wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
 
+        {#-------------------------------------------------------------------------------#}
+        {#---------------------------SCRIPT JAVASCRIPT/JQUERY ---------------------------#}
+        {#-------------------------------------------------------------------------------#}
+
+
+
+
+    {#******************FIN JAVASCRIPT *************************#}
 
 
 {% endblock %}
+   {% block javascripts %}
+        {{ parent() }}
+       <!-- Menu Toggle Script -->
+       <script>
+           $("#menu-toggle").click(function(e) {
+               e.preventDefault();
+               $("#wrapper").toggleClass("toggled");
+           });
+       </script>
+
+
+   {% endblock %}

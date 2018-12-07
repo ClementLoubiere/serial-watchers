@@ -16,7 +16,8 @@
     {#------------------------------ DEBUT HEADER ------------------------------#}
 
     {#---------------------- DEBUT MENU ADMIN -----------------------#}
-
+    {# s'il y a un utilisateur connecté et qu'il a le rôle ROLE_ADMIN #}
+    {% if is_granted('ROLE_ADMIN') %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container-fluid navbar-nav">
             {#
@@ -26,7 +27,7 @@
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
                 LOGO
             </a>
-            <a class="navbar-brand" href="{{ path('app_index_index') }}">
+            <a class="navbar-brand">
                 Admin
             </a>
 
@@ -51,6 +52,7 @@
             </div>
         </div>
     </nav>
+    {% endif %}
     {#---------------------- FIN MENU ADMIN -----------------------#}
 
     {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
@@ -64,10 +66,6 @@
         <div class="container-fluid navbar-nav">
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
                 LOGO
-            </a>
-
-            <a class="navbar-brand" href="{{ path('app_index_index') }}">
-                User
             </a>
             <ul class="navbar-nav navbar-collapse">
                 {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
@@ -85,7 +83,7 @@
                 {% else %}
                 {#------ PROFIL ------#}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_user_profil') }}">Profil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('app_user_index') }}">Profil <span class="sr-only">(current)</span></a>
                 </li>
                 {#------ TOUTES LES SERIES ------#}
                 <li class="nav-item">
@@ -125,7 +123,7 @@
                 </li>
                 {#------ DECONNEXION ------#}
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ path('app_security_logout') }}" class="nav-link">
                         Déconnexion
                     </a>
                 </li>
@@ -178,6 +176,7 @@
             crossorigin="anonymous"></script>
 
     <script src="{{ asset('lib/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('lib/ajaxapi/ajax.js') }}"></script>
 {% endblock %}
 </body>
 </html>
