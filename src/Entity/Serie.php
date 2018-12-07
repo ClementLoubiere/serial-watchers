@@ -31,6 +31,7 @@ class Serie
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\
      */
     private $season;
     /**
