@@ -88,7 +88,7 @@
                 </li>
                 {#------ CONNEXION ------#}
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ path('app_security_login') }}" class="nav-link">
                         Connexion
                     </a>
                 </li>
@@ -103,8 +103,18 @@
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
 <div class="container">
-
-
+    {# affichage des messages flash #}
+    {% for type, flashes in app.session.flashBag.all %}
+        {% for message in flashes %}
+            {# pour la classe alert-danger du bootstrap #}
+            {% if type == 'error' %}
+                {% set type = 'danger' %}
+            {% endif %}
+            <div class="alert alert-{{ type }}">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+    {% endfor %}
 
     {% block body %}{% endblock %}
 </div>
