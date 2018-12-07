@@ -79,7 +79,7 @@ class UserController extends AbstractController
 
 
     //fonction liste serie
-    public function mesListes(Serie $serie)
+    public function Listes(Serie $serie)
     {
 
 
