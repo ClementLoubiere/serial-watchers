@@ -20,21 +20,28 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25)
+     * @Assert\NotBlank(message="Le pseudo est obligatoire")
+     * @Assert\Length(maxMessage="Le pseudo ne doit pas dépasser {{ limit }} caractères")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(maxMessage="Le nom ne doit pas faire plus de {{ limit }} caractères")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=45)
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(maxMessage="Le prénom ne doit pas faire plus de {{ limit }} caractères")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="L'email est obligatoire")
      */
     private $email;
 
@@ -278,5 +285,10 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function __toString()
+    {
+        return $this->pseudo;
     }
 }
