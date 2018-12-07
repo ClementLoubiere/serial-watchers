@@ -17,13 +17,16 @@
 
     {#---------------------- DEBUT MENU ADMIN -----------------------#}
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container navbar-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+        <div class="container-fluid navbar-nav">
             {#
                <a class="navbar-brand" href="index.html">logo</a>
             page connecté en tant qu'admin #}
 
-            <a class="navbar-brand text-white">
+            <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
+                LOGO
+            </a>
+            <a class="navbar-brand" href="{{ path('app_index_index') }}">
                 Admin
             </a>
 
@@ -49,6 +52,7 @@
         </div>
     </nav>
     {#---------------------- FIN MENU ADMIN -----------------------#}
+
     {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
     {#---------------------- LOGO LIEN INDEX ---------------------#}
 
@@ -56,12 +60,29 @@
 
     {#------------------------------ INSCRIPTION ------------------------------#}
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-secondary">
-        <div class="container navbar-nav">
-            <a class="navbar-brand" href="{{ path('app_index_index') }}">
-                Interface user
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid navbar-nav">
+            <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
+                LOGO
             </a>
-            <ul class="container navbar-nav">
+
+            <a class="navbar-brand" href="{{ path('app_index_index') }}">
+                User
+            </a>
+            <ul class="navbar-nav navbar-collapse">
+                {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
+                {% if app.user is null %}
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="#series">
+                            Premier pas
+                        </a>
+                    </li>
+                {% else %}
                 {#------ PROFIL ------#}
                 <li class="nav-item active">
                     <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
@@ -78,8 +99,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">Boutique</a>
                 </li>
+                {% endif %}
             </ul>
 
+            {% if app.user is null %}
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="{{ path('app_security_register') }}" class="nav-link">
@@ -88,11 +111,25 @@
                 </li>
                 {#------ CONNEXION ------#}
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ path('app_security_login') }}" class="nav-link">
                         Connexion
                     </a>
                 </li>
             </ul>
+            {% else %}
+                {# Nom de l'utilisateur connecté #}
+                <li class="nav-item">
+                    <a class="nav-link">
+                        {{ app.user }}
+                    </a>
+                </li>
+                {#------ DECONNEXION ------#}
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        Déconnexion
+                    </a>
+                </li>
+            {% endif %}
         </div>
     </nav>
     {#---------------------- FIN MENU INTERFACE UTILISATEUR ---------------------#}
@@ -103,8 +140,18 @@
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
 <div class="container">
-
-
+    {# affichage des messages flash #}
+    {% for type, flashes in app.session.flashBag.all %}
+        {% for message in flashes %}
+            {# pour la classe alert-danger du bootstrap #}
+            {% if type == 'error' %}
+                {% set type = 'danger' %}
+            {% endif %}
+            <div class="alert alert-{{ type }}">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+    {% endfor %}
 
     {% block body %}{% endblock %}
 </div>
