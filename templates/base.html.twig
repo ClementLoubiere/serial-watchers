@@ -5,8 +5,14 @@
     {# -------------- META --------------#}
     <title>{% block title %}Serial-Watchers{% endblock %}</title>
     {% block stylesheets %}
-        {#---------------------- STYLESHEET ---------------------#}
+        {#----------------------------------------- STYLESHEET ---------------------------------------------#}
+        {#------------------------ Bootstrap ----------------------#}
         <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
+        {#---------------------- Font Awesome ---------------------#}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        {#------------------------ Notre CSS ----------------------#}
+        <link rel="stylesheet" href="{{ asset('lib/style.css')}}">
+
     {% endblock %}
 </head>
 <body>
@@ -109,6 +115,32 @@
     {% block body %}{% endblock %}
 </div>
 {#---------------------- DEBUT FOOTER ---------------------#}
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <p>Conditions générales d'utilisation</p>
+                <p>Foire aux questions</p>
+                <p>Contact</p>
+            </div>
+            <div class="col-md-4 text-center" id="backgroundImageFooter">
+                <p class="">&copy; Serial Watchers - All rights reserved - 2018</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p>
+                    <i class="fab fa-facebook-square" id="iconFooter"></i>
+                </p>
+                <p>
+                    <i class="fab fa-twitter-square" id="iconFooter"></i>
+                </p>
+                <p>
+                    <i class="fab fa-instagram" id="iconFooter"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 {#---------------------- FIN FOOTER -----------------------#}
 

@@ -1,0 +1,31 @@
+/*****************@import google font********************/
+@import url('https://fonts.googleapis.com/css?family=Hind+Vadodara');
+/********************************************************/
+
+
+
+/************************BODY****************************/
+body{
+    font-family: 'Hind Vadodara', sans-serif;
+}
+
+
+/************************FOOTER**************************/
+footer{
+    background-color: black;
+    color: white;
+    margin-bottom: 0;
+}
+
+/*Image du footer*/
+#backgroundImageFooter{
+    background-image: url("https://images7.alphacoders.com/838/thumb-1920-838517.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#iconFooter{
+    font-size: 200%;
+}
+
