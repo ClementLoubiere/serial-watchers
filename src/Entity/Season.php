@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use mysql_xdevapi\Collection;
+use Doctrine\Common\Collections\Collection;
 
 
 /**
@@ -19,10 +19,15 @@ class Season
     private $id;
     /**
      * @var Collection
-     * @ORM\M(targetEntity="e", mappedBy="season")
+     * @ORM\ManyToOne(targetEntity="Episode")
      * @ORM\JoinColumn(nullable=false)
      */
     private $episode;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
      * @return Collection
@@ -40,11 +45,5 @@ class Season
     {
         $this->episode = $episode;
         return $this;
-    }
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 }

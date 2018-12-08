@@ -43,7 +43,7 @@ class Serie
     /**
      * @ORM\Column(type="integer")
      */
-    private $episod;
+    private $episode;
 
 
     /**
@@ -82,11 +82,6 @@ class Serie
         $this->profil = $profil;
         return $this;
     }
-
-
-
-
-
 
 
     /**
@@ -163,18 +158,18 @@ class Serie
     /**
      * @return mixed
      */
-    public function getEpisod()
+    public function getEpisode()
     {
-        return $this->episod;
+        return $this->episode;
     }
 
     /**
-     * @param mixed $episod
+     * @param mixed $episode
      * @return Serie
      */
-    public function setEpisod($episod)
+    public function setEpisode($episode)
     {
-        $this->episod = $episod;
+        $this->episode = $episode;
         return $this;
     }
 
