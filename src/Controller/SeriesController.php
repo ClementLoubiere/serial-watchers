@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -17,8 +19,22 @@ class SeriesController extends AbstractController
      */
     public function index()
     {
-        return $this->render('gestion-series/index.html.twig', [
-            'controller_name' => 'SeriesController',
+
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+        $series = $repository->findBy([], ['name' => 'asc']);
+
+
+        return $this->render('user/series/index.html.twig', [
+
+            'series' => $series
+
         ]);
+
     }
+
+
+
+
 }
