@@ -1,88 +1,241 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+{{ parent() }}
+   {{ asset('lib/css/profil.css') }}
+{% endblock %}
 
 
+    {% block  content %}
 
 
-
-    {% block body %}
-
+    {#-------------------------------------------------------------------------------#}
+    {#--------------------------------SIDEBAR PROFIL---------------------------------#}
         {#-------------------------------------------------------------------------------#}
-        {#--------------------------------SIDEBAR PROFIL---------------------------------#}
-        {#-------------------------------------------------------------------------------#}
-
-
-        <div id="wrapper">
-
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="#">
-                            logo avatar
-                        </a>
-                        <p>
-                            Pseudo utilisateur
-                        </p>
-                    </li>
-                    <li>
-                        <a href="#">Mon compte</a>
-                    </li>
-                    <li>
-                        <a href="#">Tableau de Bord</a>
-                    </li>
-                    <li>
-                        <a href="#">Mes series</a>
-                    </li>
-
-                </ul>
-            </div>
-            <!-- /#sidebar-wrapper -->
-            {#-------------------------------------------------------------------------------#}
-            {#-----------------------------PAGE CONTENT PROFIL-------------------------------#}
-            {#-------------------------------------------------------------------------------#}
-            <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <!-- /#page-content-Mes Favoris/Mes playlists -->
-                    <div class="row">
-                        <!-- /#page-content-Mes Favoris -->
-                        <div class="col-6">
-
+        <div class="page-wrapper chiller-theme toggled">
+            <nav id="sidebar" class="sidebar-wrapper">
+                <div class="sidebar-content">
+                    <div id="toggle-sidebar">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="sidebar-brand">
+                        <a href="#">pro sidebar</a>
+                    </div>
+                    <div class="sidebar-header">
+                        <div class="user-pic">
+                            <img class="img-responsive img-rounded"
+                                 src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/bootstrap4/assets/img/user.jpg"
+                                 alt="User picture">
                         </div>
-                        <!-- /#page-content-Mes playslists -->
-                        <div class="col-6">
-
+                        <div class="user-info">
+                        <span class="user-name">Jhon
+                            <strong>Smith</strong>
+                        </span>
+                            <span class="user-role">Administrator</span>
+                            <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
                         </div>
                     </div>
-
-
-                    <!-- /#page-content- -->
-                    <div class="row">
-                        <!-- /#page-content-tableau de bord -->
-                        <div class="col-6">
-
-                        </div>
-                        <!-- /#page-content-Mon agenda -->
-                        <div class="col-6">
-
+                    <!-- sidebar-header  -->
+                    <div class="sidebar-search">
+                        <div>
+                            <div class="input-group">
+                                <input type="text" class="form-control search-menu" placeholder="Search...">
+                                <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- sidebar-search  -->
+                    <div class="sidebar-menu">
+                        <ul>
+                            <li class="header-menu">
+                                <span>General</span>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                    <span class="badge badge-pill badge-danger">New</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Dashboard 1
+                                                <span class="badge badge-pill badge-success">Pro</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dashboard 2</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dashboard 3</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>E-commerce</span>
+                                    <span class="badge badge-pill badge-primary">3</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Products
 
-
-
-                    <h1>Simple Sidebar</h1>
-                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Orders</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Credit cart</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="far fa-gem"></i>
+                                    <span>Components</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">General</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Panels</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Tables</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Icons</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Forms</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-chart-line"></i>
+                                    <span>Charts</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Pie chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Line chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Bar chart</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Histogram</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-globe"></i>
+                                    <span>Maps</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            <a href="#">Google maps</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Open street map</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="header-menu">
+                                <span>Extra</span>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-calendar"></i>
+                                    <span>Calendar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-folder"></i>
+                                    <span>Examples</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-book"></i>
+                                    <span>Documentation</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- sidebar-menu  -->
                 </div>
-            </div>
-            <!-- /#page-content-wrapper -->
+                <!-- sidebar-content  -->
+                <div class="sidebar-footer">
+                    <a href="#">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge badge-pill badge-warning notification">3</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i>
+                        <span class="badge badge-pill badge-success notification">7</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span class="badge-sonar"></span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+                </div>
+            </nav>
+            <!-- sidebar-wrapper  -->
+            <main class="page-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <h1>Sidebar template</h1>
+                            <p>This is a responsive sidebar template with dropdown menu based on bootstrap 4
+                                framework.</p>
 
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <a href="https://github.com/azouaoui-med/pro-sidebar-template" class="btn btn-secondary"
+                               target="_blank">
+                                <i class="fab fa-github"></i> View source on Github</a>
+                            <a href="https://github.com/azouaoui-med/pro-sidebar-template/archive/gh-pages.zip"
+                               class="btn btn-outline-secondary" target="_blank">
+                                <i class="fa fa-download"></i> Download code</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <!-- /#wrapper -->
-
-
         {#-------------------------------------------------------------------------------#}
         {#---------------------------SCRIPT JAVASCRIPT/JQUERY ---------------------------#}
         {#-------------------------------------------------------------------------------#}
@@ -90,17 +243,35 @@
 
 
 
-    {#******************FIN JAVASCRIPT *************************#}
+        {#******************FIN JAVASCRIPT *************************#}
 
 
-{% endblock %}
+    {% endblock %}
    {% block javascripts %}
-        {{ parent() }}
+       {{ parent() }}
        <!-- Menu Toggle Script -->
        <script>
-           $("#menu-toggle").click(function(e) {
-               e.preventDefault();
-               $("#wrapper").toggleClass("toggled");
+
+           jQuery(function ($) {
+
+               $(".sidebar-dropdown > a").click(function () {
+                   $(".sidebar-submenu").slideUp(200);
+                   if ($(this).parent().hasClass("active")) {
+                       $(".sidebar-dropdown").removeClass("active");
+                       $(this).parent().removeClass("active");
+                   } else {
+                       $(".sidebar-dropdown").removeClass("active");
+                       $(this).next(".sidebar-submenu").slideDown(200);
+                       $(this).parent().addClass("active");
+                   }
+
+               });
+
+               $("#toggle-sidebar").click(function () {
+                   $(".page-wrapper").toggleClass("toggled");
+               });
+
+
            });
        </script>
 
