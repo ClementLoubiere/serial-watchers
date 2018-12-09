@@ -2,6 +2,10 @@
 
 {% block body %}
 
-    {{ json_data }}
+    {% for json in json_data %}
+
+    <div>{{ json }}</div>
+
+    {% endfor %}
 
 {% endblock %}

@@ -80,15 +80,24 @@ class SecurityController extends AbstractController
      */
     public function api()
     {
-        $string = file_get_contents('https://api.themoviedb.org/3/tv/60?api_key=f9966f8cc78884142eed6c6d4710717a&language=en-US');
+        $string = [file_get_contents('https://api.themoviedb.org/3/tv/60?api_key=f9966f8cc78884142eed6c6d4710717a&language=en-US'), file_get_contents('https://api.themoviedb.org/3/tv/60500?api_key=f9966f8cc78884142eed6c6d4710717a&language=en-US')];
 
-        $json_data = json_decode($string,true);
+        $json_data = [];
+        $i = 0;
+
+        foreach($string as $info) {
+
+            $json_data[$i++] = json_decode($info, true)['name'];
+
+        }
+
 
         // print_r($json_data);
 
+
         return $this->render('security/api.html.twig',
             [
-                'json_data' => $json_data['name']
+                'json_data' => $json_data
             ]);
     }
 }
