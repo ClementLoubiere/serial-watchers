@@ -1,31 +1,110 @@
 /*****************@import google font********************/
-@import url('https://fonts.googleapis.com/css?family=Hind+Vadodara');
+@import url('https://fonts.googleapis.com/css?family=Lato');
 /********************************************************/
 
+h1, h2, h3, p, a, ul, li{
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+/************************HEADER****************************/
+
+header{
+    background-color: #4698db;
+}
 
 
 /************************BODY****************************/
-body{
-    font-family: 'Hind Vadodara', sans-serif;
+
+/***********Section1************/
+#section1 {
+    background-color: #0d151c;
+    height: 500px;
+    text-align: center;
+    padding-top: 10%;
+}
+
+
+/***********Section2************/
+#section2{
+    background-image: radial-gradient(circle at top left, #59abee, #1d6fb2);
+}
+
+#section2 > div > p {
+    font-size: 3em;
+    text-align: center;
+    padding-top: 8%;
+
+}
+
+#section2 .feature {
+    padding-top: 6%;
+    padding-bottom: 4%;
+}
+
+#section2 .feature .featureOne,
+#section2 .feature .featureTwo,
+#section2 .feature .featureThree,
+#section2 .feature .featureFour {
+    text-align: center;
+}
+
+#section2 .feature .featureOne h3,
+#section2 .feature .featureTwo h3,
+#section2 .feature .featureThree h3,
+#section2 .feature .featureFour h3 {
+    padding-top: 10%;
+}
+
+#section2 .feature .featureOne i,
+#section2 .feature .featureTwo i,
+#section2 .feature .featureThree i,
+#section2 .feature .featureFour i {
+    font-size: 2.5em;
+    border-radius: 50%;
+    border-style: hidden;
+    background: #7d8b95;
+    padding: 15%;
+
+}
+
+/***********Section3************/
+
+#section3{
+    height: 800px;
+    background-color: #171f26;
 }
 
 
 /************************FOOTER**************************/
 footer{
+
     background-color: black;
-    color: white;
+    color: rgba(218, 218, 218, 0.59);
     margin-bottom: 0;
 }
 
+footer ul li {
+    padding-top: 2%;
+    list-style: none;
+}
+
+footer div p {
+    padding-top: 20%;
+}
+
+footer div i {
+    font-size: 200%;
+    padding: 10% 10%;
+    color: white;
+}
 /*Image du footer*/
 #backgroundImageFooter{
     background-image: url("https://images7.alphacoders.com/838/thumb-1920-838517.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-#iconFooter{
-    font-size: 200%;
 }
 

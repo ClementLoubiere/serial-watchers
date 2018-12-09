@@ -68,7 +68,7 @@
 
     {#------------------------------ INSCRIPTION ------------------------------#}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid navbar-nav">
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
                 LOGO
@@ -143,7 +143,7 @@
 
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
-<div class="container">
+<div>
     {# affichage des messages flash #}
     {% for type, flashes in app.session.flashBag.all %}
         {% for message in flashes %}
@@ -157,7 +157,11 @@
         {% endfor %}
     {% endfor %}
 
-    {% block body %}{% endblock %}
+    {% block body %}
+
+
+
+    {% endblock %}
 </div>
 {#---------------------- DEBUT FOOTER ---------------------#}
 
@@ -165,23 +169,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 text-center">
-                <p>Conditions générales d'utilisation</p>
-                <p>Foire aux questions</p>
-                <p>Contact</p>
+                <ul>
+                    <li>Conditions générales d'utilisation</li>
+                    <li>Nous contacter</li>
+                    <li>FAQ</li>
+                </ul>
             </div>
             <div class="col-md-4 text-center" id="backgroundImageFooter">
                 <p class="">&copy; Serial Watchers - All rights reserved - 2018</p>
             </div>
             <div class="col-md-4 text-center">
-                <p>
-                    <i class="fab fa-facebook-square" id="iconFooter"></i>
-                </p>
-                <p>
-                    <i class="fab fa-twitter-square" id="iconFooter"></i>
-                </p>
-                <p>
-                    <i class="fab fa-instagram" id="iconFooter"></i>
-                </p>
+                <i class="fab fa-facebook-square"></i>
+                <i class="fab fa-twitter-square"></i>
+                <i class="fab fa-instagram"></i>
             </div>
         </div>
     </div>
