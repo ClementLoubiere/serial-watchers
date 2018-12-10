@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Serie;
+//use App\Entity\Serie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Component\HttpFoundation\JsonResponse;
 //use Symfony\Component\HttpFoundation\Request;
@@ -50,18 +50,30 @@ class TestController extends AbstractController
     {
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/top_rated?api_key=".$api."&language=en-US&page=1");
+        $baseURI = "http://image.tmdb.org/t/p/";
+        $size = "w342";
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=en-US&page=1");
 
         $result = json_decode($json, true);
 
         //$poster_path = $result["poster_path"];
         //$backdrop_path = $result["backdrop_path"];
-        $overview = $result["results"][0]["original_name"];
+        //$overview = $result["results"][0]["original_name"];
+        $tplArray[] = array();
 
-        return $this->render('user/test/test.html.twig',
-            [
-                'overview' => $overview
-            ]);
+        for ($i = 0; $i < count($result['results']); $i++){
+            $tplArray = array(
+                'name' => $result["results"][$i]["original_name"],
+                'datediff' => $result["results"][$i]["first_air_date"],
+                'description' => $result["results"][$i]["overview"],
+                'img' => $baseURI.$size.$result["results"][$i]["poster_path"]
+            );
+        }
+
+        return $this->render('user/test/test.html.twig', array(
+                'array' => $tplArray
+            ));
     }
 
 }
