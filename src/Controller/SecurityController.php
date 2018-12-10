@@ -98,9 +98,10 @@ class SecurityController extends AbstractController
 
             $json_table = json_decode($info, true);
 
-            $json_data[$i++]["poster_path"] = "'https://image.tmdb.org/t/p/w185/".$json_table['poster_path']."'";
+            $json_data[$i]["poster_path"] = "https://image.tmdb.org/t/p/w185".$json_table['poster_path'];
 
-            $json_data[$i++]["name"] = $json_table['name'];
+            $json_data[$i]["name"] = $json_table['name'];
+            $i++;
         }
 
 
@@ -111,7 +112,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/api.html.twig',
             [
-                'json_data' => $json_data,
+                'json_data' => $json_data
             ]);
     }
 }
