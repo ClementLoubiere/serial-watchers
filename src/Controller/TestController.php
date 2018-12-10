@@ -60,10 +60,10 @@ class TestController extends AbstractController
         //$poster_path = $result["poster_path"];
         //$backdrop_path = $result["backdrop_path"];
         //$overview = $result["results"][0]["original_name"];
-        $tplArray[] = array();
+        $tplArray = array();
 
         for ($i = 0; $i < count($result['results']); $i++){
-            $tplArray = array(
+            $tplArray[] = array(
                 'name' => $result["results"][$i]["original_name"],
                 'datediff' => $result["results"][$i]["first_air_date"],
                 'description' => $result["results"][$i]["overview"],
