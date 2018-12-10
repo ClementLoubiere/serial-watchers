@@ -53,13 +53,6 @@ class Serie
      */
     private $profil;
 
-    /**
-     * @var Season
-     * @ORM\OneToMany(targetEntity="Season", mappedBy="serie")
-     */
-    // pas de getter/setter pour le moment
-    private $seasons;
-
 
     public function getId(): ?int
     {

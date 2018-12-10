@@ -32,6 +32,7 @@ class Season
     // pas de getter/setter pour le moment
     private $serie;
 
+
     public function getId(): ?int
     {
         return $this->id;

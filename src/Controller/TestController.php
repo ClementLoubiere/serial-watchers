@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -14,54 +16,51 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
 
-    /*
-    public function test(Request $request)
-    {
-
-        $repository = $this->getDoctrine()->getRepository(Serie::class);
-        $research = $repository->find($request->request->get('research'));
-        $tab=[];
-        //check si j'ai reçu un appel ajax
-        if($request->isXmlHttpRequest()) {
-
-            // on récupère la recherche de l'utilisateur
-
-            // on stocke notre résultat de la recherche dans une entréé d'un tableau
-            $tab['resultat'] = $research->setName($research['name']);
-            return new JsonResponse($tab);
-        } else {
-
-            echo "Je ne pas reçu d'appel AJAX";
-
-        }
-
-        return $this->render('user/test/test.html.twig');
-
-    }*/
 
     /**
      * @Route("/test")
      */
-    public function api(Request $request)
+    /*public function test(Request $request)
+    {
+        $tab = [];
+        if ($request->isXmlHttpRequest()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $research = $request->request->get('research');
+
+            $tab['resultat'] = $em->getRepository(Serie::class)->find($research);
+
+            dump($tab);
+
+        } else{
+
+            echo "Pas d'appel AJAX trouvé";
+
+        }
+
+        return  new JsonResponse($tab) .  $this->render('user/test/test.html.twig', [
+            'cro' => $tab
+        ]);
+
+    }*/
+
+
+    public function api()
     {
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
-        $keywords = '';
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/top_rated?api_key=".$api."&language=en-US&page=1");
 
-        $string = file_get_contents("https://api.themoviedb.org/3/search/tv?page=1&query=".$keywords."&language=en-US&api_key=".$api);
+        $result = json_decode($json, true);
 
-        if (is_null($keywords)){
-            $keywords = $request->request->get('research');
-        }
-
-        $json_data = json_decode($string);
-        dump($json_data);
-
+        //$poster_path = $result["poster_path"];
+        //$backdrop_path = $result["backdrop_path"];
+        $overview = $result["results"][0]["original_name"];
 
         return $this->render('user/test/test.html.twig',
             [
-                'json_data' => $json_data['name'],
-                'keyword' => $keywords
+                'overview' => $overview
             ]);
     }
 

@@ -6,12 +6,12 @@
     <form method="post">
         <div class="form-group">
             <label for="recherche">Rechercher une série</label>
-            <input type="text" name="research" class="form-control" id="recherche" value="{{ keyword }}">
+            <input type="text" name="research" class="form-control" id="recherche">
         </div>
     </form>
 
     <div id="resultat">
-        {{ json_data }}
+        <h2>{{ overview }}</h2>
     </div>
 
 {% endblock %}
