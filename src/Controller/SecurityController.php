@@ -93,11 +93,19 @@ class SecurityController extends AbstractController
 
         $json_data = [];
         $i = 0;
+        $image = [];
+        $j = 0;
 
         foreach($string as $info) {
 
             $json_data[$i++] = json_decode($info, true)['name'];
+
+            foreach ($img as $value)
+
+            $image[$j++] = $value[$j];
         }
+
+        dump($image);
 
 
 
@@ -108,7 +116,7 @@ class SecurityController extends AbstractController
         return $this->render('security/api.html.twig',
             [
                 'json_data' => $json_data,
-                'image' => $img
+                'image' => $image
             ]);
     }
 }
