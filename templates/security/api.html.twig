@@ -7,15 +7,12 @@
     <div class="container">
         <div class="row">
 
-            
+
     {% for json in json_data %}
         <div class="col-3 text-center">
-            {% for test in image %}
-            <img src="{{ test }}" alt="">
-            {% endfor %}
+            <img src="{{ json['poster_path'] }}" alt="">
             <br>
-            {{ json }}</div>
-        
+            {{ json['name'] }}</div>
     {% endfor %}
         </div>
     </div>
