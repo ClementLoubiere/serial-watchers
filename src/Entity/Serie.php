@@ -73,6 +73,7 @@ class Serie
         return $this->profil;
     }
 
+
     /**
      * @param User $profil
      * @return Serie
