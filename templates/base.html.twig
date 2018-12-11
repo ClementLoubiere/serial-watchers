@@ -144,7 +144,7 @@
 
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
-<div>
+<div class="mt-2 container">
     {# affichage des messages flash #}
     {% for type, flashes in app.session.flashBag.all %}
         {% for message in flashes %}
@@ -157,12 +157,7 @@
             </div>
         {% endfor %}
     {% endfor %}
-
-    {% block body %}
-
-
-
-    {% endblock %}
+    {% block body %}{% endblock %}
 </div>
 {#---------------------- DEBUT FOOTER ---------------------#}
 
