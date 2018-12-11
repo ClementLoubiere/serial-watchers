@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,7 +25,7 @@ class SeriesController extends AbstractController
         $series = $repository->findBy([], ['name' => 'asc']);
 
 
-        return $this->render('user/series/index.html.twig', [
+        return $this->render('user/test/test.html.twig', [
 
             'series' => $series
 
