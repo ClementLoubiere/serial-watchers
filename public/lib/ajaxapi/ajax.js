@@ -20,12 +20,12 @@ $(document).ready(function (){
         $.post(
             '/user/test',
             parameters,
-            function(data) {
+            function (data) {
                 $(this).html(data);
             }, 'json')
             .done(function (response) {
-            console.log(response);
-        });
+                console.log(response);
+            });
 
     });
 

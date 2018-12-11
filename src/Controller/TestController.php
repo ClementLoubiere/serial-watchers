@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+//use App\Entity\Serie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+//use Symfony\Component\HttpFoundation\JsonResponse;
+//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,44 +17,64 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
 
+
     /**
      * @Route("/test")
      */
+    /*public function test(Request $request)
+    {
+        $tab = [];
+        if ($request->isXmlHttpRequest()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $research = $request->request->get('research');
+
+            $tab['resultat'] = $em->getRepository(Serie::class)->find($research);
+
+            dump($tab);
+
+        } else{
+
+            echo "Pas d'appel AJAX trouvé";
+
+        }
+
+        return  new JsonResponse($tab) .  $this->render('user/test/test.html.twig', [
+            'cro' => $tab
+        ]);
+
+    }*/
+
+
     public function api()
     {
-        //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
-        // La taille de l'image
+        $baseURI = "http://image.tmdb.org/t/p/";
         $size = "w342";
-        // concaténer avec l'url de l'image
-        $baseURI = "http://image.tmdb.org/t/p/". $size;
 
-        //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=" . $api . "&language=en-US&page=1");
 
-        // convertit l'api de json en tableau
         $result = json_decode($json, true);
 
-        // initialisation d'une variable tableau
+        //$poster_path = $result["poster_path"];
+        //$backdrop_path = $result["backdrop_path"];
+        //$overview = $result["results"][0]["original_name"];
         $tplArray = array();
 
-        // boucle du nombre de résultat à partir de tableau $results à l'indice "results"
-        for ($i = 0; $i < count($result['results']); $i++){
-            // itération des différents indices qu'on va récupérer
+        for ($i = 0; $i < count($result['results']); $i++) {
             $tplArray[] = array(
-                'id' => $result["results"][$i]["id"],
                 'name' => $result["results"][$i]["original_name"],
                 'datediff' => $result["results"][$i]["first_air_date"],
                 'description' => $result["results"][$i]["overview"],
-                'img' => $baseURI.$result["results"][$i]["poster_path"]
+                'img' => $baseURI . $size . $result["results"][$i]["poster_path"]
             );
         }
 
-        // appel des indices de tplArray dans test.twig
         return $this->render('user/test/test.html.twig', array(
-                'array' => $tplArray
-            ));
+            'array' => $tplArray
+        ));
     }
 
 }

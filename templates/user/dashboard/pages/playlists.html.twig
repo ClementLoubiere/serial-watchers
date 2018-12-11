@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+
+
+    {{ form_start(form) }}
+
+    {#Bloc de formulaire pour l'attribut name#}
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.image) }}
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary">Retour</a>
+    </div>
+    {#ferme la balise form #}
+    {{ form_end(form) }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {#<form method="post">#}
+    {#<div class="form-group">#}
+    {#<label>Titre de la playlist</label>#}
+    {#<input type="text" name="_name" class="form-control" value="{{ name_playlist }}">#}
+    {#</div>#}
+    {#<div class="form-group">#}
+    {#<label>Description de la playlist</label>#}
+    {#<input type="text" name="_description" class="form-control">#}
+    {#</div>#}
+    {#<div class="form-group">#}
+    {#<label>Genre de la playlist</label>#}
+    {#<select name="genre" id="genre">#}
+    {#{% for date in array %}#}
+    {#<option value="{{ data.genre) ~ '...' }}"></option>#}
+    {#{% endfor %}#}
+
+
+    {#</select>#}
+    {#</div>#}
+
+    {#<div class="text-right">#}
+    {#<button type="submit" class="btn btn-primary">#}
+    {#Enregistrer#}
+    {#</button>#}
+    {#</div>#}
+    {#</form>#}
+
+{% endblock %}
