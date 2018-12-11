@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 
 /**
@@ -14,48 +16,45 @@ class Season
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Serie", inversedBy="Season")
      */
     private $id;
-
+    
     /**
-     * @var Episode
-     * @ORM\ManyToOne(targetEntity="Episode", inversedBy="nb_episodes")
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\Column(type="integer")
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="Season")
      */
-    private $nb_seasons;
-
-    /**
-     * @var Serie
-     * @ORM\ManyToOne(targetEntity="Serie", inversedBy="season")
-     */
-    // pas de getter/setter pour le moment
-    private $serie;
-
+    private $serieId;
+    
+    public function __construct()
+    {
+        $this->serieId = new ArrayCollection();
+    }
+    
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
     /**
-     * @return Episode
+     * @return Collection
      */
-    public function getNbSeasons(): Episode
+    public function getSerieId(): Collection
     {
-        return $this->nb_seasons;
+        return $this->serieId;
     }
-
+    
     /**
-     * @param Episode $nb_seasons
+     * @param Collection $serieId
      * @return Season
      */
-    public function setNbSeasons(Episode $nb_seasons): Season
+    public function setSerieId(Collection $serieId): Season
     {
-        $this->nb_seasons = $nb_seasons;
+        $this->serieId = $serieId;
         return $this;
     }
-
-
+    
+    
 
 }

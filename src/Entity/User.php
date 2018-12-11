@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -72,6 +74,17 @@ class User implements UserInterface, \Serializable
      * @Assert\NotBlank(message="Le mot de passe est obligatoire")
      */
     private $plainPassword;
+    
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Serie", mappedBy="User")
+     */
+    private $serie;
+    
+    public function __construct()
+    {
+        $this->serie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -191,6 +204,26 @@ class User implements UserInterface, \Serializable
         $this->plainPassword = $plainPassword;
         return $this;
     }
+    
+    /**
+     * @return Collection
+     */
+    public function getSerie(): Collection
+    {
+        return $this->serie;
+    }
+    
+    /**
+     * @param Collection $serie
+     * @return User
+     */
+    public function setSerie(Collection $serie): User
+    {
+        $this->serie = $serie;
+        return $this;
+    }
+    
+    
 
 
     /**
