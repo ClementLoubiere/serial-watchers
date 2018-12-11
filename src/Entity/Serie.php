@@ -17,46 +17,34 @@ class Serie
     private $id;
 
     /**
-     *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $name;
 
-
     /**
      * @ORM\Column(type="string")
-     *
      */
     private $genre;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\
-     */
-    private $season;
-    /**
      * @ORM\Column(type="string")
      */
-
     private $country;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $episod;
-
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $date_diff;
 
-
-    /***
+    /**
      * @ORM\Column(type="string")
      */
     private $network;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $image;
 
     /**
      * @var User
@@ -65,29 +53,11 @@ class Serie
      */
     private $profil;
 
-    /**
-     * @return User
-     */
-    public function getProfil(): User
+
+    public function getId(): ?int
     {
-        return $this->profil;
+        return $this->id;
     }
-
-    /**
-     * @param User $profil
-     * @return Serie
-     */
-    public function setProfil(User $profil): Serie
-    {
-        $this->profil = $profil;
-        return $this;
-    }
-
-
-
-
-
-
 
     /**
      * @return mixed
@@ -106,6 +76,7 @@ class Serie
         $this->name = $name;
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -121,24 +92,6 @@ class Serie
     public function setGenre($genre)
     {
         $this->genre = $genre;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSeason()
-    {
-        return $this->season;
-    }
-
-    /**
-     * @param mixed $season
-     * @return Serie
-     */
-    public function setSeason($season)
-    {
-        $this->season = $season;
         return $this;
     }
 
@@ -163,36 +116,18 @@ class Serie
     /**
      * @return mixed
      */
-    public function getEpisod()
+    public function getDateDiff()
     {
-        return $this->episod;
+        return $this->date_diff;
     }
 
     /**
-     * @param mixed $episod
+     * @param mixed $date_diff
      * @return Serie
      */
-    public function setEpisod($episod)
+    public function setDateDiff($date_diff)
     {
-        $this->episod = $episod;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     * @return Serie
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
+        $this->date_diff = $date_diff;
         return $this;
     }
 
@@ -214,13 +149,41 @@ class Serie
         return $this;
     }
 
-
-
-
-
-
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getImage()
     {
-        return $this->id;
+        return $this->image;
     }
+
+    /**
+     * @param mixed $image
+     * @return Serie
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getProfil(): ?User
+    {
+        return $this->profil;
+    }
+
+    /**
+     * @param User $profil
+     * @return Serie
+     */
+    public function setProfil(User $profil): Serie
+    {
+        $this->profil = $profil;
+        return $this;
+    }
+
+
 }

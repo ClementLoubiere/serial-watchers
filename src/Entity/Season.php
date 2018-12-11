@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use mysql_xdevapi\Collection;
 
 
 /**
@@ -17,34 +16,46 @@ class Season
      * @ORM\Column(type="integer")
      */
     private $id;
+
     /**
-     * @var Collection
-     * @ORM\M(targetEntity="e", mappedBy="season")
+     * @var Episode
+     * @ORM\ManyToOne(targetEntity="Episode", inversedBy="nb_episodes")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $episode;
+    private $nb_seasons;
 
     /**
-     * @return Collection
+     * @var Serie
+     * @ORM\ManyToOne(targetEntity="Serie", inversedBy="season")
      */
-    public function getEpisode(): Collection
-    {
-        return $this->episode;
-    }
-
-    /**
-     * @param Collection $episode
-     * @return Season
-     */
-    public function setEpisode(Collection $episode): Season
-    {
-        $this->episode = $episode;
-        return $this;
-    }
+    // pas de getter/setter pour le moment
+    private $serie;
 
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @return Episode
+     */
+    public function getNbSeasons(): Episode
+    {
+        return $this->nb_seasons;
+    }
+
+    /**
+     * @param Episode $nb_seasons
+     * @return Season
+     */
+    public function setNbSeasons(Episode $nb_seasons): Season
+    {
+        $this->nb_seasons = $nb_seasons;
+        return $this;
+    }
+
+
+
 }
