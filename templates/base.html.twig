@@ -5,10 +5,14 @@
     {# -------------- META --------------#}
     <title>{% block title %}Serial-Watchers{% endblock %}</title>
     {% block stylesheets %}
-        {#---------------------- STYLESHEET ---------------------#}
+        {#----------------------------------------- STYLESHEET ---------------------------------------------#}
+        {#------------------------ Bootstrap ----------------------#}
         <link rel="stylesheet" href="{{ asset('lib/bootstrap/bootstrap.min.css') }}">
+        {#---------------------- Font Awesome ---------------------#}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="{{ asset('lib/css/profil.css') }}">
+        {#------------------------ Notre CSS ----------------------#}
+        <link rel="stylesheet" href="{{ asset('lib/style.css')}}">
 
     {% endblock %}
 </head>
@@ -65,7 +69,7 @@
 
     {#------------------------------ INSCRIPTION ------------------------------#}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid navbar-nav">
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
                 LOGO
@@ -86,7 +90,7 @@
                 {% else %}
                 {#------ PROFIL ------#}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_user_index') }}">Profil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
                 </li>
                 {#------ TOUTES LES SERIES ------#}
                 <li class="nav-item">
@@ -133,8 +137,6 @@
             {% endif %}
         </div>
     </nav>
-
-
     {#---------------------- FIN MENU INTERFACE UTILISATEUR ---------------------#}
 
     {#--------------------------------- FIN HEADER ------------------------------#}
@@ -142,7 +144,7 @@
 
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
-<div class="container">
+<div class="mt-2 container">
     {# affichage des messages flash #}
     {% for type, flashes in app.session.flashBag.all %}
         {% for message in flashes %}
@@ -155,15 +157,33 @@
             </div>
         {% endfor %}
     {% endfor %}
-
     {% block body %}{% endblock %}
 </div>
 {#---------------------- DEBUT FOOTER ---------------------#}
 
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <ul>
+                    <li>Conditions générales d'utilisation</li>
+                    <li>Nous contacter</li>
+                    <li>FAQ</li>
+                </ul>
+            </div>
+            <div class="col-md-4 text-center" id="backgroundImageFooter">
+                <p class="">&copy; Serial Watchers - All rights reserved - 2018</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="fab fa-facebook-square"></i>
+                <i class="fab fa-twitter-square"></i>
+                <i class="fab fa-instagram"></i>
+            </div>
+        </div>
+    </div>
+</footer>
+
 {#---------------------- FIN FOOTER -----------------------#}
-
-
-
 
 
 {#-------------------------------------------------------------------------------#}
@@ -172,23 +192,19 @@
 
 
 {% block javascripts %}
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
 
-    <!-- Popper.JS -->
+    {# ----------------------------CDN JQUERY----------------------------------- #}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    {# -------------------------Script Bootstrap-------------------------------- #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
 
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
+    {#----------------------------------------------------------------------------#}
     <script src="{{ asset('lib/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('lib/ajaxapi/ajax.js') }}"></script>
-
-
+    <script src="{{ asset('lib/js/script.js') }}"></script>
 {% endblock %}
 </body>
 </html>

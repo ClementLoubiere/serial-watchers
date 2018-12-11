@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Gestion des produits</h1>
+    <p>
+        <a href="{{ path('app_admin_product_edit') }}">
+            Ajouter un produit
+        </a>
+    </p>
+    <table class="table table-hover">
+        <tr class="table-dark">
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Description du produit</th>
+            <th>Prix</th>
+            <th></th>
+            <th width="50px"></th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }} €</td>
+                <td>
+                    <a href="{{ path('app_admin_product_edit', {id:product.id}) }}" class="btn btn-primary">Modifier</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock body %}
