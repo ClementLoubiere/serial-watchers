@@ -66,11 +66,53 @@ class SecurityController extends AbstractController
 
         if(!empty($errors)){
             $this->addFlash('error', 'Les identifiants sont incorrects');
+        } else {
+            $this->redirectToRoute('app_index_index');
         }
+
+
 
         return $this->render('security/login.html.twig',
             [
                 'last_username' => $lastUsername
+            ]);
+    }
+
+
+    /**
+     * @Route("/api")
+     */
+    public function api()
+    {
+        $string = [file_get_contents('https://api.themoviedb.org/3/tv/60?api_key=f9966f8cc78884142eed6c6d4710717a&language=en-US'), file_get_contents('https://api.themoviedb.org/3/tv/71663?api_key=f9966f8cc78884142eed6c6d4710717a&language=en-US')];
+
+        $img = ['https://image.tmdb.org/t/p/w185/ousZgyHc994KRdaKE2UjySAdn4O.jpg','https://image.tmdb.org/t/p/w185/tM3i08Xs5I1bg5DB6sa9H0Zpt9e.jpg'];
+
+
+
+        /*
+        $json_data = [];
+        $i = 0;
+
+        foreach($string as $info) {
+
+            $json_table = json_decode($info, true);
+
+            $json_data[$i]["poster_path"] = "https://image.tmdb.org/t/p/w185".$json_table['poster_path'];
+
+            $json_data[$i]["name"] = $json_table['name'];
+            $i++;
+        }*/
+
+
+
+
+        // print_r($json_data);
+
+
+        return $this->render('security/api.html.twig',
+            [
+                'json_data' => $json_data
             ]);
     }
 }

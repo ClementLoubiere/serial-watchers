@@ -2,4 +2,8 @@
 
 {% block body %}
 
+    {% for data in final %}
+        <img src="{{ data.img }}" alt="">
+    {% endfor %}
+
 {% endblock %}
