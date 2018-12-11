@@ -39,6 +39,7 @@ class TestController extends AbstractController
         for ($i = 0; $i < count($result['results']); $i++){
             // itération des différents indices qu'on va récupérer
             $tplArray[] = array(
+                'id' => $result["results"][$i]["id"],
                 'name' => $result["results"][$i]["original_name"],
                 'datediff' => $result["results"][$i]["first_air_date"],
                 'description' => $result["results"][$i]["overview"],
