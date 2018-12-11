@@ -90,7 +90,7 @@ class SecurityController extends AbstractController
 
 
 
-
+        /*
         $json_data = [];
         $i = 0;
 
@@ -102,7 +102,7 @@ class SecurityController extends AbstractController
 
             $json_data[$i]["name"] = $json_table['name'];
             $i++;
-        }
+        }*/
 
 
 
