@@ -28,17 +28,14 @@
         private $episodes;
 
         /**
-         * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="series")
+         * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="series")
          */
         private $users;
-    
-        /**
-         * Serie constructor.
-         * @param $users
-         */
-        public function __construct($users)
+
+        
+        public function __construct()
         {
-            $this->users = $users;
+            $this->users = new ArrayCollection();
         }
     
     
@@ -59,17 +56,25 @@
             return $this;
         }
     
-        public function getUsers(): Collection
+        /**
+         * @return mixed
+         */
+        public function getUsers()
         {
             return $this->users;
         }
     
-        public function setUsers(Collection $users): Serie
+        /**
+         * @param mixed $users
+         * @return Serie
+         */
+        public function setUsers($users)
         {
             $this->users = $users;
-        
             return $this;
         }
+    
+        
         
 
         /**
