@@ -2,11 +2,129 @@
 
 {% block body %}
 
-    <h1>hello le shop</h1>
-    {{ dump(products) }}
+    <ul class="nav nav-pills nav-fill pt-3">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Longer nav link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+    </ul>
+    <hr>
+    <div class="products">
+    <div class="container">
+    <div class="row products_row">
+    {% for product in products %}
 
-    {% for product in products  %}
-        {{ product.category }}
+                    <!-- Product -->
+                    <div class="col-xl-4 col-md-6">
+                        <div class="product">
+                            <div class="product_image"><img src="lib/asset/{{ product.image }}" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_info d-flex flex-row align-items-start justify-content-start">
+                                    <div>
+                                        <div>
+                                            <div class="product_name"><a href="">{{ product.title }}</a></div>
+                                            <div class="product_category"><a href="">{{ product.category }}</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="ml-auto text-right">
+                                        <div class="rating">
+                                            <label for="stars-rating-5"><i class="fa fa-star gold"></i></label>
+                                            <label for="stars-rating-4"><i class="fa fa-star gold"></i></label>
+                                            <label for="stars-rating-3"><i class="fa fa-star gold"></i></label>
+                                            <label for="stars-rating-2"><i class="fa fa-star gold"></i></label>
+                                            <label for="stars-rating-1"><i class="fa fa-star gold"></i></label>
+                                        </div>
+                                        <div class="product_price text-right">{{ product.price }} €</div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div>
+                                    <h6>Description du produit</h6>
+                                    <p>{{ product.description }}</p>
+                                </div>
+                                <div class="product_buttons">
+                                    <div class="text-right d-flex flex-row align-items-start justify-content-start">
+                                        <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
+                                            <p><a href=""><i class="fas fa-search"></i></a></p>
+                                        </div>
+                                        <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
+                                            <p><a href=""><i class="fas fa-cart-plus"></i></a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
     {% endfor %}
+    </div>
+    </div>
+    </div>
+
+
+    {#
+    <div class="container">
+
+    {% for product in products %}
+
+        <div class="col-xs-12 col-md-6 bootstrap snippets">
+            <div class="product-content product-wrap clearfix">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12 col-xs-12">
+                        <div class="product-image">
+                            <img src="lib/asset/{{ product.image }}" alt="" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 col-xs-12">
+                        <div class="product-deatil">
+                            <h5 class="name">
+                                <a href="#">
+                                    {{ product.title }} <span>{{ product.category }}</span>
+                                </a>
+                            </h5>
+                            <p class="price-container">
+                                <span>{{ product.price }} €</span>
+                            </p>
+                            <span class="tag1"></span>
+                        </div>
+                        <div class="description">
+                            <p>{{ product.description }}</p>
+                        </div>
+                        <div class="product-info smart-form">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <a href="javascript:void(0);" class="btn btn-success">Add to cart</a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="rating">
+                                        <label for="stars-rating-5"><i class="fa fa-star gold"></i></label>
+                                        <label for="stars-rating-4"><i class="fa fa-star gold"></i></label>
+                                        <label for="stars-rating-3"><i class="fa fa-star gold"></i></label>
+                                        <label for="stars-rating-2"><i class="fa fa-star gold"></i></label>
+                                        <label for="stars-rating-1"><i class="fa fa-star gold"></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    {% endfor %}
+
+    </div>
+
+#}
+
 
 {% endblock %}
