@@ -48,9 +48,29 @@ class UserController extends AbstractController
             );
         }
 
+
+        $json2 = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
+
+        $result2 = json_decode($json2, true);
+
+        $tblArray2 = array();
+
+
+        $tblArray2[] = array(
+            'name' => $result2["original_name"],
+            'datediff' => $result2["first_air_date"],
+            'description' => $result2["next_episode_to_air"]["overview"],
+            'country' => $result2["origin_country"],
+            'nb_episodes' => $result2['number_of_episodes'],
+            'nb_seasons' => $result2['number_of_seasons']
+        );
+
+
         return $this->render('user/dashboard/index.html.twig', array(
-            'array' => $tplArray
+            'array' => $tplArray,
+            'array2' => $tblArray2
         ));
+
 
     }
 
@@ -74,6 +94,7 @@ class UserController extends AbstractController
         $playlist = new playlist();
         $form = $this->createForm(PlaylistType::class, $playlist);
         $form->handleRequest($request);
+
         if ($form->isSubmitted()) {
             //si mon form est valide à partir des annotation dans l'entité Catégory son ok
             if ($form->isValid()) {
@@ -93,6 +114,33 @@ class UserController extends AbstractController
             'playlists' => $playlists,
             'form' => $form->createView()
         ]);
+
+
+    }
+
+    public function newSerie()
+    {
+
+        //pour appeler les nouvelles series:
+
+        $api = "f9966f8cc78884142eed6c6d4710717a";
+
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
+
+        $result2 = json_decode($json, true);
+
+        $tblArray2 = array();
+
+
+        $tblArray2[] = array(
+            'name' => $result2["original_name"],
+            'datediff' => $result2["first_air_date"],
+            'description' => $result2["next_episode_to_air"]["overview"],
+            'country' => $result2["origin_country"],
+            'episodes' => $result2['number_of_episodes'],
+            'seasons' => $result2['number_of_seasons']
+        );
 
 
     }
