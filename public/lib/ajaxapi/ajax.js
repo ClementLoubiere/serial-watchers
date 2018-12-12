@@ -1,8 +1,8 @@
-$(document).ready(function (){
-
+$(document).ready(function (e) {
+    e.preventDefault();
     // appel ajax
 
-    $('#recherche').on('input', function () {
+    /*$('#recherche').on('input', function () {
 
         let research = $(this).val();
 
@@ -17,17 +17,17 @@ $(document).ready(function (){
             "data": "{}"
         };*/
 
-        $.post(
-            '/user/test',
-            parameters,
-            function (data) {
-                $(this).html(data);
-            }, 'json')
-            .done(function (response) {
-                console.log(response);
-            });
+    /*$.post(
+        '/user/test',
+        parameters,
+        function (data) {
+            $(this).html(data);
+        }, 'json')
+        .done(function (response) {
+            console.log(response);
+        });
 
-    });
+});*/
 
 
     /*$('#recherche').on('input', function (e) {

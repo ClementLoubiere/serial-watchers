@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 /********************************************************/
 
+html, body {
+    overflow-x: hidden;
+}
+
+
 h1, h2, h3, p, a, ul, li{
     font-family: 'Lato', sans-serif;
     margin: 0;
@@ -12,6 +17,18 @@ a:hover{
     text-decoration: none;
 }
 
+/** couleur **/
+.red-text {
+    color: #f15c5c;
+}
+
+.yellow-text {
+    color: #ffcc4c;
+}
+
+.blue-text {
+    color: #19aad1;
+}
 
 
 /************************HEADER****************************/
@@ -23,19 +40,19 @@ a:hover{
 
 /***********Section1************/
 
+.top_section {
+    background: #f6f6f6;
+    position: relative;
+}
 
-/* Gestion du bouton scroll */
+.top_content {
+    position: relative;
+    padding-top: 50px;
+}
 
-
-
-/***********Section2************/
-
-
-
-/***********Section3************/
-
-
-
+.top_left_cont {
+    padding: 110px 0;
+}
 
 /************************FOOTER**************************/
 
