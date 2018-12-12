@@ -8,7 +8,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Playlist;
 use App\Form\PlaylistType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,9 +36,6 @@ class UserController extends AbstractController
 
         $result = json_decode($json, true);
 
-        //$poster_path = $result["poster_path"];
-        //$backdrop_path = $result["backdrop_path"];
-        //$overview = $result["results"][0]["original_name"];
         $tplArray = array();
 
         for ($i = 0; $i < count($result['results']); $i++) {

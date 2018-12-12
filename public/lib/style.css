@@ -42,10 +42,6 @@ a:hover{
 footer{
     background: #343a40;
     color: #FFFFFF;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
 }
 
 footer a{
