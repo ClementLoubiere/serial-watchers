@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Common\Collections\Collection;
 
 class SeriesController extends AbstractController
 {
@@ -72,7 +76,7 @@ class SeriesController extends AbstractController
 
         // itération des différents indices qu'on va récupérer
         $ficheArray[] = array(
-            'id' => $result["id"],
+            'id_api' => $result["id"],
             'name' => $result["original_name"],
             'description' => $result["overview"],
             'network' => $result["networks"][0]["name"],
@@ -103,5 +107,48 @@ class SeriesController extends AbstractController
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre
         ));
+    }
+    
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/series")
+     */
+    public function ajoutFav(Request $request,User $user)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+        $series = $repository->findAll();
+        
+        
+        if($request->isMethod('POST')) {
+            
+            $favori = $request->request->get('test');
+            
+            $serie = new Serie();
+            
+            $serie->setIdApi($favori);
+            
+            $idfavori = $repository->find($favori);
+            
+    
+            $user->getSeries()->add($idfavori);
+            
+            
+            $em->persist($user);
+            $em->flush();
+            
+            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
+        } else {
+            $this->addFlash('error', 'On a fait dla merde');
+        }
+        
+        return $this->render('series/index.html.twig',
+            [
+                'users' => $user,
+                'serie' => $series
+            ]);
     }
 }
