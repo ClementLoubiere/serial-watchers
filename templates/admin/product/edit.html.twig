@@ -2,18 +2,47 @@
 
 {% block body %}
     <h2>Ajout / Modification d'un produit</h2>
+    <hr class="p-3">
 
     {{ form_start(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.price) }}
-        {{ form_row(form.image) }}
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Nom du produit</label>
+        <div class="col-sm-9">
+            {{ form_row(form.title) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Description complète</label>
+        <div class="col-sm-9">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Prix unitaire</label>
+        <div class="col-sm-9">
+            {{ form_row(form.price) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Image d'illustration</label>
+        <div class="col-sm-9">
+            {{ form_row(form.image) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-3 col-form-label">Choisissez une catégorie</label>
+        <div class="col-sm-9">
+            {{ form_row(form.category) }}
+        </div>
+    </div>
 
         {% if original_image is not null %}
-            <p>
-                Actuellement :
-                <img src="{{ asset('lib/asset/' ~ original_image )}}" height="200px" alt="">
-            </p>
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-3 col-form-label">Image actuelle</label>
+                <div class="col-sm-9">
+                    <img src="{{ asset('lib/asset/' ~ original_image )}}" height="200px" alt="">
+                </div>
+            </div>
         {% endif %}
 
         <div class="text-right">

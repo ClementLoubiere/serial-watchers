@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,29 +21,38 @@ class ProductType extends AbstractType
                 'title',
                 TextType::class,
                 [
-                    'label' => 'Titre'
+                    'label' => false
                 ]
             )
             ->add(
                 'description',
                 TextareaType::class,
                 [
-                    'label' => 'Description'
+                    'label' => false
                 ]
             )
             ->add(
                 'price',
                 NumberType::class,
                 [
-                    'label' => 'Prix'
+                    'label' => false
                 ]
             )
             ->add(
                 'image',
                 FileType::class,
                 [
-                    'label' => 'Illustration',
+                    'label' => false,
                     'required' => false
+                ]
+            )
+            ->add(
+                'category',
+                ChoiceType::class,
+                [
+                    'label' => false,
+                    'choices' => array('coffret série' => 'coffret série', 'DVD / Blue-ray' => 'DVD / Blue-ray', 'goodies' => 'goodies'),
+                    'placeholder' => 'Choisir une option'
                 ]
             )
         ;

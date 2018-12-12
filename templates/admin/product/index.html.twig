@@ -2,34 +2,46 @@
 
 {% block body %}
     <h1>Gestion des produits</h1>
-    <p>
-        <a href="{{ path('app_admin_product_edit') }}">
+    <hr>
+    <p class="pb-3">
+        <a class="btn btn-success btn-sm" href="{{ path('app_admin_product_edit') }}">
             Ajouter un produit
         </a>
     </p>
-    <table class="table table-hover">
-        <tr class="table-dark">
-            <th>Id</th>
-            <th>Titre</th>
-            <th>Description du produit</th>
-            <th>Prix</th>
-            <th></th>
-            <th width="50px"></th>
-        </tr>
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Titre</th>
+                <th class="text-center">Catégorie</th>
+                <th class="text-center">Description du produit</th>
+                <th class="text-center">Prix</th>
+                <th width="50px">Modifier</th>
+                <th width="50px">Supprimer</th>
+            </tr>
+        </thead>
         {% for product in products %}
             <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.title }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }} €</td>
+                <td class="text-center pt-md-2">{{ product.id }}</td>
+                <td class="pt-md-2">{{ product.title }}</td>
+                <td class="pt-md-2">{{ product.category }}</td>
+                <td class="pt-md-2">{{ product.description }}</td>
+                <td class="text-center pt-md-2">{{ product.price }} €</td>
                 <td>
-                    <a href="{{ path('app_admin_product_edit', {id:product.id}) }}" class="btn btn-primary">Modifier</a>
+                    <a href="{{ path('app_admin_product_edit', {id:product.id}) }}" >
+                        <div class="text-center pt-md-2">
+                            <i class="far fa-edit"></i>
+                        </div>
+                    </a>
                 </td>
                 <td>
-                    <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-danger">Supprimer</a>
+                    <div class="text-center">
+                    <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></a>
+                    </div>
                 </td>
             </tr>
         {% endfor %}
     </table>
+
 
 {% endblock body %}

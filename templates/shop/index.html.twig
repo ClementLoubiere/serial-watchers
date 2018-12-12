@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>hello le shop</h1>
+    {{ dump(products) }}
+
+    {% for product in products  %}
+        {{ product.category }}
+    {% endfor %}
+
+{% endblock %}
