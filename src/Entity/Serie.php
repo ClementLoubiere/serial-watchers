@@ -28,15 +28,10 @@
         private $episodes;
 
         /**
-         * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="series")
+         * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="series")
+         * @ORM\JoinColumn(nullable=false)
          */
-        private $users;
-
-        
-        public function __construct()
-        {
-            $this->users = new ArrayCollection();
-        }
+        private $user;
     
     
         public function getId(): ?int
@@ -55,26 +50,18 @@
         
             return $this;
         }
-    
-        /**
-         * @return mixed
-         */
-        public function getUsers()
+
+        public function getUser(): ?User
         {
-            return $this->users;
+            return $this->user;
         }
-    
-        /**
-         * @param mixed $users
-         * @return Serie
-         */
-        public function setUsers($users)
+
+        public function setUser(?User $user): self
         {
-            $this->users = $users;
+            $this->user = $user;
+
             return $this;
         }
-    
-        
         
 
         /**

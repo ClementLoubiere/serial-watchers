@@ -45,7 +45,8 @@ class SeriesController extends AbstractController
                 'img' => $baseURI.$result["results"][$i]["poster_path"]
             );
         }
-    
+
+        /*
         // section enregistrement de l'id api avec l'utilisateur dans la bdd
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Serie::class);
@@ -68,11 +69,13 @@ class SeriesController extends AbstractController
         } else {
             $this->addFlash('error', 'On a fait dla merde');
         }
+        */
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
         ));
+
     }
 
     /**
@@ -133,14 +136,27 @@ class SeriesController extends AbstractController
     }
     
     /**
-     * @param Request $request
-     * @param User $user
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/series")
      */
-    public function ajoutFav()
+    public function ajoutFav(Request $request)
     {
-        
-    
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->getUser();
+
+            $serie = new Serie();
+
+            $serie->setIdApi($request->request->get('id'));
+
+            $serie->setUser($user);
+
+
+            $em->persist($serie);
+            $em->flush();
+        }
+
+        return new JsonResponse($serie);
     }
 }

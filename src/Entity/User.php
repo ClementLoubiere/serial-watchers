@@ -65,12 +65,10 @@
         private $plainPassword;
 
         /**
-         * @var Collection
-         * @ORM\ManyToMany(targetEntity="App\Entity\Serie", mappedBy="users")
+         * @ORM\OneToMany(targetEntity="App\Entity\Serie", mappedBy="user")
          */
         private $series;
-    
-  
+
         public function __construct()
         {
             $this->series = new ArrayCollection();
@@ -169,39 +167,38 @@
             $this->plainPassword = $plainPassword;
             return $this;
         }
-    
+
         /**
-         * @return Collection
+         * @return Collection|Serie[]
          */
         public function getSeries(): Collection
         {
             return $this->series;
         }
-    
-        /**
-         * @param Collection $series
-         * @return User
-         */
-        public function setSeries(Collection $series): User
+
+        public function addSeries(Serie $series): self
         {
-            $this->series = $series;
+            if (!$this->series->contains($series)) {
+                $this->series[] = $series;
+                $series->setUser($this);
+            }
+
             return $this;
         }
-        
-        
-        
-        
-        public function addSerie(Serie $serie)
+
+        public function removeSeries(Serie $series): self
         {
-          $this->series->add($serie);
-          
-          $serie->setUsers($this);
+            if ($this->series->contains($series)) {
+                $this->series->removeElement($series);
+                // set the owning side to null (unless already changed)
+                if ($series->getUser() === $this) {
+                    $series->setUser(null);
+                }
+            }
+
+            return $this;
         }
-        
-        
-        
-        
-        
+
         /**
          * String representation of object
          * @link https://php.net/manual/en/serializable.serialize.php
