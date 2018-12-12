@@ -1,10 +1,9 @@
 <?php
     
     namespace App\Entity;
-
     use Doctrine\Common\Collections\ArrayCollection;
-    use Doctrine\Common\Collections\Collection;
     use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\Collection;
     /**
      * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
      */
@@ -29,12 +28,11 @@
         private $episodes;
 
         /**
-         * @var Collection
-         * @ORM\ManyToOne(targetEntity="User", inversedBy="series")
+         * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="series")
          */
         private $users;
-    
 
+        
         public function __construct()
         {
             $this->users = new ArrayCollection();
@@ -58,17 +56,25 @@
             return $this;
         }
     
-        public function getUsers(): Collection
+        /**
+         * @return mixed
+         */
+        public function getUsers()
         {
             return $this->users;
         }
     
-        public function setUsers(Collection $users): Serie
+        /**
+         * @param mixed $users
+         * @return Serie
+         */
+        public function setUsers($users)
         {
             $this->users = $users;
-        
             return $this;
         }
+    
+        
         
 
         /**

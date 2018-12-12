@@ -15,7 +15,7 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series")
      */
-    public function api()
+    public function api(Request $request)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -45,10 +45,33 @@ class SeriesController extends AbstractController
                 'img' => $baseURI.$result["results"][$i]["poster_path"]
             );
         }
+    
+        // section enregistrement de l'id api avec l'utilisateur dans la bdd
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+    
+    
+        if($request->isMethod('POST')) {
+        
+            $favori = $request->request->get('test');
+        
+            $serie = new Serie();
+        
+            $serie->setIdApi($favori);
+            
+            $serie->setUsers($this->getUser());
+            
+            $em->persist($serie);
+            $em->flush();
+        
+            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
+        } else {
+            $this->addFlash('error', 'On a fait dla merde');
+        }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
-            'array' => $tplArray
+            'array' => $tplArray,
         ));
     }
 
@@ -110,40 +133,14 @@ class SeriesController extends AbstractController
     }
     
     /**
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/series")
      */
-    public function ajoutFav(Request $request,User $user)
+    public function ajoutFav()
     {
         
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
-        $series = $repository->findAll();
-        
-        
-        if($request->isMethod('POST')) {
-            // on appelle le name du $_POST['']
-            $favori = $request->request->get('test');
-
-            $serie = new Serie();
-            
-            $serie->setIdApi($favori);
-            
-            $idfavori = $repository->find($favori);
-
-            $user->getSeries()->add($idfavori);
-
-            $em->persist($user);
-            $em->flush();
-            
-            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
-        } else {
-            $this->addFlash('error', 'On a fait dla merde');
-        }
-        
-        return $this->render('series/index.html.twig',
-            [
-                'users' => $user,
-                'serie' => $series
-            ]);
+    
     }
 }

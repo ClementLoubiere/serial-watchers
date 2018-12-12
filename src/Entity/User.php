@@ -5,6 +5,7 @@
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Validator\Constraints as Assert;
     use Doctrine\Common\Collections\Collection;
+
     /**
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
@@ -65,15 +66,17 @@
 
         /**
          * @var Collection
-         * @ORM\OneToMany(targetEntity="Serie", mappedBy="users")
+         * @ORM\ManyToMany(targetEntity="App\Entity\Serie", mappedBy="users")
          */
         private $series;
-
+    
+  
         public function __construct()
         {
             $this->series = new ArrayCollection();
         }
-        
+    
+    
         public function getId(): ?int
         {
             return $this->id;
@@ -170,7 +173,7 @@
         /**
          * @return Collection
          */
-        public function getSeries() : Collection
+        public function getSeries(): Collection
         {
             return $this->series;
         }
@@ -179,18 +182,22 @@
          * @param Collection $series
          * @return User
          */
-        public function setSeries(Collection $series) : User
+        public function setSeries(Collection $series): User
         {
             $this->series = $series;
             return $this;
         }
-    
+        
+        
+        
+        
         public function addSerie(Serie $serie)
         {
           $this->series->add($serie);
           
-          $serie->setIdApi($this);
+          $serie->setUsers($this);
         }
+        
         
         
         
