@@ -64,7 +64,8 @@
         private $plainPassword;
 
         /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Serie", mappedBy="users")
+         * @var Collection
+         * @ORM\OneToMany(targetEntity="Serie", mappedBy="users")
          */
         private $series;
 
@@ -188,7 +189,7 @@
         {
           $this->series->add($serie);
           
-          $serie->setUsers($this);
+          $serie->setIdApi($this);
         }
         
         

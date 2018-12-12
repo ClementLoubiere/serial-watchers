@@ -110,9 +110,6 @@ class SeriesController extends AbstractController
     }
     
     /**
-     * @param Request $request
-     * @param User $user
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/series")
      */
     public function ajoutFav(Request $request,User $user)
@@ -124,19 +121,17 @@ class SeriesController extends AbstractController
         
         
         if($request->isMethod('POST')) {
-            
+            // on appelle le name du $_POST['']
             $favori = $request->request->get('test');
-            
+
             $serie = new Serie();
             
             $serie->setIdApi($favori);
             
             $idfavori = $repository->find($favori);
-            
-    
+
             $user->getSeries()->add($idfavori);
-            
-            
+
             $em->persist($user);
             $em->flush();
             

@@ -48,13 +48,15 @@
                                 <a href="{{ path('app_series_ficheserie', {id: data.id}) }}" class="btn btn-sm btn-outline-secondary">
                                     Voir
                                 </a>
-                                {% for test in serie.users %}
+                                {% for test in users.addSerie() %}
                                 <form method="post">
-                                    <input type="hidden" name="test" id="refSerie" value="{{ test.id }}">
+                                    <input type="hidden" name="test" id="refSerie" value="">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
                                         Ajouter
                                     </button>
                                 </form>
+                                {% else %}
+                                    <p>Aucune série n'est affiché</p>
                                 {% endfor %}
                             </div>
                             <small class="text-muted">
@@ -63,8 +65,6 @@
                         </div>
                     </div>
                 </div>
-            {% else %}
-                <p>Aucune série n'est affiché</p>
             {% endfor %}
         </div>
     </div>
