@@ -13,9 +13,13 @@ html {
 
 body {
     height: 100%;
-    margin: 0 auto;
+    margin: 0 !important;
 }
 
+.container {
+
+    margin: 0 !important;
+}
 /** ======================  WRAPPER DASHBOARD UTILISATEUR  ==============================**/
 #wrapper {
     display: -webkit-box;
@@ -138,6 +142,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 /** ======================  sidebar ==============================**/
 .sidebar {
+    margin: 0 !important;
     width: 90px !important;
     background-color: #212529;
     min-height: calc(100vh - 56px);
