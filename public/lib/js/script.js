@@ -1,13 +1,15 @@
 
 $(document).ready(function(){
 
-    $("#section1 .headerBot i").click(function(e) {
+    $('#refSerie').click(function (e) {
         e.preventDefault();
-        $("html, body").animate({
-            scrollTop: $("#section3").offset().top
-        }, 2000)
-    });
-    window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-    }
+        let id = $(this).data('id');
+        let parameters = {'id' : id};
+
+        $.post('/series',
+            parameters,
+            function(retour){
+            $(this).html(retour);
+            },'json');
+    })
 });

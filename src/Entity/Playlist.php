@@ -38,32 +38,6 @@ class Playlist extends AbstractController
     private $publicationDate;
 
 
-    /**
-     * @var Serie
-     * @ORM\ManyToOne(targetEntity="Serie", inversedBy="playlist")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $serie;
-
-    /**
-     * @return Serie
-     */
-    public function getSerie(): ?Serie
-    {
-        return $this->serie;
-    }
-
-    /**
-     * @param Serie $serie
-     * @return Playlist
-     */
-    public function setSerie(Serie $serie): Playlist
-    {
-        $this->serie = $serie;
-        return $this;
-    }
-
-
     public function getId(): ?int
     {
         return $this->id;
