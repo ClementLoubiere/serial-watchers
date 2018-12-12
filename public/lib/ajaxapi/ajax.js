@@ -1,8 +1,8 @@
-$(document).ready(function (){
-
+$(document).ready(function (e){
+    e.preventDefault();
     // appel ajax
 
-    $('#recherche').on('input', function () {
+    /*$('#recherche').on('input', function () {
 
         let research = $(this).val();
 
@@ -17,7 +17,7 @@ $(document).ready(function (){
             "data": "{}"
         };*/
 
-        $.post(
+        /*$.post(
             '/user/test',
             parameters,
             function (data) {
@@ -27,7 +27,7 @@ $(document).ready(function (){
                 console.log(response);
             });
 
-    });
+    });*/
 
 
     /*$('#recherche').on('input', function (e) {

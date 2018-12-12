@@ -77,18 +77,7 @@
             </a>
             <ul class="navbar-nav navbar-collapse">
                 {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
-                {% if app.user is null %}
-                    <li class="nav-item">
-                        <a class="nav-link">
-                            Accueil
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="#series">
-                            Premier pas
-                        </a>
-                    </li>
-                {% else %}
+                {% if app.user is not null %}
                 {#------ PROFIL ------#}
                 <li class="nav-item active">
                     <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
@@ -145,7 +134,10 @@
 
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
-<div class="mt-2 container">
+
+{# si on n'est pas sur la homepage, on affiche la class container#}
+
+<div class="{% if app.request.attributes.get('_route') != 'app_index_index' %}mt-2 container{% endif %}">
     {# affichage des messages flash #}
     {% for type, flashes in app.session.flashBag.all %}
         {% for message in flashes %}
@@ -160,6 +152,10 @@
     {% endfor %}
     {% block body %}{% endblock %}
 </div>
+
+
+
+
 {#---------------------- DEBUT FOOTER ---------------------#}
 
 <!-- Footer -->
