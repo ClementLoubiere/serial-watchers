@@ -30,11 +30,11 @@ class Episode
     private $numero_episode;
 
     /**
-     * @var Season
-     * @ORM\ManyToOne(targetEntity="Season", inversedBy="listEpisodes")
-     * renvoie a une saison
+     * @var Serie
+     * @ORM\ManyToOne(targetEntity="Serie", inversedBy="episodes")
+     * renvoi a une serie
      */
-    private $oneSeason;
+    private $serie;
 
     public function getId(): ?int
     {
@@ -66,22 +66,26 @@ class Episode
     }
 
     /**
-     * @return Season
+     * @return Serie
      */
-    public function getOneSeason(): Season
+    public function getSerie(): Serie
     {
-        return $this->oneSeason;
+        return $this->serie;
     }
 
     /**
-     * @param Season $oneSeason
+     * @param Serie $serie
      * @return Episode
      */
-    public function setOneSeason(Season $oneSeason): Episode
+    public function setSerie(Serie $serie): Episode
     {
-        $this->oneSeason = $oneSeason;
+        $this->serie = $serie;
         return $this;
     }
+
+
+
+
 
 
 

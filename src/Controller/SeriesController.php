@@ -3,13 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
-use App\Entity\User;
-use App\Form\SerieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\Collection;
 
 class SeriesController extends AbstractController
 {
@@ -25,6 +21,9 @@ class SeriesController extends AbstractController
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
+
+        // page de résultat
+        $page = "1";
 
         //appel à l'api
         $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
@@ -46,6 +45,15 @@ class SeriesController extends AbstractController
                 'img' => $baseURI.$result["results"][$i]["poster_path"]
             );
         }
+
+        /*$per = [$page];
+
+        for ($per[0]; $per[0] < 10; $per[0]++){
+            $per[] = array(
+                'page' => $result['page']
+            );
+        }*/
+
 
         /*
         // section enregistrement de l'id api avec l'utilisateur dans la bdd
@@ -84,7 +92,8 @@ class SeriesController extends AbstractController
         
             $serie
                 ->setUser($user)
-                ->setIdApi($fun);
+                ->setIdApi($fun)
+            ;
         
             $em->persist($serie);
             $em->flush();
@@ -93,6 +102,7 @@ class SeriesController extends AbstractController
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
+            //'page' => $per[0]
         ));
 
     }

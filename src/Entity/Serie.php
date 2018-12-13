@@ -22,7 +22,7 @@
         private $id_api;
 
         /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="nb_episodes")
+         * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="serie")
          */
         private $episodes;
 
@@ -31,16 +31,6 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $user;
-    
-        /**
-         * Serie constructor.
-         * @param $user
-         *
-        public function __construct($user)
-        {
-            $this->user = $user;
-        }
-         */
     
     
         public function getId(): ?int
