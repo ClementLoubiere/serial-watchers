@@ -163,7 +163,6 @@ class SeriesController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Serie::class);
         $series = $repository->findBy(['user' => $user]);
         
-        
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
     
@@ -173,25 +172,27 @@ class SeriesController extends AbstractController
         $baseURI = "http://image.tmdb.org/t/p/". $size;
         
         $varId = $repository->findBy(['idApi' => $serie]);
+
+        $json_data = [];
+        $i = 0;
         
         foreach ($varId as $test) {
             $var = $test['idApi'];
-    
+
             //appel à l'api
             $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
-    
-    
-            $json_data = [];
-            $i = 0;
-    
+
+
             foreach ($varApi as $info) {
                 $json_table = json_decode($info, true);
-                $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
-                $json_data[$i]["name"] = $json_table['name'];
+                $json_data[$i] = [];
+                $json_data["results"][$i]["poster_path"] = $baseURI . $json_table["results"][$i]['poster_path'];
+                $json_data["results"][$i]["name"] = $json_table["results"][$i]['name'];
                 $i++;
             }
         }
-    
+
+
         
         
         return $this->render('series/mesSeries.html.twig',
