@@ -1,6 +1,7 @@
 <?php
     
     namespace App\Entity;
+    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\Collection;
     /**
@@ -19,7 +20,7 @@
          * @ORM\Column(type="string", length=255)
          * @ORM\JoinColumn(nullable=false)
          */
-        private $id_api;
+        private $idApi;
 
         /**
          * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="nb_episodes")
@@ -31,16 +32,12 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $user;
-    
-        /**
-         * Serie constructor.
-         * @param $user
-         *
-        public function __construct($user)
+        
+        public function __construct()
         {
-            $this->user = $user;
+            $this->user = new ArrayCollection();
         }
-         */
+        
     
     
         public function getId(): ?int
@@ -50,12 +47,12 @@
     
         public function getIdApi(): ?string
         {
-            return $this->id_api;
+            return $this->idApi;
         }
     
-        public function setIdApi(string $id_api): self
+        public function setIdApi(string $idApi): self
         {
-            $this->id_api = $id_api;
+            $this->idApi = $idApi;
         
             return $this;
         }
