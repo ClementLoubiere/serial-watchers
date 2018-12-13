@@ -24,12 +24,14 @@ class Season
     private $numero_season;
 
     /**
+     * @var Serie
      * @ORM\ManyToOne(targetEntity="Serie", inversedBy="listSeasons")
      * renvoie à une serie
      */
     private $oneSerie;
 
     /**
+     * @var Episode
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="oneSeason")
      * liste des episodes
      */
@@ -51,4 +53,42 @@ class Season
 
         return $this;
     }
+
+    /**
+     * @return Serie
+     */
+    public function getOneSerie(): Serie
+    {
+        return $this->oneSerie;
+    }
+
+    /**
+     * @param Serie $oneSerie
+     * @return Season
+     */
+    public function setOneSerie(Serie $oneSerie): Season
+    {
+        $this->oneSerie = $oneSerie;
+        return $this;
+    }
+
+    /**
+     * @return Episode
+     */
+    public function getListEpisodes(): Episode
+    {
+        return $this->listEpisodes;
+    }
+
+    /**
+     * @param Episode $listEpisodes
+     * @return Season
+     */
+    public function setListEpisodes(Episode $listEpisodes): Season
+    {
+        $this->listEpisodes = $listEpisodes;
+        return $this;
+    }
+
+
 }

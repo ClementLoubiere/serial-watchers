@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,22 +20,30 @@ class Serie
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     *
+     * @ORM\Column(type="integer")
      * id de la serie de l'api
      */
     private $idApiSerie;
 
     /**
+     * @var Season
      * @ORM\OneToMany(targetEntity="Season", mappedBy="oneSerie")
      * liste des saisons
      */
     private $listSeasons;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="users")
-     * plusieurs series pour n utilisateur
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="series")
+     * plusieurs series pour n utilisateurs
      */
-    private $series;
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,17 +62,45 @@ class Serie
         return $this;
     }
 
-
-    public function getListSeasons()
+    /**
+     * @return Season
+     */
+    public function getListSeasons(): Season
     {
         return $this->listSeasons;
     }
 
-
-    public function setListSeasons($listSeasons)
+    /**
+     * @param Season $listSeasons
+     * @return Serie
+     */
+    public function setListSeasons(Season $listSeasons): Serie
     {
         $this->listSeasons = $listSeasons;
         return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param Collection $users
+     * @return Serie
+     */
+    public function setUsers(Collection $users): Serie
+    {
+        $this->users = $users;
+        return $this;
+    }
+
+    public function __toString()
+    {
+        $this->idApiSerie;
     }
 
 

@@ -30,6 +30,7 @@ class Episode
     private $numero_episode;
 
     /**
+     * @var Season
      * @ORM\ManyToOne(targetEntity="Season", inversedBy="listEpisodes")
      * renvoie a une saison
      */
@@ -63,5 +64,25 @@ class Episode
 
         return $this;
     }
+
+    /**
+     * @return Season
+     */
+    public function getOneSeason(): Season
+    {
+        return $this->oneSeason;
+    }
+
+    /**
+     * @param Season $oneSeason
+     * @return Episode
+     */
+    public function setOneSeason(Season $oneSeason): Episode
+    {
+        $this->oneSeason = $oneSeason;
+        return $this;
+    }
+
+
 
 }

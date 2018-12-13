@@ -1,6 +1,7 @@
 <?php
     namespace App\Entity;
     use Doctrine\Common\Collections\ArrayCollection;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -8,6 +9,8 @@
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+     * @UniqueEntity(fields={"email"},
+     *     message="Il existe déjà un utilisateur avec cet email")
      */
     class User implements UserInterface, \Serializable
     {
@@ -40,8 +43,9 @@
         private $firstname;
 
         /**
-         * @ORM\Column(type="string", length=100)
+         * @ORM\Column(type="string", length=255, unique=true)
          * @Assert\NotBlank(message="L'email est obligatoire")
+         * @Assert\Email(message="L'email n'est pas valide")
          */
         private $email;
 
@@ -56,6 +60,7 @@
         private $gender;
 
         /**
+         * @var \DateTime
          * @ORM\Column(type="datetime")
          */
         private $birthdate;
@@ -74,10 +79,16 @@
         private $plainPassword;
 
         /**
-         * @ORM\ManyToMany(targetEntity="Serie", mappedBy="series")
+         * @var Collection
+         * @ORM\ManyToMany(targetEntity="Serie", mappedBy="users")
          * plusieurs utilisateurs pour n series
          */
-        private $users;
+        private $series;
+
+        public function __construct()
+        {
+            $this->series = new ArrayCollection();
+        }
 
         public function getId(): ?int
         {
@@ -190,6 +201,26 @@
         }
 
         /**
+         * @return Collection
+         */
+        public function getSeries(): Collection
+        {
+            return $this->series;
+        }
+
+        /**
+         * @param Collection $series
+         * @return User
+         */
+        public function setSeries(Collection $series): User
+        {
+            $this->series = $series;
+            return $this;
+        }
+
+
+
+        /**
          * Returns the roles granted to the user.
          *
          *     public function getRoles()
@@ -288,6 +319,8 @@
         {
             return $this->pseudo;
         }
+
+
 
         /*
         public function addSerie(Serie $serie)

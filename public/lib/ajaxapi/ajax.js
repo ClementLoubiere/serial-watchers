@@ -1,54 +1,46 @@
-$(document).ready(function (e){
-    e.preventDefault();
-    // appel ajax
-
-    /*$('#recherche').on('input', function () {
-
-        let research = $(this).val();
-
-        let parameters = {'research': research};
-
-        /*let settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://api.themoviedb.org/3/tv/popular?page=1&language=en-US&api_key=f9966f8cc78884142eed6c6d4710717a",
-            "method": "GET",
-            "headers": {},
-            "data": "{}"
-        };*/
-
-        /*$.post(
-            '/user/test',
-            parameters,
-            function (data) {
-                $(this).html(data);
-            }, 'json')
-            .done(function (response) {
-                console.log(response);
-            });
-
-    });*/
+$(document).ready(function (){
 
 
-    /*$('#recherche').on('input', function (e) {
+    $("#refSerie").click(function (e) {
         e.preventDefault();
-        // on test la validité du champ
-        console.log('suis-je une champ ?');
-        // on récupère la valeur du champ
-        let research = $(this).val();
-        // on transmet la variable dans le get
-        let parameters = {'rechercher': research};
+        let id = $(this).data('id');
+        let parameters = {"id": id};
 
-        // appel ajax
-        $.post(
-            '/user/test',
+        $.post("/series",
             parameters,
             function (retour) {
                 $(this).html(retour);
-            }
-        , 'json');
+            }, 'json');
+    });
 
-    });*/
+    $('.btn-addSerie').on('click' , function(e) {
+        e.preventDefault();
+
+        /*$.ajax(
+            "series?id=" + $(this).data('id') )
+            .done(function () {
+                alert('success');
+            })
+            .fail(function () {
+                alert('error');
+            });*/
+        let id = $(this).data('id');
+
+        $.ajax({
+           url: "?id=" + id,
+            dataType: 'json',
+            success: function (res) {
+               console.log(res);
+
+            },
+            fail: function (err) {
+                console.log(err);
+            }
+        });
+
+
+
+    });
 
 
 
