@@ -48,9 +48,12 @@
                                 <a href="{{ path('app_series_ficheserie', {id: data.id}) }}" class="btn btn-sm btn-outline-secondary">
                                     Voir
                                 </a>
-                                <a href="#" class="btn btn-sm btn-outline-secondary">
-                                    Ajouter
-                                </a>
+                                <form method="post">
+                                    <input type="hidden" value="{{ data.id }}" name="fav">
+                                    <button type="submit"  class="btn btn-sm btn-outline-secondary btn-addSerie">
+                                        Ajouter
+                                    </button>
+                                </form>
                             </div>
                             <small class="text-muted">
                                 {{ data.datediff|date('d/m/Y') }}

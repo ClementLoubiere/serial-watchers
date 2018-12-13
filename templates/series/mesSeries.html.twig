@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Appel de l'api</h1>
+
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <label for="annee">Annee</label>
+                    <select name="annee" class="custom-select">
+                        <option selected>Aucun</option>
+                        <option value="1">2018</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="popularite">Popularite</label>
+                    <select name="popularite" class="custom-select">
+                        <option selected>Aucun</option>
+                        <option value="1">Popularite descendante</option>
+                        <option value="2">Popularite ascendante</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="genre">Genre</label>
+                    <select name="genre" class="custom-select">
+                        <option selected>Aucun</option>
+                        <option value="action">Action</option>
+                        <option value="sci">Sci-fi et fantastique</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="row mt-4">
+            {% for series in serie %}
+                <li>{{ series.idApi }}</li>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

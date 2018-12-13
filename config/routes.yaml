@@ -5,3 +5,4 @@
 # route de la page de déconnexion
 app_security_logout:
   path: /deconnexion
+

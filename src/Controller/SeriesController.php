@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Common\Collections\Collection;
 
 class SeriesController extends AbstractController
 {
     /**
      * @Route("/series")
      */
-    public function api()
+    public function api(Request $request)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -42,10 +46,56 @@ class SeriesController extends AbstractController
             );
         }
 
+        /*
+        // section enregistrement de l'id api avec l'utilisateur dans la bdd
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+    
+    
+        if($request->isMethod('POST')) {
+        
+            $favori = $request->request->get('test');
+        
+            $serie = new Serie();
+        
+            $serie->setIdApi($favori);
+            
+            $serie->setUsers($this->getUser());
+            
+            $em->persist($serie);
+            $em->flush();
+        
+            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
+        } else {
+            $this->addFlash('error', 'On a fait dla merde');
+        }
+        */
+    
+        if($request->isMethod('POST')) {
+            /*if ($request->isXmlHttpRequest()) { */
+        
+            $user = $this->getUser();
+        
+            $em = $this->getDoctrine()->getManager();
+        
+            $serie = new Serie();
+            $fun = $request->request->get('fav');
+        
+            $serie
+                ->setUser($user)
+                ->setIdApi($fun);
+        
+            $em->persist($serie);
+            $em->flush();
+            
+            $this->addFlash('success', 'Série ajoutée');
+        }
+
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
-            'array' => $tplArray
+            'array' => $tplArray,
         ));
+
     }
 
     /**
@@ -72,7 +122,7 @@ class SeriesController extends AbstractController
 
         // itération des différents indices qu'on va récupérer
         $ficheArray[] = array(
-            'id' => $result["id"],
+            'id_api' => $result["id"],
             'name' => $result["original_name"],
             'description' => $result["overview"],
             'network' => $result["networks"][0]["name"],
@@ -103,5 +153,52 @@ class SeriesController extends AbstractController
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre
         ));
+    }
+    
+    /**
+     * @Route("/mesSeries/{id}")
+     */
+    public function afficherFav(User $user)
+    {
+        $repository = $this->getDoctrine()->getRepository(Serie::class);
+        $serie = $repository->findBy(['user' => $user]);
+        
+        //La clé API
+        $api = "f9966f8cc78884142eed6c6d4710717a";
+    
+        // La taille de l'image
+        $size = "w342";
+        // concaténer avec l'url de l'image
+        $baseURI = "http://image.tmdb.org/t/p/". $size;
+    
+        //appel à l'api
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
+    
+        // convertit l'api de json en tableau
+        $result = json_decode($json, true);
+    
+        // initialisation d'une variable tableau
+        $tplArray = array();
+    
+        
+        // boucle du nombre de résultat à partir de tableau $results à l'indice "results"
+            for ($i = 0; $i < count($result['results']); $i++) {
+        
+                // itération des différents indices qu'on va récupérer
+        
+                $tplArray[] = array(
+                    'id' => $result["results"][$i]["id"],
+                    'name' => $result["results"][$i]["original_name"],
+                    'datediff' => $result["results"][$i]["first_air_date"],
+                    'description' => $result["results"][$i]["overview"],
+                    'img' => $baseURI . $result["results"][$i]["poster_path"]
+                );
+            }
+        
+        return $this->render('series/mesSeries.html.twig',
+            [
+               'user' => $user,
+                'serie' => $serie
+            ]);
     }
 }
