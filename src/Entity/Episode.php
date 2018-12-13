@@ -13,34 +13,55 @@ class Episode
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * id de la table episode
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Serie", inversedBy="episodes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=200)
+     * titre de l'episode
      */
-    private $nb_episodes;
-    
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     * numero de l'episode d'une saison dans une serie
+     */
+    private $numero_episode;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Season", inversedBy="listEpisodes")
+     * renvoie a une saison
+     */
+    private $oneSeason;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNbEpisodes(): ?Serie
+    public function getTitle(): ?string
     {
-        return $this->nb_episodes;
+        return $this->title;
     }
 
-    public function setNbEpisodes(?Serie $nb_episodes): self
+    public function setTitle(string $title): self
     {
-        $this->nb_episodes = $nb_episodes;
+        $this->title = $title;
 
         return $this;
     }
 
+    public function getNumeroEpisode(): ?string
+    {
+        return $this->numero_episode;
+    }
 
-    
+    public function setNumeroEpisode(string $numero_episode): self
+    {
+        $this->numero_episode = $numero_episode;
+
+        return $this;
+    }
 
 }

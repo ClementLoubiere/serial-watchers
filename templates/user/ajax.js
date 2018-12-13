@@ -7,7 +7,7 @@ $(document).ready(function () { //je prend mon bouton
 //         //3-dans laquelle j'effectue un envoie ajax
 // console.log("j'affiche bien dans le formulaire")
 
-    let url = "http://api.themoviedb.org/"
+    let url = "http://api.themoviedb.org/";
     let key = 'f9966f8cc78884142eed6c6d4710717a';
 
     $.ajax({
