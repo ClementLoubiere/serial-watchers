@@ -33,7 +33,7 @@
             page connecté en tant qu'admin #}
 
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="#">
-                LOGO
+                <img src="/lib/asset/serial-watcher-logoVlight.png" alt="tv" style="width:100%">
             </a>
             <a class="navbar-brand">
                 Admin
@@ -71,11 +71,11 @@
     {#------------------------------ INSCRIPTION ------------------------------#}
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid navbar-nav">
+        <div class="container-fluid navbar-nav ">
             <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="{{ path('app_index_index') }}">
-                LOGO
+                <img src="/lib/asset/serial-watcher-logoVlight.png" alt="tv" style="width:200%">
             </a>
-            <ul class="navbar-nav navbar-collapse">
+            <ul class="navbar-nav navbar-collapse col-sm-5 ">
                 {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
                 {% if app.user is not null %}
                 {#------ PROFIL ------#}
@@ -98,7 +98,26 @@
             </ul>
 
             {% if app.user is null %}
-            <ul class="navbar-nav">
+
+            <ul class="navbar-nav navbar-collapse col-sm-4" id="navbar-index">
+                {#<li class="nav-item">#}
+                {#<a href="#about" class="nav-link">#}
+                {#Accueil#}
+                {#</a>#}
+                {#<a href="#team" class="nav-link">#}
+                {#Les Séries#}
+                {#</a>#}
+                {#<a href="#team" class="nav-link">#}
+                {#Communauté#}
+                {#</a>#}
+                {#</li>#}
+                {#<li class="nav-item">#}
+                {#<a href="{{ path('app_security_register') }}" class="nav-link">#}
+                {#La boutique#}
+                {#</a>#}
+                {#</li>#}
+                {#</ul>#}
+                <ul class="navbar-nav" id="navbar-index">
                 <li class="nav-item">
                     <a href="{{ path('app_security_register') }}" class="nav-link">
                         Inscription

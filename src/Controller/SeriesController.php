@@ -101,7 +101,9 @@ class SeriesController extends AbstractController
         return $this->render('series/serie.html.twig', array(
             'fiche' => $ficheArray,
             'nb_season' => $nb_season,
-            'nb_genre' => $nb_genre
+            'nb_genre' => $nb_genre,
         ));
     }
+
+
 }

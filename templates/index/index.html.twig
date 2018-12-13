@@ -1,78 +1,197 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('lib/css/index.css') }}">
+{% endblock %}
+
+
 {% block body %}
     {% if app.user is null %}
-        <section class="top_section">
-            <div class="container">
-                <div class="top_content">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="top_left_cont">
-                                <h2 class="display-4 font-weight-bold my-1">Découvrez et suivez vos séries en ligne</h2>
-                                <p class="lead my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <a href="#" class="btn btn-outline-info">Voir nos services</a>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
 
+        <main id="main">
+
+            <!--==========================
+              About Section
+            ============================-->
+            <section id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h2>Regarder vos séries</h2>
+                            <p>Sed nam ut dolor qui repellendus iusto odit. Possimus inventore eveniet accusamus error
+                                amet eius aut
+                                accusantium et. Non odit consequatur repudiandae sequi ea odio molestiae. Enim possimus
+                                sunt inventore in
+                                est ut optio sequi unde.</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3>Where</h3>
+                            <p>Downtown Conference Center, New York</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <h3>When</h3>
+                            <p>Monday to Wednesday<br>10-12 December</p>
                         </div>
                     </div>
                 </div>
-            </div>
-    </section>
-    <!-- Section: Features v.1 -->
-    <section class="text-center my-5">
+            </section>
 
-        <!-- Section heading -->
-        <h2 class="font-weight-bold my-5">Why is it so great?</h2>
-        <!-- Section description -->
-        <p class="lead grey-text w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
 
-        <!-- Grid row -->
-        <div class="row">
+            <section class="top_section">
+                <div class="container">
+                    <div class="top_content">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="top_left_cont">
+                                    <h2 class="display-4 font-weight-bold my-1">Découvrez et suivez vos séries en ligne</h2>
+                                    <p class="lead my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                        eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                    <a href="#" class="btn btn-outline-info">Voir nos services</a>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
 
-            <!-- Grid column -->
-            <div class="col-md-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Features v.1 -->
+            <section class="text-center my-5">
+                <!-- Section heading -->
+                <h2 class="font-weight-bold my-5">Why is it so great?</h2>
+                <!-- Section description -->
+                <p class="lead grey-text w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-4">
 
-                <i class="fas fa-user-plus fa-3x red-text"></i>
-                <h5 class="font-weight-bold my-4">Inscrivez-vous</h5>
-                <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.
-                </p>
+                        <i class="fas fa-user-plus fa-3x red-text"></i>
+                        <h5 class="font-weight-bold my-4">Inscrivez-vous</h5>
+                        <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.
+                        </p>
 
-            </div>
-            <!-- Grid column -->
+                    </div>
+                    <!-- Grid column -->
 
-            <!-- Grid column -->
-            <div class="col-md-4">
+                    <!-- Grid column -->
+                    <div class="col-md-4">
 
-                <i class="fas fa-download fa-3x yellow-text"></i>
-                <h5 class="font-weight-bold my-4">Suivez vos séries favorites</h5>
-                <p class="grey-text mb-md-0 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit
-                    maiores aperiam minima assumenda deleniti hic.
-                </p>
+                        <i class="fas fa-download fa-3x yellow-text"></i>
+                        <h5 class="font-weight-bold my-4">Suivez vos séries favorites</h5>
+                        <p class="grey-text mb-md-0 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit
+                            maiores aperiam minima assumenda deleniti hic.
+                        </p>
 
-            </div>
-            <!-- Grid column -->
+                    </div>
+                    <!-- Grid column -->
 
-            <!-- Grid column -->
-            <div class="col-md-4">
+                    <!-- Grid column -->
+                    <div class="col-md-4">
+                        <i class="fas fa-calendar-check fa-3x blue-text"></i>
+                        <h5 class="font-weight-bold my-4">Soyez à jour sur votre fil</h5>
+                        <p class="grey-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
+                            aperiam minima assumenda deleniti hic.
+                        </p>
 
-                <i class="fas fa-calendar-check fa-3x blue-text"></i>
-                <h5 class="font-weight-bold my-4">Soyez à jour sur votre fil</h5>
-                <p class="grey-text mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores
-                    aperiam minima assumenda deleniti hic.
-                </p>
+                    </div>
+                    <!-- Grid column -->
 
-            </div>
-            <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
 
-        </div>
-        <!-- Grid row -->
+            </section>
+            <!-- /Section: Features v.1 -->
 
-    </section>
-    <!-- Section: Features v.1 -->
+            <!-- Section: Caroussel -->
+            <section id="carousel" style="background: #f6f6f6;">
+                <h2 class="font-weight-bold my-5 text-center">Tendances actuelle</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="Carousel" class="carousel slide">
+
+                            <ol class="carousel-indicators">
+                                <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#Carousel" data-slide-to="1"></li>
+                                <li data-target="#Carousel" data-slide-to="2"></li>
+                            </ol>
+                            <!-- Carousel items -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <div class="row" id="test-carousel">
+                                        {% for data in array |slice(0, 4) %}
+                                        <div class="col-md-3 id=" test
+                                        ">
+                                        <a href="#" class="thumbnail">
+                                            <img src="{{ data.img }}" alt="Image" style="max-width:100%;">
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+
+                                </div><!--.row-->
+                            </div><!--.item-->
+
+
+                        </div><!--.carousel-inner-->
+                        <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+                        <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+                    </div><!--.Carousel-->
+
+                </div>
+                </div>
+
+
+            </section>
+
+
+            <!-- /Section: Caroussel -->
+
+            <!-- troisieme section-->
+
+            <div id="third-section ">
+                <div class="row">
+                    <div class="col-6 description1">
+                        <p class="col-5 offset-1 " style="font-size:0.8em">Mercredi 3 Octobre - culture</p>
+                        <h3 class="col-5 offset-1">Partager le Meilleur des séries</h3>
+                        <p class="col-8 offset-1">
+
+                    </div>
+                    <div class="col-6">
+                        <img src="/lib/asset/television.jpg" alt="tv" style="width:100%" class="img-fluid">
+                    </div>
+                </div>
+                <!-- troisieme section-->
+
+        </main>
     {% endif %}
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+
+            $('#carousel').carousel({
+
+                interval: 2000,
+                for(var i = 0;
+            i < #test[i].length;
+            i++
+        )
+            {
+
+
+            }
+        })
+            ;
+        })
+    </script>
+
 {% endblock %}
