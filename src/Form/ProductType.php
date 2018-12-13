@@ -51,7 +51,7 @@ class ProductType extends AbstractType
                 ChoiceType::class,
                 [
                     'label' => false,
-                    'choices' => array('coffret série' => 'coffret série', 'DVD / Blue-ray' => 'DVD / Blue-ray', 'goodies' => 'goodies'),
+                    'choices' => array('Coffret série' => 'Coffret série', 'DVD & Blue-ray' => 'DVD & Blue-ray', 'Goodies' => 'Goodies'),
                     'placeholder' => 'Choisir une option'
                 ]
             )

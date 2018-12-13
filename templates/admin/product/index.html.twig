@@ -15,26 +15,24 @@
                 <th class="text-center">Titre</th>
                 <th class="text-center">Catégorie</th>
                 <th class="text-center">Description du produit</th>
-                <th class="text-center">Prix</th>
-                <th width="50px">Modifier</th>
+                <th class="text-center" width="80px">Prix</th>
+                <th width="100px">Modifier</th>
                 <th width="50px">Supprimer</th>
             </tr>
         </thead>
         {% for product in products %}
             <tr>
                 <td class="text-center pt-md-2">{{ product.id }}</td>
-                <td class="pt-md-2">{{ product.title }}</td>
-                <td class="pt-md-2">{{ product.category }}</td>
+                <td class="pt-md-2"><strong>{{ product.title }}</strong></td>
+                <td class="pt-md-2"><em>{{ product.category }}</em></td>
                 <td class="pt-md-2">{{ product.description }}</td>
-                <td class="text-center pt-md-2">{{ product.price }} €</td>
-                <td>
-                    <a href="{{ path('app_admin_product_edit', {id:product.id}) }}" >
-                        <div class="text-center pt-md-2">
-                            <i class="far fa-edit"></i>
-                        </div>
-                    </a>
+                <td class="text-center pt-md-2 align-middle">{{ product.price }} €</td>
+                <td class="align-middle">
+                    <div class="text-center">
+                        <a class="btn btn-outline-primary" href="{{ path('app_admin_product_edit', {id:product.id}) }}" ><i class="far fa-edit"></i></a>
+                    </div>
                 </td>
-                <td>
+                <td class="align-middle">
                     <div class="text-center">
                     <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></a>
                     </div>

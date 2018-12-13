@@ -179,7 +179,7 @@ header{
 }
 .product_content
 {
-    border: solid 2px #dbdbdb;
+    border: solid 1px #dbdbdb;
 }
 .home_item_large .product_content
 {
@@ -193,7 +193,7 @@ header{
 {
     padding-left: 25px;
     padding-right: 25px;
-    padding-top: 18px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 .product_name
