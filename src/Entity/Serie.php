@@ -1,107 +1,106 @@
 <?php
-
-namespace App\Entity;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
- */
-class Serie
-{
+    
+    namespace App\Entity;
+    use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\Collection;
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * id de la table serie
+     * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
      */
-    private $id;
-
-    /**
-     *
-     * @ORM\Column(type="integer")
-     * id de la serie de l'api
-     */
-    private $idApiSerie;
-
-    /**
-     * @var Season
-     * @ORM\OneToMany(targetEntity="Season", mappedBy="oneSerie")
-     * liste des saisons
-     */
-    private $listSeasons;
-
-    /**
-     * @var Collection
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="series")
-     * plusieurs series pour n utilisateurs
-     */
-    private $users;
-
-    public function __construct()
+    class Serie
     {
-        $this->users = new ArrayCollection();
-    }
+        /**
+         * @ORM\Id()
+         * @ORM\GeneratedValue()
+         * @ORM\Column(type="integer")
+         */
+        private $id;
+    
+        /**
+         * @ORM\Column(type="string", length=255)
+         * @ORM\JoinColumn(nullable=false)
+         */
+        private $id_api;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+        /**
+         * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="nb_episodes")
+         */
+        private $episodes;
 
-    public function getIdApiSerie()
-    {
-        return $this->idApiSerie;
-    }
+        /**
+         * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="series")
+         * @ORM\JoinColumn(nullable=false)
+         */
+        private $user;
+    
+        /**
+         * Serie constructor.
+         * @param $user
+         *
+        public function __construct($user)
+        {
+            $this->user = $user;
+        }
+         */
+    
+    
+        public function getId(): ?int
+        {
+            return $this->id;
+        }
+    
+        public function getIdApi(): ?string
+        {
+            return $this->id_api;
+        }
+    
+        public function setIdApi(string $id_api): self
+        {
+            $this->id_api = $id_api;
+        
+            return $this;
+        }
 
+        public function getUser(): ?User
+        {
+            return $this->user;
+        }
 
-    public function setIdApiSerie($idApiSerie)
-    {
-        $this->idApiSerie = $idApiSerie;
-        return $this;
-    }
+        public function setUser(?User $user): self
+        {
+            $this->user = $user;
 
-    /**
-     * @return Season
-     */
-    public function getListSeasons(): Season
-    {
-        return $this->listSeasons;
-    }
+            return $this;
+        }
+        
 
-    /**
-     * @param Season $listSeasons
-     * @return Serie
-     */
-    public function setListSeasons(Season $listSeasons): Serie
-    {
-        $this->listSeasons = $listSeasons;
-        return $this;
-    }
+        /**
+         * @return Collection|Episode[]
+         */
+        public function getEpisodes(): Collection
+        {
+            return $this->episodes;
+        }
 
-    /**
-     * @return Collection
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
+        public function addEpisode(Episode $episode): self
+        {
+            if (!$this->episodes->contains($episode)) {
+                $this->episodes[] = $episode;
+                $episode->setNbEpisodes($this);
+            }
 
-    /**
-     * @param Collection $users
-     * @return Serie
-     */
-    public function setUsers(Collection $users): Serie
-    {
-        $this->users = $users;
-        return $this;
-    }
+            return $this;
+        }
 
-    public function __toString()
-    {
-        $this->idApiSerie;
-    }
+        public function removeEpisode(Episode $episode): self
+        {
+            if ($this->episodes->contains($episode)) {
+                $this->episodes->removeElement($episode);
+                // set the owning side to null (unless already changed)
+                if ($episode->getNbEpisodes() === $this) {
+                    $episode->setNbEpisodes(null);
+                }
+            }
 
-
+            return $this;
+        }
 }

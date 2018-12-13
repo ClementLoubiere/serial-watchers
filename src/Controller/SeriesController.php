@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Serie;
 use App\Entity\User;
+use App\Form\SerieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,24 +16,8 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series")
      */
-    public function api()
+    public function api(Request $request)
     {
-        $tabListe = array(
-            $popular = "popular",
-            $genre = "genre/tv/list",
-
-        );
-
-        ;
-        // résultat de page
-        $page = [];
-
-        // les genres
-        $popularity = "&sort_by=popularity";
-        $annee = "&sort_by=first_air_date_year";
-        $genre = "";
-
-
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
@@ -44,7 +27,7 @@ class SeriesController extends AbstractController
         $baseURI = "http://image.tmdb.org/t/p/". $size;
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$popular."?api_key=".$api."&language=fr-FR&page=".$page);
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
@@ -64,16 +47,60 @@ class SeriesController extends AbstractController
             );
         }
 
+        /*
+        // section enregistrement de l'id api avec l'utilisateur dans la bdd
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+    
+    
+        if($request->isMethod('POST')) {
+        
+            $favori = $request->request->get('test');
+        
+            $serie = new Serie();
+        
+            $serie->setIdApi($favori);
+            
+            $serie->setUsers($this->getUser());
+            
+            $em->persist($serie);
+            $em->flush();
+        
+            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
+        } else {
+            $this->addFlash('error', 'On a fait dla merde');
+        }
+        */
+    
+        if($request->isMethod('POST')) {
+            /*if ($request->isXmlHttpRequest()) { */
+        
+            $user = $this->getUser();
+        
+            $em = $this->getDoctrine()->getManager();
+        
+            $serie = new Serie();
+            $fun = $request->request->get('fav');
+        
+            $serie
+                ->setUser($user)
+                ->setIdApi($fun);
+        
+            $em->persist($serie);
+            $em->flush();
+        }
+
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
         ));
+
     }
 
     /**
-     * @Route("/series/{idApiSerie}", defaults={"idApiSerie": null}, requirements={"idApiSerie": "\d+"})
+     * @Route("/series/{id}", requirements={"id": "\d+"})
      */
-    public function ficheSerie($idApiSerie)
+    public function ficheSerie($id)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -84,7 +111,7 @@ class SeriesController extends AbstractController
         $baseURI = "http://image.tmdb.org/t/p/" . $size;
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$idApiSerie."?api_key=".$api."&language=fr-FR");
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$id."?api_key=".$api."&language=fr-FR");
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
@@ -94,7 +121,7 @@ class SeriesController extends AbstractController
 
         // itération des différents indices qu'on va récupérer
         $ficheArray[] = array(
-            'id' => $result["id"],
+            'id_api' => $result["id"],
             'name' => $result["original_name"],
             'description' => $result["overview"],
             'network' => $result["networks"][0]["name"],
@@ -119,7 +146,6 @@ class SeriesController extends AbstractController
             );
         }
 
-
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
             'fiche' => $ficheArray,
@@ -129,39 +155,14 @@ class SeriesController extends AbstractController
     }
     
     /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/seriesAjax")
+     * @Route("/series")
      */
     public function ajoutFav(Request $request)
     {
-        // section enregistrement de l'id api avec l'utilisateur dans la bdd
-
-        //$repository = $em->getRepository(Serie::class);
-
-        if($request->isMethod('GET')) {
-
-            if ($request->isXmlHttpRequest()) {
-
-                $em = $this->getDoctrine()->getManager();
-                // appel de user
-                $user = $this->getUser();
-
-                // instance de Serie
-                $serie = new Serie();
-
-                // rajoute dans la modif de $users, la valeur du get
-                $serie->setUsers($user);
-
-                $serie->setIdApiSerie($request->request->get('id'));
-
-                $em->persist($serie);
-                $em->flush();
-
-            }
-        }
-        return new Response('Success' . $serie->getId());
-        //return new JsonResponse($serie);
+       
+       /* }
     
+        return new JsonResponse(); */
+        
     }
 }

@@ -45,11 +45,12 @@
                         </p>
                         <div class="my-2 d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="{{ path('app_series_ficheserie', {idApiSerie: data.id}) }}" class="btn btn-sm btn-outline-secondary">
+                                <a href="{{ path('app_series_ficheserie', {id: data.id}) }}" class="btn btn-sm btn-outline-secondary">
                                     Voir
                                 </a>
-                                <form method="get">
-                                    <button type="submit" data-id="{{ data.id }}" name="id" class="btn btn-sm btn-addSerie btn-outline-secondary">
+                                <form method="post">
+                                    <input type="hidden" value="{{ data.id }}" name="fav">
+                                    <button type="submit"  class="btn btn-sm btn-outline-secondary btn-addSerie">
                                         Ajouter
                                     </button>
                                 </form>
