@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    /*
     let key = 'f9966f8cc78884142eed6c6d4710717a';
 
     $.ajax({
@@ -16,5 +16,5 @@ $(document).ready(function () {
             for (let p = 0; p < data.page.length; p++) {
                 $('.pagination').append('<li><a href="https://api.themoviedb.org/3/tv/popular?api_key=' + key + '&page=' + page + '">' + page + '</a></li>');
             }
-        });
+        });*/
 });

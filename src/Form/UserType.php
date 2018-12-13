@@ -38,7 +38,8 @@ class UserType extends AbstractType
                     'label' => 'Sexe',
                     'choices' => ['Homme' => 'H', 'Femme' => 'F'],
                     'expanded' => true,
-                    'multiple' => false])
+                    'multiple' => false]
+            )
             ->add('birthdate',
                 DateType::class,
                     ['widget' => 'single_text',

@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
         if(!empty($errors)){
             $this->addFlash('error', 'Les identifiants sont incorrects');
         } else {
-            $this->redirectToRoute('app_index_index');
+            $this->redirectToRoute('app_user_index');
         }
 
 
