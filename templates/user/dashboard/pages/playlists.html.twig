@@ -7,18 +7,56 @@
 
 
 
-    {{ form_start(form) }}
+    <div class="container row">
 
-    {#Bloc de formulaire pour l'attribut name#}
-    {{ form_row(form.title) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.image) }}
-    <div class="text-right">
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary">Retour</a>
+        <!-- formulaire edit Playlist -->
+        <div class=" card col-md-4">
+            <div class="card-header">
+                Créer une nouvelle playlist de serie
+            </div>
+            <!-- card body -->
+            <div class="card-body">
+                {{ form_start(form) }}
+                {#Bloc de formulaire pour l'attribut name#}
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form.row(form.serie) }}
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary">Retour</a>
+                </div>
+                {#ferme la balise form #}
+                {{ form_end(form) }}
+                <!-- /formulaire edit Playlist -->
+
+            </div>
+            <!-- /card body -->
+        </div>
+
+        <!-- chart PLaylist -->
+        <div class=" card col-md-8 ">
+            <!-- card header -->
+            <div class="card-header">
+                Mes playlists de séries
+            </div>
+            <!-- card body -->
+            <div class="card-body">
+
+                <div class="overlay-card align-content-center">
+                    {#<img src="{{ data.img }}" class="img-rounded center-block">#}
+                    {#<div class="row text-center">#}
+                    {#<h5>{{ data.name }}</h5>#}
+                    {#<a class="btn btn-follow btn-sm text-center" href="#" role="button">Plus d'infos</a>#}
+                    {#</div>#}
+
+                </div>
+            </div>
+            <!-- /card body -->
+        </div>
     </div>
-    {#ferme la balise form #}
-    {{ form_end(form) }}
+
+
+
 
 
 

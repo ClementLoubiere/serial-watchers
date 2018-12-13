@@ -1,110 +1,69 @@
 <?php
-    
-    namespace App\Entity;
-    use Doctrine\Common\Collections\ArrayCollection;
-    use Doctrine\ORM\Mapping as ORM;
-    use Doctrine\Common\Collections\Collection;
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
+ */
+class Serie
+{
     /**
-     * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     * id de la table serie
      */
-    class Serie
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     * id de la serie de l'api
+     */
+    private $idApiSerie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Season", mappedBy="oneSerie")
+     * liste des saisons
+     */
+    private $listSeasons;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="users")
+     * plusieurs series pour n utilisateur
+     */
+    private $series;
+
+    public function getId(): ?int
     {
-        /**
-         * @ORM\Id()
-         * @ORM\GeneratedValue()
-         * @ORM\Column(type="integer")
-         */
-        private $id;
-    
-        /**
-         * @ORM\Column(type="string", length=255)
-         * @ORM\JoinColumn(nullable=false)
-         */
-        private $id_api;
+        return $this->id;
+    }
 
-        /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="nb_episodes")
-         */
-        private $episodes;
+    public function getIdApiSerie()
+    {
+        return $this->idApiSerie;
+    }
 
-        /**
-         * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="series")
-         */
-        private $users;
 
-        
-        public function __construct()
-        {
-            $this->users = new ArrayCollection();
-        }
-    
-    
-        public function getId(): ?int
-        {
-            return $this->id;
-        }
-    
-        public function getIdApi(): ?string
-        {
-            return $this->id_api;
-        }
-    
-        public function setIdApi(string $id_api): self
-        {
-            $this->id_api = $id_api;
-        
-            return $this;
-        }
-    
-        /**
-         * @return mixed
-         */
-        public function getUsers()
-        {
-            return $this->users;
-        }
-    
-        /**
-         * @param mixed $users
-         * @return Serie
-         */
-        public function setUsers($users)
-        {
-            $this->users = $users;
-            return $this;
-        }
-    
-        
-        
+    public function setIdApiSerie($idApiSerie)
+    {
+        $this->idApiSerie = $idApiSerie;
+        return $this;
+    }
 
-        /**
-         * @return Collection|Episode[]
-         */
-        public function getEpisodes(): Collection
-        {
-            return $this->episodes;
-        }
 
-        public function addEpisode(Episode $episode): self
-        {
-            if (!$this->episodes->contains($episode)) {
-                $this->episodes[] = $episode;
-                $episode->setNbEpisodes($this);
-            }
+    public function getListSeasons()
+    {
+        return $this->listSeasons;
+    }
 
-            return $this;
-        }
 
-        public function removeEpisode(Episode $episode): self
-        {
-            if ($this->episodes->contains($episode)) {
-                $this->episodes->removeElement($episode);
-                // set the owning side to null (unless already changed)
-                if ($episode->getNbEpisodes() === $this) {
-                    $episode->setNbEpisodes(null);
-                }
-            }
+    public function setListSeasons($listSeasons)
+    {
+        $this->listSeasons = $listSeasons;
+        return $this;
+    }
 
-            return $this;
-        }
+
 }

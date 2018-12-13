@@ -21,8 +21,9 @@ class PlaylistType extends AbstractType
             ->add('description', TextareaType::class, ['label' => 'description'])
             ->add('image', FileType::class, ['label' => 'illustration', 'required' => false]);
 
-
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
