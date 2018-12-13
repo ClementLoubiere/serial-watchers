@@ -37,7 +37,9 @@
     <div class="col-md-12">
         <div class="row mt-4">
             {% for series in serie %}
-                <li>{{ series.idApi }}</li>
+                {% for test in json_data %}
+                <li>{{ test['name'] }}</li>
+                    {% endfor %}
             {% endfor %}
         </div>
     </div>

@@ -158,10 +158,11 @@ class SeriesController extends AbstractController
     /**
      * @Route("/mesSeries/{id}")
      */
-    public function afficherFav(User $user)
+    public function afficherFav(User $user, Serie $serie)
     {
         $repository = $this->getDoctrine()->getRepository(Serie::class);
-        $serie = $repository->findBy(['user' => $user]);
+        $series = $repository->findBy(['user' => $user]);
+        
         
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -170,35 +171,34 @@ class SeriesController extends AbstractController
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
-    
-        //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
-    
-        // convertit l'api de json en tableau
-        $result = json_decode($json, true);
-    
-        // initialisation d'une variable tableau
-        $tplArray = array();
-    
         
-        // boucle du nombre de résultat à partir de tableau $results à l'indice "results"
-            for ($i = 0; $i < count($result['results']); $i++) {
+        $varId = $repository->findBy(['idApi' => $serie]);
         
-                // itération des différents indices qu'on va récupérer
-        
-                $tplArray[] = array(
-                    'id' => $result["results"][$i]["id"],
-                    'name' => $result["results"][$i]["original_name"],
-                    'datediff' => $result["results"][$i]["first_air_date"],
-                    'description' => $result["results"][$i]["overview"],
-                    'img' => $baseURI . $result["results"][$i]["poster_path"]
-                );
+        foreach ($varId as $test) {
+            $var = $test['idApi'];
+    
+            //appel à l'api
+            $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
+    
+    
+            $json_data = [];
+            $i = 0;
+    
+            foreach ($varApi as $info) {
+                $json_table = json_decode($info, true);
+                $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
+                $json_data[$i]["name"] = $json_table['name'];
+                $i++;
             }
+        }
+    
+        
         
         return $this->render('series/mesSeries.html.twig',
             [
                'user' => $user,
-                'serie' => $serie
+                'serie' => $series,
+                'json_data' => $json_data
             ]);
     }
 }

@@ -4,6 +4,8 @@
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\Collection;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
     /**
      * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
      */
@@ -32,6 +34,7 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $user;
+    
         
         public function __construct()
         {
@@ -99,5 +102,10 @@
             }
 
             return $this;
+        }
+    
+        public function __toString()
+        {
+            return $this->idApi;
         }
 }
