@@ -1,7 +1,6 @@
 <?php
     
     namespace App\Entity;
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\Collection;
     /**
@@ -32,6 +31,16 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $user;
+    
+        /**
+         * Serie constructor.
+         * @param $user
+         *
+        public function __construct($user)
+        {
+            $this->user = $user;
+        }
+         */
     
     
         public function getId(): ?int

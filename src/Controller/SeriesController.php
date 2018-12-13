@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Serie;
 use App\Entity\User;
+use App\Form\SerieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,6 +71,24 @@ class SeriesController extends AbstractController
             $this->addFlash('error', 'On a fait dla merde');
         }
         */
+    
+        if($request->isMethod('POST')) {
+            /*if ($request->isXmlHttpRequest()) { */
+        
+            $user = $this->getUser();
+        
+            $em = $this->getDoctrine()->getManager();
+        
+            $serie = new Serie();
+            $fun = $request->request->get('fav');
+        
+            $serie
+                ->setUser($user)
+                ->setIdApi($fun);
+        
+            $em->persist($serie);
+            $em->flush();
+        }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
@@ -140,23 +159,10 @@ class SeriesController extends AbstractController
      */
     public function ajoutFav(Request $request)
     {
-        if($request->isXmlHttpRequest()){
-
-            $em = $this->getDoctrine()->getManager();
-
-            $user = $this->getUser();
-
-            $serie = new Serie();
-
-            $serie->setIdApi($request->request->get('id'));
-
-            $serie->setUser($user);
-
-
-            $em->persist($serie);
-            $em->flush();
-        }
-
-        return new JsonResponse($serie);
+       
+       /* }
+    
+        return new JsonResponse(); */
+        
     }
 }
