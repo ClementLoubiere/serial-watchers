@@ -70,7 +70,20 @@ nav {
 }
 
 /************************CARROUSEL**************************/
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+    display: block;
+}
 
+.carousel .carousel-inner {
+    -webkit-box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.3);
+}
+
+.carousel .now-ui-icons {
+    font-size: 2em;
+}
 
 #Carousel {
     background: #f6f6f6;
@@ -80,8 +93,8 @@ nav {
 .carousel {
     margin-bottom: 0;
     padding: 0 40px 30px 40px;
-}
 
+}
 /* The controlsy */
 .carousel-control {
     left: -12px;

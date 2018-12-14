@@ -41,7 +41,7 @@ class IndexController extends AbstractController
                 'img' => $baseURI . $result["results"][$i]["poster_path"]
             );
         }
-
+//Appel fiche serie
 
 
 
