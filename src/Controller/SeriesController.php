@@ -7,12 +7,13 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\Collection;
 
 class SeriesController extends AbstractController
 {
+    //------------------- AFFICHAGE DES SERIES / FILTRES / PAGINATION ------------------//
+
     /**
      * @Route("/series")
      */
@@ -25,7 +26,7 @@ class SeriesController extends AbstractController
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
-    
+
         // page de résultat
         if ($request->query->has('page')) {
             $page = $request->query->get('page');
@@ -33,11 +34,46 @@ class SeriesController extends AbstractController
             $page = 1;
         }
 
+        /*if ($request->query->has('sort_by')) {
+            $genre = $request->query->has('sort_by');
+
+
+            if ($sort == 'Note ascendante'){
+                $sort = 'vote_average.asc';
+            } elseif($sort == 'Popularité ascendante') {
+                $sort = 'popularity.asc';
+            }
+
+        } else {
+            $sort = "first_air_date.desc";
+        }*/
+
+        // tri
+        if ($request->query->has('sort_by')) {
+            $sort = $request->query->get('sort_by');
+
+            $sort = array(
+                'Note ascendante' => 'vote_average.asc',
+                'Note descendante'=> 'vote_average.desc',
+                'Date de sortie descendante' => 'first_air_date.desc',
+                'Popularité ascendante' => 'popularity.asc',
+                'Populairité descendante' => 'popularity.desc'
+            );
+
+        } else {
+            $sort = "popularity.desc";
+        }
+
+
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=". $page);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
+        //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
+        //dump($jsom);
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
+
+        // les genres
 
         // initialisation d'une variable tableau
         $tplArray = array();
@@ -75,43 +111,28 @@ class SeriesController extends AbstractController
             $serie
                 ->setUser($user)
                 ->setIdApi($ajout);
-    
+        
+            // On enregistre en bdd l'objet série
+            $em->persist($serie);
+            $em->flush();
             
-            // Recherche dans la table série une ligne qui combine l'idApi avec l'id du user connecté
-            $repository = $em->getRepository(Serie::class);
-            $doublon = $repository->findBy(['idApi' => $ajout, 'user' => $user]);
-    
-    
-            //-------- Condition pour éviter les ajouts de doublon de série
-            if(count($doublon) < 1 ) {
-    
-                // On enregistre en bdd l'objet série
-                $em->persist($serie);
-                $em->flush();
-    
-                // Message qui confirme que la série a bien été ajoutée
-                $this->addFlash('success', 'Série ajoutée');
-            } else {
-    
-                $this->addFlash('error', 'Vous avez déjà ajouter cette série');
-            }
-            
+            // Message qui confirme que la série a bien été ajoutée
+            $this->addFlash('success', 'Série ajoutée');
         }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
-            'page' => $page
+            'page' => $page,
+            'sort' => $sort
         ));
 
     }
-    
-    //-------------------- PAGE DETAIL D'UNE SERIE --------------------//
 
     /**
      * @Route("/series/{id}", requirements={"id": "\d+"})
      */
-    public function ficheSerie(Request $request, $id)
+    public function ficheSerie($id)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -120,7 +141,6 @@ class SeriesController extends AbstractController
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/" . $size;
-        
 
         //appel à l'api
         $json = file_get_contents("https://api.themoviedb.org/3/tv/".$id."?api_key=".$api."&language=fr-FR");
@@ -146,7 +166,6 @@ class SeriesController extends AbstractController
 
         for ($j = 0; $j < count($result['seasons']); $j++) {
             $nb_season[] = array(
-                'id_season' => $result['seasons'][$j]["id"],
                 'season' => $result["seasons"][$j]["season_number"]
             );
         }
@@ -158,40 +177,17 @@ class SeriesController extends AbstractController
                 'name' => $result["genres"][$g]["name"]
             );
         }
-    
-        if ($request->query->has('page')) {
-            $season = $request->query->get('page');
-        } else {
-            $season = 1;
-        }
-    
-        $episode = file_get_contents("https://api.themoviedb.org/3/tv/".$id."/season/".$season."?api_key=".$api."&language=fr-FR");
-        
-        $resultat = json_decode($episode, true);
-        
-        $nb_episode = array();
-        
-        for ($n = 0; $n< count($resultat["episodes"]); $n++) {
-            $nb_episode[] = array(
-                'name_episode' => $resultat["episodes"][$n]["name"],
-                'num_episode' => $resultat["episodes"][$n]["episode_number"]
-            );
-        }
-      
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
             'fiche' => $ficheArray,
             'nb_season' => $nb_season,
-            'nb_genre' => $nb_genre,
-            'episodes' => $nb_episode
+            'nb_genre' => $nb_genre
         ));
     }
     
-    //---------------- PAGE DES SERIES AJOUTEES PAR L'UTILISATEUR ------------//
-    
     /**
-     * @Route("/mesSeries")
+     * @Route("/mesSeries/{id}")
      */
     public function afficherFav()
     {
@@ -218,7 +214,7 @@ class SeriesController extends AbstractController
         // Pour chaque série que le user a ajouter:
         foreach ($series as $test) {
             
-            // on définie la variable var à l'id API de la série correspondant à l'id User que l'on recherche
+            // on définie la variable var à l'id API de la série
             $var = $test->getIdApi();
     
             //appel à l'api
@@ -231,7 +227,6 @@ class SeriesController extends AbstractController
             $json_data[$i]["id"] = $json_table['id'];
             $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
             $json_data[$i]["original_name"] = $json_table['original_name'];
-            $json_data[$i]["fav_id"] = $test->getId();
             $i++;
         }
         
@@ -241,28 +236,5 @@ class SeriesController extends AbstractController
             [
                 'json_data' => $json_data
             ]);
-    }
-    
-    //------------ RETIRER UNE SERIE DE LA PAGE MES SERIES ---------//
-    
-    /**
-     * @Route("/mesSeries/{id}")
-     */
-    public function retirerFav($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
-        
-        $serie = $repository->find($id);
-        
-        if(!is_null($serie)){
-            $em->remove($serie);
-            $em->flush();
-            
-            $this->addFlash('success', 'Série supprimée');
-            
-           return $this->redirectToRoute('app_series_afficherfav');
-           
-        }
     }
 }

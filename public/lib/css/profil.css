@@ -17,8 +17,8 @@ body {
 }
 
 .container {
-
     margin: 0 !important;
+    padding: 0;
 }
 /** ======================  WRAPPER DASHBOARD UTILISATEUR  ==============================**/
 #wrapper {

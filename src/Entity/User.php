@@ -48,6 +48,7 @@
          * @ORM\Column(type="string", length=20)
          */
         private $gender;
+
         /**
          * @ORM\Column(type="datetime")
          */
@@ -73,12 +74,12 @@
         {
             $this->series = new ArrayCollection();
         }
-    
-    
+
         public function getId(): ?int
         {
             return $this->id;
         }
+
         public function getPseudo(): ?string
         {
             return $this->pseudo;
@@ -88,69 +89,84 @@
             $this->pseudo = $pseudo;
             return $this;
         }
+
         public function getLastname(): ?string
         {
             return $this->lastname;
         }
+
         public function setLastname(string $lastname): self
         {
             $this->lastname = $lastname;
             return $this;
         }
+
         public function getFirstname(): ?string
         {
             return $this->firstname;
         }
+
         public function setFirstname(string $firstname): self
         {
             $this->firstname = $firstname;
             return $this;
         }
+
         public function getEmail(): ?string
         {
             return $this->email;
         }
+
         public function setEmail(string $email): self
         {
             $this->email = $email;
             return $this;
         }
+
         public function getPassword(): ?string
         {
             return $this->password;
         }
+
         public function setPassword(string $password): self
         {
             $this->password = $password;
             return $this;
         }
+
         public function getGender(): ?string
         {
             return $this->gender;
         }
+
         public function setGender(string $gender): self
         {
             $this->gender = $gender;
             return $this;
         }
+
         public function getBirthdate(): ?\DateTimeInterface
         {
             return $this->birthdate;
         }
+
         public function setBirthdate(\DateTimeInterface $birthdate): self
         {
             $this->birthdate = $birthdate;
             return $this;
         }
+
         public function getStatus(): ?string
         {
             return $this->status;
         }
+
         public function setStatus(string $status): self
         {
             $this->status = $status;
             return $this;
         }
+
         /**
          * @return string
          */
@@ -158,6 +174,7 @@
         {
             return $this->plainPassword;
         }
+
         /**
          * @param string $plainpassword
          * @return User
@@ -182,7 +199,6 @@
                 $this->series[] = $series;
                 $series->setUser($this);
             }
-
             return $this;
         }
 
@@ -195,7 +211,6 @@
                     $series->setUser(null);
                 }
             }
-
             return $this;
         }
 
@@ -238,6 +253,7 @@
                 $this->birthdate
                 ) = unserialize($serialized);
         }
+
         /**
          * Returns the roles granted to the user.
          *
@@ -256,6 +272,7 @@
         {
             return [$this->status];
         }
+
         /**
          * Returns the salt that was originally used to encode the password.
          *
@@ -267,6 +284,7 @@
         {
             return null;
         }
+
         /**
          * Returns the username used to authenticate the user.
          *
@@ -277,6 +295,7 @@
             // attribut qui va servir d'identifiant
             return $this->email;
         }
+
         /**
          * Removes sensitive data from the user.
          *
@@ -285,8 +304,9 @@
          */
         public function eraseCredentials()
         {
-            // TODO: Implement eraseCredentials() method.
+
         }
+
         public function __toString()
         {
             return $this->pseudo;
