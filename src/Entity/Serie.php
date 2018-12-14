@@ -1,10 +1,10 @@
 <?php
     
     namespace App\Entity;
+
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\Collection;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
@@ -25,6 +25,7 @@
         private $idApi;
 
         /**
+         * @var Collection
          * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="series")
          * @ORM\JoinColumn(nullable=false)
          */
@@ -35,9 +36,7 @@
         {
             $this->user = new ArrayCollection();
         }
-        
-    
-    
+
         public function getId(): ?int
         {
             return $this->id;
@@ -55,7 +54,7 @@
             return $this;
         }
 
-        public function getUser(): ?User
+        public function getUser(): ArrayCollection
         {
             return $this->user;
         }

@@ -223,7 +223,7 @@ class SeriesController extends AbstractController
     //---------------- PAGE DES SERIES AJOUTEES PAR L'UTILISATEUR ------------//
 
     /**
-     * @Route("/mesSeries/{id}")
+     * @Route("/mesSeries")
      */
     public function afficherFav()
     {

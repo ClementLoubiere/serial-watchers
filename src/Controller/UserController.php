@@ -69,7 +69,7 @@ class UserController extends AbstractController
         );
 
 
-        return $this->render('user/index.html.twig', array(
+        return $this->render('index/index.html.twig', array(
             'array' => $tplArray,
             'array2' => $tblArray2
         ));
@@ -150,7 +150,7 @@ class UserController extends AbstractController
 //
 //            curl_close($ch);
 //
-//            vardump($result);
+//            var_dump($result);
 //
 //        }
 
