@@ -7,6 +7,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\Collection;
 
@@ -73,8 +74,6 @@ class SeriesController extends AbstractController
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
 
-        // les genres
-
         // initialisation d'une variable tableau
         $tplArray = array();
 
@@ -111,13 +110,24 @@ class SeriesController extends AbstractController
             $serie
                 ->setUser($user)
                 ->setIdApi($ajout);
-        
-            // On enregistre en bdd l'objet série
-            $em->persist($serie);
-            $em->flush();
-            
-            // Message qui confirme que la série a bien été ajoutée
-            $this->addFlash('success', 'Série ajoutée');
+
+            // Recherche dans la table série une ligne qui combine l'idApi avec l'id du user connecté
+            $repository = $em->getRepository(Serie::class);
+            $doublon = $repository->findBy(['idApi' => $ajout, 'user' => $user]);
+
+            //-------- Condition pour éviter les ajouts de doublon de série
+            if(count($doublon) < 1 ) {
+
+                // On enregistre en bdd l'objet série
+                $em->persist($serie);
+                $em->flush();
+
+                // Message qui confirme que la série a bien été ajoutée
+                $this->addFlash('success', 'Série ajoutée');
+            } else {
+
+                $this->addFlash('error', 'Vous avez déjà ajouter cette série');
+            }
         }
 
         // appel des indices de tplArray dans test.twig
@@ -129,10 +139,12 @@ class SeriesController extends AbstractController
 
     }
 
+    //-------------------- PAGE DETAIL D'UNE SERIE --------------------//
+
     /**
      * @Route("/series/{id}", requirements={"id": "\d+"})
      */
-    public function ficheSerie($id)
+    public function ficheSerie(Request $request, $id)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -178,14 +190,38 @@ class SeriesController extends AbstractController
             );
         }
 
+        //
+        if ($request->query->has('page')) {
+            $season = $request->query->get('page');
+        } else {
+            $season = 1;
+        }
+
+        $episode = file_get_contents("https://api.themoviedb.org/3/tv/".$id."/season/".$season."?api_key=".$api."&language=fr-FR");
+
+        $resultat = json_decode($episode, true);
+
+        $nb_episode = array();
+
+        for ($n = 0; $n< count($resultat["episodes"]); $n++) {
+            $nb_episode[] = array(
+                'name_episode' => $resultat["episodes"][$n]["name"],
+                'num_episode' => $resultat["episodes"][$n]["episode_number"]
+            );
+        }
+
+
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
             'fiche' => $ficheArray,
             'nb_season' => $nb_season,
-            'nb_genre' => $nb_genre
+            'nb_genre' => $nb_genre,
+            'episodes' => $nb_episode
         ));
     }
-    
+
+    //---------------- PAGE DES SERIES AJOUTEES PAR L'UTILISATEUR ------------//
+
     /**
      * @Route("/mesSeries/{id}")
      */
@@ -227,14 +263,39 @@ class SeriesController extends AbstractController
             $json_data[$i]["id"] = $json_table['id'];
             $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
             $json_data[$i]["original_name"] = $json_table['original_name'];
+            $json_data[$i]["fav_id"] = $test->getId();
             $i++;
         }
-        
-        
-        
+
+
         return $this->render('series/mesSeries.html.twig',
             [
                 'json_data' => $json_data
             ]);
     }
+
+    //------------ RETIRER UNE SERIE DE LA PAGE MES SERIES ---------//
+
+    /**
+     * @Route("/mesSeries/{id}")
+     */
+    public function retirerFav($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Serie::class);
+
+        $serie = $repository->find($id);
+
+        if(!is_null($serie)){
+            $em->remove($serie);
+            $em->flush();
+
+            $this->addFlash('success', 'Série supprimée');
+
+            return $this->redirectToRoute('app_series_afficherfav');
+
+        }
+    }
+
+
 }
