@@ -45,49 +45,34 @@ class SeriesController extends AbstractController
                 'img' => $baseURI.$result["results"][$i]["poster_path"]
             );
         }
-
-        /*
-        // section enregistrement de l'id api avec l'utilisateur dans la bdd
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
+        
+        //------------------- AJOUT DE SERIE DANS LA SECTION MES SERIES PAR L'UTILISATEUR ------------------//
     
-    
+        // Si notre formulaire est en POST
         if($request->isMethod('POST')) {
         
-            $favori = $request->request->get('test');
-        
-            $serie = new Serie();
-        
-            $serie->setIdApi($favori);
-            
-            $serie->setUsers($this->getUser());
-            
-            $em->persist($serie);
-            $em->flush();
-        
-            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
-        } else {
-            $this->addFlash('error', 'On a fait dla merde');
-        }
-        */
-    
-        if($request->isMethod('POST')) {
-            /*if ($request->isXmlHttpRequest()) { */
-        
+            // On va chercher l'utilisateur connecté
             $user = $this->getUser();
         
+            // On appel l'entity manager
             $em = $this->getDoctrine()->getManager();
         
+            // On instancie un nouvel objet Série
             $serie = new Serie();
-            $fun = $request->request->get('fav');
+            
+            // On stock dans une variable la requête qui va rechercher le nom qui contient la valeur 'fav'
+            $ajout = $request->request->get('fav');
         
+            // On définit dans l'objet série l'utilisateur connecté et l'idApi à l'id de la série que l'utilisateur veut ajouter
             $serie
                 ->setUser($user)
-                ->setIdApi($fun);
+                ->setIdApi($ajout);
         
+            // On enregistre en bdd l'objet série
             $em->persist($serie);
             $em->flush();
             
+            // Message qui confirme que la série a bien été ajoutée
             $this->addFlash('success', 'Série ajoutée');
         }
 
@@ -158,8 +143,12 @@ class SeriesController extends AbstractController
     /**
      * @Route("/mesSeries/{id}")
      */
-    public function afficherFav(User $user, Serie $serie)
+    public function afficherFav()
     {
+        // on récupère l'utilisateur connecté
+        $user = $this->getUser();
+        
+        // on va chercher dans la table Série les objets users afin de récupérer les Id API qui leur correspond
         $repository = $this->getDoctrine()->getRepository(Serie::class);
         $series = $repository->findBy(['user' => $user]);
         
@@ -172,32 +161,33 @@ class SeriesController extends AbstractController
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
         
-        $varId = $repository->findBy(['idApi' => $serie]);
+        // On initialise un tableau vide (json_data) et une variable i à 0
+        $json_data = [];
+        $i = 0;
         
-        foreach ($varId as $test) {
-            $var = $test['idApi'];
+        // Pour chaque série que le user a ajouter:
+        foreach ($series as $test) {
+            
+            // on définie la variable var à l'id API de la série
+            $var = $test->getIdApi();
     
             //appel à l'api
             $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
+            
+            // on transforme l'appel api en tableau json
+            $json_table = json_decode($varApi, true);
     
-    
-            $json_data = [];
-            $i = 0;
-    
-            foreach ($varApi as $info) {
-                $json_table = json_decode($info, true);
-                $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
-                $json_data[$i]["name"] = $json_table['name'];
-                $i++;
-            }
+            // >On boucle nos différents éléments pour chaque série
+            $json_data[$i]["id"] = $json_table['id'];
+            $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
+            $json_data[$i]["original_name"] = $json_table['original_name'];
+            $i++;
         }
-    
+        
         
         
         return $this->render('series/mesSeries.html.twig',
             [
-               'user' => $user,
-                'serie' => $series,
                 'json_data' => $json_data
             ]);
     }
