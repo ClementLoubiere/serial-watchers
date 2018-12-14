@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\Collection;
 
 class SeriesController extends AbstractController
 {
+    //------------------- AFFICHAGE DES SERIES / FILTRES / PAGINATION ------------------//
+
     /**
      * @Route("/series")
      */
@@ -25,11 +27,53 @@ class SeriesController extends AbstractController
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
 
+        // page de résultat
+        if ($request->query->has('page')) {
+            $page = $request->query->get('page');
+        } else {
+            $page = 1;
+        }
+
+        /*if ($request->query->has('sort_by')) {
+            $genre = $request->query->has('sort_by');
+
+
+            if ($sort == 'Note ascendante'){
+                $sort = 'vote_average.asc';
+            } elseif($sort == 'Popularité ascendante') {
+                $sort = 'popularity.asc';
+            }
+
+        } else {
+            $sort = "first_air_date.desc";
+        }*/
+
+        // tri
+        if ($request->query->has('sort_by')) {
+            $sort = $request->query->get('sort_by');
+
+            $sort = array(
+                'Note ascendante' => 'vote_average.asc',
+                'Note descendante'=> 'vote_average.desc',
+                'Date de sortie descendante' => 'first_air_date.desc',
+                'Popularité ascendante' => 'popularity.asc',
+                'Populairité descendante' => 'popularity.desc'
+            );
+
+        } else {
+            $sort = "popularity.desc";
+        }
+
+
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=1");
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
+        //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
+        //dump($jsom);
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
+
+        // les genres
 
         // initialisation d'une variable tableau
         $tplArray = array();
@@ -79,6 +123,8 @@ class SeriesController extends AbstractController
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
+            'page' => $page,
+            'sort' => $sort
         ));
 
     }

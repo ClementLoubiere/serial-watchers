@@ -8,22 +8,24 @@
             <div class="row">
                 <div class="col">
                     <label for="annee">Annee</label>
-                    <select name="annee" class="custom-select">
+                    <select name="annee" class="custom-select filter-select">
                         <option selected>Aucun</option>
-                        <option value="1">2018</option>
                     </select>
                 </div>
                 <div class="col">
+                    <form method="get">
                     <label for="popularite">Popularite</label>
-                    <select name="popularite" class="custom-select">
+                    <select name="popularite" class="custom-select filter-select">
                         <option selected>Aucun</option>
-                        <option value="1">Popularite descendante</option>
-                        <option value="2">Popularite ascendante</option>
+                        {% for key, value in sort %}
+                            <option name="{{ key }}">{{ value }}</option>
+                        {% endfor %}
                     </select>
+                    </form>
                 </div>
                 <div class="col">
                     <label for="genre">Genre</label>
-                    <select name="genre" class="custom-select">
+                    <select name="genre" class="custom-select filter-select">
                         <option selected>Aucun</option>
                         <option value="action">Action</option>
                         <option value="sci">Sci-fi et fantastique</option>
@@ -66,8 +68,7 @@
             {% endfor %}
         </div>
 
-
-        <ul class="pagination justify-content-center">
+          <ul class="pagination justify-content-center">
             {% for i in 1..10 %}
                 <li class="page-item {% if i is null %} '' {% else %} 'active' {% endif %}">
                     <a class="page-link " href="{{ path('app_series_api', {page: i}) }}">{{ i }}</a>
@@ -77,6 +78,16 @@
 
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.filter-select').on('change', function () {
+            // soumet le formulaire, lorsqu'une valeur change
+            this.form.submit();
+        })
+    </script>
 {% endblock %}
 
 
