@@ -2,37 +2,7 @@
 
 {% block body %}
 
-    <h1>Appel de l'api</h1>
-
-    <div class="row">
-        <div class="col">
-            <div class="row">
-                <div class="col">
-                    <label for="annee">Annee</label>
-                    <select name="annee" class="custom-select">
-                        <option selected>Aucun</option>
-                        <option value="1">2018</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="popularite">Popularite</label>
-                    <select name="popularite" class="custom-select">
-                        <option selected>Aucun</option>
-                        <option value="1">Popularite descendante</option>
-                        <option value="2">Popularite ascendante</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="genre">Genre</label>
-                    <select name="genre" class="custom-select">
-                        <option selected>Aucun</option>
-                        <option value="action">Action</option>
-                        <option value="sci">Sci-fi et fantastique</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1>Mes séries</h1>
 
     {# AFFICHAGE DES SERIES #}
 
@@ -48,8 +18,15 @@
                         <a href="{{ path('app_series_ficheserie', {id: serie['id']}) }}" class="btn btn-sm btn-outline-secondary">
                             Voir
                         </a>
+                            <a href="{{ path('app_series_retirerfav', {id: serie['fav_id']}) }}">
+                                <button class="btn btn-sm btn-outline-secondary">
+                                Retirer
+                                </button>
+                            </a>
                     </div>
                 </div>
+            {% else %}
+                <p class="alert alert-danger">Vous ne suivez actuellement aucune série !</p>
             {% endfor %}
         </div>
     </div>
