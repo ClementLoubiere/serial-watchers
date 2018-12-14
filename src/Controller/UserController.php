@@ -8,11 +8,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Playlist;
-use App\Entity\User;
-use App\Form\PlaylistType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -72,82 +69,90 @@ class UserController extends AbstractController
         );
 
 
-        /*** new */
+        return $this->render('user/index.html.twig', array(
+            'array' => $tplArray,
+            'array2' => $tblArray2
+        ));
 
 
-        if (isset($_GET['code'])) {
-
-            $url = 'https://api.betaseries.com/oauth/access_token';
-
-            $fields_string = '';
-
-            $fields = array(
-
-                'code' => urlencode($_GET['code']),
-
-                'client_id' => urlencode("8587f0d7ca5d"),
-
-                'client_secret' => urlencode("705d2a09c446fe226754cccd12d8d747"),
-
-                'redirect_uri' => urlencode('http://localhost/betaseries/'),
-
-                'v' => urlencode($version),
-
-            );
-
-            //url-ify the data for the POST
-
-            foreach ($fields as $key => $value) {
-
-                $fields_string .= $key . '=' . $value . '&';
-
-            }
-
-            rtrim($fields_string, '&');
-
-            //open connection
-
-            $ch = curl_init();
-
-            //set the url, number of POST vars, POST data
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-
-            curl_setopt($ch, CURLOPT_POST, true);
-
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            curl_setopt($ch, CURLOPT_HEADER, false);
-
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-            //execute post
-
-            $result = curl_exec($ch);
-
-            $result = json_decode($result, true);
-
-            //if error echo log
-
-            if ($result === false) {
-
-                trigger_error('Erreur curl : ' . curl_error($ch), E_USER_WARNING);
-
-            } else {
-
-                var_dump($result);
-
-            }
-
-            //close connection
-
-            curl_close($ch);
-
-            vardump($result);
-
-        }
+    }
+//
+//        /*** new */
+//
+//
+//        if (isset($_GET['code'])) {
+//
+//            $url = 'https://api.betaseries.com/oauth/access_token';
+//
+//            $fields_string = '';
+//
+//            $fields = array(
+//
+//                'code' => urlencode($_GET['code']),
+//
+//                'client_id' => urlencode("8587f0d7ca5d"),
+//
+//                'client_secret' => urlencode("705d2a09c446fe226754cccd12d8d747"),
+//
+//                'redirect_uri' => urlencode('http://localhost/betaseries/'),
+//
+//                'v' => urlencode($version),
+//
+//            );
+//
+//            //url-ify the data for the POST
+//
+//            foreach ($fields as $key => $value) {
+//
+//                $fields_string .= $key . '=' . $value . '&';
+//
+//            }
+//
+//            rtrim($fields_string, '&');
+//
+//            //open connection
+//
+//            $ch = curl_init();
+//
+//            //set the url, number of POST vars, POST data
+//
+//            curl_setopt($ch, CURLOPT_URL, $url);
+//
+//            curl_setopt($ch, CURLOPT_POST, true);
+//
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+//
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//
+//            curl_setopt($ch, CURLOPT_HEADER, false);
+//
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//
+//            //execute post
+//
+//            $result = curl_exec($ch);
+//
+//            $result = json_decode($result, true);
+//
+//            //if error echo log
+//
+//            if ($result === false) {
+//
+//                trigger_error('Erreur curl : ' . curl_error($ch), E_USER_WARNING);
+//
+//            } else {
+//
+//                var_dump($result);
+//
+//            }
+//
+//            //close connection
+//
+//            curl_close($ch);
+//
+//            vardump($result);
+//
+//        }
 
 
         //$api2="8587f0d7ca5d";
@@ -176,10 +181,7 @@ class UserController extends AbstractController
 //        ));
 
 
-
-
-
-    }
+    //  }
 
 //    /**
 //     * @Route("/update-user/{id}")
@@ -218,48 +220,48 @@ class UserController extends AbstractController
 //        );
 //    }
 
-    /**
-     * @Route("/playlist")
-     */
-    public function playlist(Request $request)
-    {
-
-        //appel de l'entité manager
-        $em = $this->getDoctrine()->getManager();
-
-        $repository = $em->getRepository(Playlist::class);
-
-
-        $playlists = $repository->findBy([], ['title' => 'asc']);
-
-
-        //création du nouvel objet playlist
-        $playlist = new playlist();
-        $form = $this->createForm(PlaylistType::class, $playlist);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            //si mon form est valide à partir des annotation dans l'entité Catégory son ok
-            if ($form->isValid()) {
-
-                $playlist->setSerie();
-
-                $em->persist($playlist);
-                $em->flush();
-                $this->addFlash('success', 'Votre playlist a bien été enregistré');
-
-            }
-        }
-
-
-        return $this->render('user/dashboard/pages/playlists.html.twig', [
-            'playlist' => $playlist,
-            'playlists' => $playlists,
-            'form' => $form->createView()
-        ]);
-
-
-    }
+//    /**
+//     * @Route("/playlist")
+//     */
+//    public function playlist(Request $request)
+//    {
+//
+//        //appel de l'entité manager
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $repository = $em->getRepository(Playlist::class);
+//
+//
+//        $playlists = $repository->findBy([], ['title' => 'asc']);
+//
+//
+//        //création du nouvel objet playlist
+//        $playlist = new playlist();
+//        $form = $this->createForm(PlaylistType::class, $playlist);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted()) {
+//            //si mon form est valide à partir des annotation dans l'entité Catégory son ok
+//            if ($form->isValid()) {
+//
+//                $playlist->setSerie();
+//
+//                $em->persist($playlist);
+//                $em->flush();
+//                $this->addFlash('success', 'Votre playlist a bien été enregistré');
+//
+//            }
+//        }
+//
+//
+//        return $this->render('user/dashboard/pages/playlists.html.twig', [
+//            'playlist' => $playlist,
+//            'playlists' => $playlists,
+//            'form' => $form->createView()
+//        ]);
+//
+//
+//    }
 
 //    public function newSerie()
 //    {
@@ -287,6 +289,7 @@ class UserController extends AbstractController
 //
 //
 //    }
+
 
 }
 

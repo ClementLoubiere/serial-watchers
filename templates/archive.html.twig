@@ -1,0 +1,56 @@
+<div class="navbar navbar-inverse navbar-dark navbar-fixed-top bg-dark">
+
+    <div class="navbar-header">
+
+        <a class="navbar-brand" href="{{ path('app_index_index') }}">
+            <img src="/lib/asset/serial-watcher-logoVlight.png" alt="logo" style="width:30%">
+        </a>
+
+    </div>
+    <div class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav">
+            {% if app.user is null %}
+                <li class="active"><a href="#">Home</a></li>
+                <li>
+                    {#INSCRIPTION#}
+                    <a href="{{ path('app_security_register') }}">
+                        Inscription
+                    </a>
+                </li>
+                {#CONNEXION#}
+                <li>
+                    <a href="{{ path('app_security_login') }}">
+                        Connexion
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+
+    <!--/.nav-collapse -->
+
+</div>
+{% if app.user is not null %}
+
+    <div class="row-offcanvas row-offcanvas-left">
+        <div id="sidebar" class="sidebar-offcanvas">
+            <div class="col-md-12">
+                <h3>{{ app.user }}</h3>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#">Section</a></li>
+                    <li><a href="{{ path('app_series_ficheserie') }}">Mes series</a></li>
+                    <li><a href="#"></a>Mes series en cours</li>
+                    <li><a href="#"></a> Mon fil d'actualités</li>
+                    <li><a href="#"></a> Mes favoris</li>
+                    <li><a href="{{ path('app_security_logout') }}"></a> Déconnexion</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endif %}
+
+
