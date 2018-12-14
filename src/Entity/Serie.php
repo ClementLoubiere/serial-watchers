@@ -77,22 +77,22 @@ class Serie
     }
 
 
-    public function addEpisode(Episode $episode): self
+    public function addEpisode(Episode $episodes): self
     {
-        if (!$this->episodes->contains($episode)) {
-            $this->episodes[] = $episode;
-            $episode->setNbEpisodes($this);
+        if (!$this->episodes->contains($episodes)) {
+            $this->episodes[] = $episodes;
+            $episodes->setNbEpisodes($this);
         }
         return $this;
     }
 
-    public function removeEpisode(Episode $episode): self
+    public function removeEpisode(Episode $episodes): self
     {
-        if ($this->episodes->contains($episode)) {
-            $this->episodes->removeElement($episode);
+        if ($this->episodes->contains($episodes)) {
+            $this->episodes->removeElement($episodes);
             // set the owning side to null (unless already changed)
-            if ($episode->getNbEpisodes() === $this) {
-                $episode->setNbEpisodes(null);
+            if ($episodes->getNbEpisodes() === $this) {
+                $episodes->setNbEpisodes(null);
             }
         }
         return $this;

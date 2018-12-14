@@ -21,8 +21,6 @@ $(document).ready(function () { //je prend mon bouton
         }
     });
 
-    $("")
-
 
 })
 ; //fin du document ready

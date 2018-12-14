@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\Serie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,33 +18,23 @@ class SeriesController extends AbstractController
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
         // La taille de l'image
-        $size = "w342";
+        $size = "w500";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
 
         // page de résultat
-        //$page = array("1", "2");
-        $page = 1;
-
-        $pagestr = strval($page);
-
-        //$pagestr = implode('', array($page));
+        // si
+        if ($request->query->has('page')) {
+            $page = $request->query->get('page');
+        } else {
+            $page = 1;
+        }
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=".$pagestr+=$page);
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=".$api."&language=fr-FR&page=". $page);
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
-
-        // filtres par page
-        $tab = [];
-
-        for($p = 0; $p < 10; $p++) {
-            $tab[] = array(
-                'page' => $result['page']
-            );
-
-        }
 
         // initialisation d'une variable tableau
         $tplArray = array();
@@ -62,32 +51,6 @@ class SeriesController extends AbstractController
             );
         }
 
-
-
-        /*
-        // section enregistrement de l'id api avec l'utilisateur dans la bdd
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
-    
-    
-        if($request->isMethod('POST')) {
-        
-            $favori = $request->request->get('test');
-        
-            $serie = new Serie();
-        
-            $serie->setIdApi($favori);
-            
-            $serie->setUsers($this->getUser());
-            
-            $em->persist($serie);
-            $em->flush();
-        
-            $this->addFlash('success', 'La série a été ajoutée à "Mes séries"');
-        } else {
-            $this->addFlash('error', 'On a fait dla merde');
-        }
-        */
     
         if($request->isMethod('POST')) {
             /*if ($request->isXmlHttpRequest()) { */
@@ -111,7 +74,7 @@ class SeriesController extends AbstractController
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
-            'page' => $tab
+            'page' => $page
         ));
 
     }
@@ -171,48 +134,5 @@ class SeriesController extends AbstractController
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre
         ));
-    }
-
-    /**
-     * @Route("/mesSeries/{id}")
-     */
-    public function afficherFav(User $user, Serie $serie)
-    {
-        $repository = $this->getDoctrine()->getRepository(Serie::class);
-        $series = $repository->findBy(['user' => $user]);
-
-        //La clé API
-        $api = "f9966f8cc78884142eed6c6d4710717a";
-
-        // La taille de l'image
-        $size = "w342";
-        // concaténer avec l'url de l'image
-        $baseURI = "http://image.tmdb.org/t/p/". $size;
-
-        $varId = $repository->findBy(['idApi' => $serie]);
-        $json_data = [];
-        $i = 0;
-
-        foreach ($varId as $test) {
-
-            $var = $test['idApi'];
-            //appel à l'api
-            $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
-            foreach ($varApi as $info) {
-                $json_table = json_decode($info, true);
-                $json_data[$i] = array();
-                $json_data["results"][$i]["poster_path"] = $baseURI . $json_table["results"][$i]['poster_path'];
-                $json_data["results"][$i]["name"] = $json_table["results"][$i]['name'];
-                $i++;
-            }
-        }
-
-
-        return $this->render('series/mesSeries.html.twig',
-            [
-                'user' => $user,
-                'serie' => $series,
-                'json_data' => $json_data
-            ]);
     }
 }
