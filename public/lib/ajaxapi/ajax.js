@@ -1,4 +1,4 @@
-$(document).ready(function (e){
+$(document).ready(function (e) {
     e.preventDefault();
     // appel ajax
 
@@ -17,17 +17,17 @@ $(document).ready(function (e){
             "data": "{}"
         };*/
 
-        /*$.post(
-            '/user/test',
-            parameters,
-            function (data) {
-                $(this).html(data);
-            }, 'json')
-            .done(function (response) {
-                console.log(response);
-            });
+    /*$.post(
+        '/user/test',
+        parameters,
+        function (data) {
+            $(this).html(data);
+        }, 'json')
+        .done(function (response) {
+            console.log(response);
+        });
 
-    });*/
+});*/
 
 
     /*$('#recherche').on('input', function (e) {
