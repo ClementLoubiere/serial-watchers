@@ -50,16 +50,10 @@ class SeriesController extends AbstractController
         }*/
 
         // tri
+        // j'appelle l'url qui permet de trier
         if ($request->query->has('sort_by')) {
+            // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
             $sort = $request->query->get('sort_by');
-
-            $sort = array(
-                'Note ascendante' => 'vote_average.asc',
-                'Note descendante'=> 'vote_average.desc',
-                'Date de sortie descendante' => 'first_air_date.desc',
-                'Popularité ascendante' => 'popularity.asc',
-                'Populairité descendante' => 'popularity.desc'
-            );
 
         } else {
             $sort = "popularity.desc";
