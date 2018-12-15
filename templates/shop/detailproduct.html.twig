@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('lib/css/shop.css') }}">
+{% endblock %}
+{% block body %}
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">{{ products.title }}</h1>
+                <p class="lead text-muted mb-0"><em>{{ products.category }}</em></p>
+                <p class="lead text-muted mb-0">{{ products.description }}</p>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <a href="" data-toggle="modal" data-target="#productModal">
+                                <img class="img-fluid" src="{{ asset('lib/asset/' ~ products.image) }}" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 add_to_cart_block">
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <p class="price">{{ products.price }} €</p>
+                            <form method="get" action="">
+                                <div class="form-group">
+                                    <label>Quantity :</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">
+                                        <div class="input-group-append">
+                                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="" class="btn btn-success btn-lg btn-block text-uppercase" id="payer">
+                                    <i class="fa fa-shopping-cart"></i> Payer
+                                </a>
+                            </form>
+                            <div class="product_rassurance">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Livraison</li>
+                                    <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>Carte bancaire</li>
+                                    <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>01 22 54 65 60</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        var quantity = 1;
+
+        $('.quantity-right-plus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            $('#quantity').val(quantity + 1);
+        });
+
+        $('.quantity-left-minus').click(function(e){
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+            if(quantity > 1){
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+        $('a').click(function(e) {
+            e.preventDefault();
+            window.alert('Merci de votre achat')
+        });
+    });
+
+
+    </script>
+{% endblock %}

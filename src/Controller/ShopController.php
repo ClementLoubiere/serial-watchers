@@ -83,4 +83,25 @@ class ShopController extends AbstractController
             ]
         );
     }
+
+
+    /**
+     * @Route("/detail-product/{id}")
+     */
+    public function detailProduct($id)
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Product::class);
+
+        $products = $repository->find($id);
+
+        dump($products);
+
+        return $this->render(
+            'shop/detailproduct.html.twig',
+            [
+                'products' => $products
+            ]
+        );
+    }
 }
