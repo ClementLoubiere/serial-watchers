@@ -142,6 +142,7 @@ class UserController extends AbstractController
             //si mon form est valide à partir des annotation dans l'entité Catégory son ok
             if ($form->isValid()) {
 
+                // il manque qqc dans l'entité Playlist par rapport à Serie
                 $playlist->setSerie();
 
                 $em->persist($playlist);
