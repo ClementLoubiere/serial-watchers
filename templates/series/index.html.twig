@@ -1,35 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Appel de l'api</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+{% endblock %}
 
+{% block body %}
     <div class="row">
         <div class="col">
             <div class="row">
                 <div class="col">
-                    <label for="annee">Annee</label>
-                    <select name="annee" class="custom-select filter-select">
-                        <option selected>Aucun</option>
-                    </select>
-                </div>
-                <div class="col">
                     <form method="get">
-                    <label for="popularite">Popularite</label>
-                    <select name="popularite" class="custom-select filter-select">
-                        <option selected>Aucun</option>
-                        {% for key, value in sort %}
-                            <option name="{{ key }}">{{ value }}</option>
+                    <label for="year">Annee</label>
+                    <select id="year" name="first_air_date_year" class="selectpicker filter-select">
+                        <option value="0">Aucun</option>
+                        {% for a in 2018..1990 %}
+                            <option value="{{ a }}">{{ a }}</option>
                         {% endfor %}
                     </select>
                     </form>
                 </div>
                 <div class="col">
-                    <label for="genre">Genre</label>
-                    <select name="genre" class="custom-select filter-select">
+                    <form method="get">
+                        <label for="sort_by">Trier par</label>
+                        <select id="sort_by" name="sort_by" class="selectpicker filter-select">
+                            <option selected>Aucun</option>
+                            <option value="popularity.desc">Popularité descendante</option>
+                            <option value="popularity.asc">Popularité ascendante</option>
+                            <option value="vote_average.desc">Note descendante</option>
+                            <option value="vote_average.asc">Note ascendante</option>
+                            <option value="primary_release_date.desc&page=2">Date de sortie descendante</option>
+                            <option value="primary_release_date.asc">Date de sortie ascendante</option>
+                            <option value="title.asc">Titre (A-Z)</option>
+                            <option value="title.desc">Titre (Z-A)</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="col">
+                    <form method="get">
+                    <label for="with_genres">Genres</label>
+                    <select id="with_genres" name="with_genres" class="selectpicker filter-select">
                         <option selected>Aucun</option>
-                        <option value="action">Action</option>
-                        <option value="sci">Sci-fi et fantastique</option>
+                        <option value="10759">Action &amp; Adventure</option>
+                        <option value="16">Animation</option>
+                        <option value="35">Comédie</option>
+                        <option value="80">Crime</option>
+                        <option value="99">Documentaire</option>
+                        <option value="18">Drame</option>
+                        <option value="10751">Familial</option>
+                        <option value="10762">Kids</option>
+                        <option value="9648">Mystère</option>
+                        <option value="10763">News</option>
+                        <option value="10764">Reality</option>
+                        <option value="10765">Science-Fiction &amp; Fantastique</option>
+                        <option value="10766">Soap</option>
+                        <option value="10767">Talk</option>
+                        <option value="10768">War &amp; Politics</option>
+                        <option value="37">Western</option>
                     </select>
+                    </form>
                 </div>
             </div>
         </div>
@@ -83,11 +113,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $('.filter-select').on('change', function () {
-            // soumet le formulaire, lorsqu'une valeur change
-            this.form.submit();
-        })
+       $('.filter-select').on('change', function () {
+           // soumet le formulaire, lorsqu'une valeur change
+           this.form.submit();
+       });
     </script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
 {% endblock %}
 
 

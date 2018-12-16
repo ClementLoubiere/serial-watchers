@@ -50,20 +50,32 @@ class SeriesController extends AbstractController
         }*/
 
         // tri
-        // j'appelle l'url qui permet de trier
+        // Est-ce que l'url possède le champ sort_by qui permet de trier
         if ($request->query->has('sort_by')) {
-            // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
-            $sort = $request->query->get('sort_by');
-
+            // Récupérer la valeur selectionnée de la <select> list
+            $tri = $request->query->get('sort_by');
         } else {
-            $sort = "popularity.desc";
+            $tri = "popularity.desc";
+        }
+
+
+        //tri par année
+        if($request->query->has('first_air_date_year')) {
+            $annee = $request->query->get('first_air_date_year');
+        } else {
+            $annee = 2018;
+        }
+
+        //tri par genre
+        if($request->query->has('with_genres')) {
+            $genre = $request->query->get('with_genres');
+        } else {
+            $genre = 0;
         }
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
-        //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
-        //dump($jsom);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page."&with_genres=".$genre."&sort_by=".$tri."&first_air_date_year=".$annee);
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
@@ -128,7 +140,9 @@ class SeriesController extends AbstractController
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
             'page' => $page,
-            'sort' => $sort
+            'sort' => $tri,
+            'year' => $annee,
+            'genre' => $genre
         ));
 
     }
@@ -136,9 +150,9 @@ class SeriesController extends AbstractController
     //-------------------- PAGE DETAIL D'UNE SERIE --------------------//
 
     /**
-     * @Route("/series/{id}/season/{season_number}", requirements={"id": "\d+", "season_number": "\d+"})
+     * @Route("/series/{id}", requirements={"id": "\d+"})
      */
-    public function ficheSerie(Request $request, $id, $season_number)
+    public function ficheSerie(Request $request, $id)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -165,8 +179,7 @@ class SeriesController extends AbstractController
             'network' => $result["networks"][0]["name"],
             'country' => $result["networks"][0]["origin_country"],
             'seasons' => $result["number_of_seasons"],
-            'img' => $baseURI . $result["poster_path"],
-            'season_id' => $result["seasons"][$season_number]["season_number"]
+            'img' => $baseURI . $result["poster_path"]
         );
 
         $nb_season = array();
@@ -185,31 +198,33 @@ class SeriesController extends AbstractController
             );
         }
 
+        /* Aucune idée, de ce que sa fout là -_-
+        if ($request->query->has('page')) {
+            $season = $request->query->get('page');
+        } else {
+            $season = 1;
+        }*/
 
+        $episode = file_get_contents("https://api.themoviedb.org/3/tv/".$id."/season/".$season."?api_key=".$api."&language=fr-FR");
 
-            $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
+        $resultat = json_decode($episode, true);
 
+        $nb_episode = array();
 
-            $resultat = json_decode($episode, true);
+        for ($n = 0; $n< count($resultat["episodes"]); $n++) {
+            $nb_episode[] = array(
+                'name_episode' => $resultat["episodes"][$n]["name"],
+                'num_episode' => $resultat["episodes"][$n]["episode_number"]
+            );
+        }
 
-            $nb_episode = array();
-
-
-                for ($n = 0; $n < count($resultat["episodes"]); $n++) {
-                    $nb_episode[] = array(
-                        'name_episode' => $resultat["episodes"][$n]["name"],
-                        'num_episode' => $resultat["episodes"][$n]["episode_number"],
-                        'season_number' => $resultat["episodes"][$n]["season_number"]
-                    );
-                }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
             'fiche' => $ficheArray,
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre,
-            'episodes' => $nb_episode,
-            'num_season' => $season_number
+            'episodes' => $nb_episode
         ));
     }
 
@@ -241,10 +256,10 @@ class SeriesController extends AbstractController
         $i = 0;
         
         // Pour chaque série que le user a ajouter:
-        foreach ($series as $idApi) {
+        foreach ($series as $test) {
             
             // on définie la variable var à l'id API de la série
-            $var = $idApi->getIdApi();
+            $var = $test->getIdApi();
     
             //appel à l'api
             $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
@@ -256,29 +271,13 @@ class SeriesController extends AbstractController
             $json_data[$i]["id"] = $json_table['id'];
             $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
             $json_data[$i]["original_name"] = $json_table['original_name'];
-            $json_data[$i]["fav_id"] = $idApi->getId();
+            $json_data[$i]["fav_id"] = $test->getId();
             $i++;
-        }
-
-        dump($json_table);
-
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$var."?api_key=".$api."&language=fr-FR");
-
-        // convertit l'api de json en tableau
-        $result = json_decode($json, true);
-
-        $nb_season = array();
-
-        for ($j = 0; $j < count($result['seasons']); $j++) {
-            $nb_season[] = array(
-                'season' => $result["seasons"][$j]["season_number"]
-            );
         }
 
 
         return $this->render('series/mesSeries.html.twig',
             [
-                'nb_season' => $nb_season,
                 'json_data' => $json_data
             ]);
     }
