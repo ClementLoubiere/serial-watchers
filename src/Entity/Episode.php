@@ -15,6 +15,7 @@ class Episode
      */
     private $id;
 
+
     public function getId(): ?int
     {
         return $this->id;
