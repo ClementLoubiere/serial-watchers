@@ -66,9 +66,16 @@ class SeriesController extends AbstractController
             $annee = 2018;
         }
 
+        //tri par genre
+        if($request->query->has('with_genres')) {
+            $genre = $request->query->get('with_genres');
+        } else {
+            $genre = 0;
+        }
+
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page."&sort_by=".$tri."&first_air_date_year=".$annee);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page."&with_genres=".$genre."&sort_by=".$tri."&first_air_date_year=".$annee);
         //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
         //dump($jsom);
 
@@ -134,9 +141,10 @@ class SeriesController extends AbstractController
         // appel des indices de tplArray dans test.twig
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
-            'p' => $page,
+            'page' => $page,
             'sort' => $tri,
-            'year' => $annee
+            'year' => $annee,
+            'genre' => $genre
         ));
 
     }
