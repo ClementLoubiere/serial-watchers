@@ -11,15 +11,15 @@
         <div class="col">
             <div class="row">
                 <div class="col">
-                    <form method="get">
+                    {#<form method="get">
                     <label for="year">Annee</label>
                     <select id="year" name="first_air_date_year" class="selectpicker filter-select">
                         <option value="0">Aucun</option>
-                        {% for a in 2018..1990 %}
-                            <option value="{{ a }}">{{ a }}</option>
-                        {% endfor %}
+                        {% for a in 2018..1990 %}#}
+                            {#<option value="{{ a }}">{{ a }}</option>#}
+                        {#{% endfor %}
                     </select>
-                    </form>
+                    </form>#}
                 </div>
                 <div class="col">
                     <form method="get">
@@ -28,12 +28,8 @@
                             <option selected>Aucun</option>
                             <option value="popularity.desc">Popularité descendante</option>
                             <option value="popularity.asc">Popularité ascendante</option>
-                            <option value="vote_average.desc">Note descendante</option>
-                            <option value="vote_average.asc">Note ascendante</option>
-                            <option value="primary_release_date.desc&page=2">Date de sortie descendante</option>
+                            <option value="primary_release_date.desc">Date de sortie descendante</option>
                             <option value="primary_release_date.asc">Date de sortie ascendante</option>
-                            <option value="title.asc">Titre (A-Z)</option>
-                            <option value="title.desc">Titre (Z-A)</option>
                         </select>
                     </form>
                 </div>

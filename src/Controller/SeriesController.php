@@ -75,7 +75,7 @@ class SeriesController extends AbstractController
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page."&with_genres=".$genre."&sort_by=".$tri."&first_air_date_year=".$annee);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&sort_by=".$tri."&first_air_date_year=2018&page=1&with_genres=".$genre);
         //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
         //dump($jsom);
 
@@ -142,7 +142,7 @@ class SeriesController extends AbstractController
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
             'page' => $page,
-            'sort' => $tri,
+            'sort_by' => $tri,
             'year' => $annee,
             'genre' => $genre
         ));
