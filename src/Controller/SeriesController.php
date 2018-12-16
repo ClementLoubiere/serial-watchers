@@ -70,12 +70,12 @@ class SeriesController extends AbstractController
         if($request->query->has('with_genres')) {
             $genre = $request->query->get('with_genres');
         } else {
-            $genre = 0;
+            $genre = "0";
         }
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&sort_by=".$tri."&first_air_date_year=2018&page=1&with_genres=".$genre);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&sort_by=".$tri."&first_air_date_year=".$annee."&page=".$page."&with_genres=".$genre);
         //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
         //dump($jsom);
 

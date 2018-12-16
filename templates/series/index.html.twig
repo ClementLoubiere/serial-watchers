@@ -11,15 +11,15 @@
         <div class="col">
             <div class="row">
                 <div class="col">
-                    {#<form method="get">
+                    <form method="get">
                     <label for="year">Annee</label>
                     <select id="year" name="first_air_date_year" class="selectpicker filter-select">
                         <option value="0">Aucun</option>
                         {% for a in 2018..1990 %}#}
-                            {#<option value="{{ a }}">{{ a }}</option>#}
-                        {#{% endfor %}
+                            <option value="{{ a }}">{{ a }}</option>
+                        {% endfor %}
                     </select>
-                    </form>#}
+                    </form>
                 </div>
                 <div class="col">
                     <form method="get">
