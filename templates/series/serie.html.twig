@@ -34,7 +34,7 @@
                             {% if num.season == '0' %}
                                 <a class="d-none" href="#">{{ 'Saison '~ num.season }}</a>
                             {% else %}
-                                <a class="dropdown-item" name="saison" href="#">{{ 'Saison '~ num.season }}</a>
+                                <a class="dropdown-item" name="saison" href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: num.season }) }}">{{ 'Saison '~ num.season }}</a>
                             {% endif %}
                         {% endfor %}
                         </div>
@@ -45,13 +45,13 @@
                             <th>Nom de l'épisode</th>
                             <th></th>
                         </tr>
-                        {% for episode in episodes %}
+                            {% for episode in episodes %}
                         <tr>
                             <td>{{ episode.num_episode }}</td>
                             <td>{{ episode.name_episode }}</td>
                             <td></td>
                         </tr>
-                        {% endfor %}
+                            {% endfor %}
                     </table>
                 </div>
             </div>

@@ -136,9 +136,9 @@ class SeriesController extends AbstractController
     //-------------------- PAGE DETAIL D'UNE SERIE --------------------//
 
     /**
-     * @Route("/series/{id}", requirements={"id": "\d+"})
+     * @Route("/series/{id}/season/{season_number}", requirements={"id": "\d+", "season_number": "\d+"})
      */
-    public function ficheSerie(Request $request, $id)
+    public function ficheSerie(Request $request, $id, $season_number)
     {
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
@@ -165,16 +165,32 @@ class SeriesController extends AbstractController
             'network' => $result["networks"][0]["name"],
             'country' => $result["networks"][0]["origin_country"],
             'seasons' => $result["number_of_seasons"],
-            'img' => $baseURI . $result["poster_path"]
+            'img' => $baseURI . $result["poster_path"],
+            'season_id' => $result["seasons"][$season_number]["season_number"]
         );
 
         $nb_season = array();
+        $nb_episode = array();
 
         for ($j = 0; $j < count($result['seasons']); $j++) {
             $nb_season[] = array(
                 'season' => $result["seasons"][$j]["season_number"]
             );
+
+            $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/season=" . $season_number . "?api_key=" . $api . "&language=fr-FR");
+
+
+            $resultat = json_decode($episode, true);
+
+            for ($n = 0; $n < count($resultat["episodes"]); $n++) {
+                $nb_episode[] = array(
+                    'name_episode' => $resultat["episodes"][$n]["name"],
+                    'num_episode' => $resultat["episodes"][$n]["episode_number"],
+                    //'season_number' => $resultat["episodes"][$season_number]["season_number"]
+                );
+            }
         }
+        dump($nb_episode);
 
         $nb_genre = array();
 
@@ -184,25 +200,11 @@ class SeriesController extends AbstractController
             );
         }
 
-        //
-        if ($request->query->has('page')) {
-            $season = $request->query->get('page');
-        } else {
-            $season = 1;
-        }
 
-        $episode = file_get_contents("https://api.themoviedb.org/3/tv/".$id."/season/".$season."?api_key=".$api."&language=fr-FR");
+            dump($season_number);
 
-        $resultat = json_decode($episode, true);
 
-        $nb_episode = array();
 
-        for ($n = 0; $n< count($resultat["episodes"]); $n++) {
-            $nb_episode[] = array(
-                'name_episode' => $resultat["episodes"][$n]["name"],
-                'num_episode' => $resultat["episodes"][$n]["episode_number"]
-            );
-        }
 
 
         // appel des indices de tplArray dans test.twig
@@ -210,7 +212,8 @@ class SeriesController extends AbstractController
             'fiche' => $ficheArray,
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre,
-            'episodes' => $nb_episode
+            'episodes' => $nb_episode,
+            'num_season' => $season_number
         ));
     }
 
@@ -242,10 +245,10 @@ class SeriesController extends AbstractController
         $i = 0;
         
         // Pour chaque série que le user a ajouter:
-        foreach ($series as $test) {
+        foreach ($series as $idApi) {
             
             // on définie la variable var à l'id API de la série
-            $var = $test->getIdApi();
+            $var = $idApi->getIdApi();
     
             //appel à l'api
             $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
@@ -257,13 +260,27 @@ class SeriesController extends AbstractController
             $json_data[$i]["id"] = $json_table['id'];
             $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
             $json_data[$i]["original_name"] = $json_table['original_name'];
-            $json_data[$i]["fav_id"] = $test->getId();
+            $json_data[$i]["fav_id"] = $idApi->getId();
             $i++;
+        }
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$var."?api_key=".$api."&language=fr-FR");
+
+        // convertit l'api de json en tableau
+        $result = json_decode($json, true);
+
+        $nb_season = array();
+
+        for ($j = 0; $j < count($result['seasons']); $j++) {
+            $nb_season[] = array(
+                'season' => $result["seasons"][$j]["season_number"]
+            );
         }
 
 
         return $this->render('series/mesSeries.html.twig',
             [
+                'nb_season' => $nb_season,
                 'json_data' => $json_data
             ]);
     }
