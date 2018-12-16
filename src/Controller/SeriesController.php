@@ -170,27 +170,12 @@ class SeriesController extends AbstractController
         );
 
         $nb_season = array();
-        $nb_episode = array();
 
         for ($j = 0; $j < count($result['seasons']); $j++) {
             $nb_season[] = array(
                 'season' => $result["seasons"][$j]["season_number"]
             );
-
-            $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/season=" . $season_number . "?api_key=" . $api . "&language=fr-FR");
-
-
-            $resultat = json_decode($episode, true);
-
-            for ($n = 0; $n < count($resultat["episodes"]); $n++) {
-                $nb_episode[] = array(
-                    'name_episode' => $resultat["episodes"][$n]["name"],
-                    'num_episode' => $resultat["episodes"][$n]["episode_number"],
-                    //'season_number' => $resultat["episodes"][$season_number]["season_number"]
-                );
-            }
         }
-        dump($nb_episode);
 
         $nb_genre = array();
 
@@ -201,11 +186,22 @@ class SeriesController extends AbstractController
         }
 
 
-            dump($season_number);
+
+            $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
 
 
+            $resultat = json_decode($episode, true);
+
+            $nb_episode = array();
 
 
+                for ($n = 0; $n < count($resultat["episodes"]); $n++) {
+                    $nb_episode[] = array(
+                        'name_episode' => $resultat["episodes"][$n]["name"],
+                        'num_episode' => $resultat["episodes"][$n]["episode_number"],
+                        'season_number' => $resultat["episodes"][$n]["season_number"]
+                    );
+                }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
@@ -263,6 +259,8 @@ class SeriesController extends AbstractController
             $json_data[$i]["fav_id"] = $idApi->getId();
             $i++;
         }
+
+        dump($json_table);
 
         $json = file_get_contents("https://api.themoviedb.org/3/tv/".$var."?api_key=".$api."&language=fr-FR");
 
