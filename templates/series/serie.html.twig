@@ -45,12 +45,12 @@
                             <th>Nom de l'épisode</th>
                         </tr>
                             {% for episode in episodes %}
-                                {% if tab.season_id == num_season %}
-                        <tr>
-                            <td>{{ episode.num_episode }}</td>
-                            <td>{{ episode.name_episode }}</td>
-                        </tr>
-                                {% endif %}
+                        {#{% if tab.season_id == num_season %}#}
+                                    <tr>
+                                        <td>{{ episode.num_episode }}</td>
+                                        <td>{{ episode.name_episode }}</td>
+                                    </tr>
+                        {#{% endif %} #}
                             {% endfor %}
                     </table>
                 </div>

@@ -35,20 +35,6 @@ class SeriesController extends AbstractController
             $page = 1;
         }
 
-        /*if ($request->query->has('sort_by')) {
-            $genre = $request->query->has('sort_by');
-
-
-            if ($sort == 'Note ascendante'){
-                $sort = 'vote_average.asc';
-            } elseif($sort == 'Popularité ascendante') {
-                $sort = 'popularity.asc';
-            }
-
-        } else {
-            $sort = "first_air_date.desc";
-        }*/
-
         // tri
         // Est-ce que l'url possède le champ sort_by qui permet de trier
         if ($request->query->has('sort_by')) {
@@ -70,12 +56,11 @@ class SeriesController extends AbstractController
         if($request->query->has('with_genres')) {
             $genre = $request->query->get('with_genres');
         } else {
-            $genre = 0;
+            $genre = 1;
         }
 
-
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page."&with_genres=".$genre."&sort_by=".$tri."&first_air_date_year=".$annee);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page."&sort_by=".$tri."&first_air_date_year=".$annee."&with_genres=".$genre);
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
@@ -198,12 +183,12 @@ class SeriesController extends AbstractController
             );
         }
 
-        /* Aucune idée, de ce que sa fout là -_-
+        /* Aucune idée, de ce que sa fout là -_- */
         if ($request->query->has('page')) {
             $season = $request->query->get('page');
         } else {
             $season = 1;
-        }*/
+        }
 
         $episode = file_get_contents("https://api.themoviedb.org/3/tv/".$id."/season/".$season."?api_key=".$api."&language=fr-FR");
 
