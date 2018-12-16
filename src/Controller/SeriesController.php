@@ -24,7 +24,7 @@ class SeriesController extends AbstractController
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
         // La taille de l'image
-        $size = "w342";
+        $size = "w300";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/". $size;
 
@@ -34,20 +34,6 @@ class SeriesController extends AbstractController
         } else {
             $page = 1;
         }
-
-        /*if ($request->query->has('sort_by')) {
-            $genre = $request->query->has('sort_by');
-
-
-            if ($sort == 'Note ascendante'){
-                $sort = 'vote_average.asc';
-            } elseif($sort == 'Popularité ascendante') {
-                $sort = 'popularity.asc';
-            }
-
-        } else {
-            $sort = "first_air_date.desc";
-        }*/
 
         // tri
         // Est-ce que l'url possède le champ sort_by qui permet de trier
@@ -63,24 +49,25 @@ class SeriesController extends AbstractController
         if($request->query->has('first_air_date_year')) {
             $annee = $request->query->get('first_air_date_year');
         } else {
-            $annee = 2018;
+            $annee = "2018";
         }
 
         //tri par genre
         if($request->query->has('with_genres')) {
             $genre = $request->query->get('with_genres');
         } else {
-            $genre = "0";
+            $genre = "10759";
         }
 
 
         //appel à l'api
         $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&sort_by=".$tri."&first_air_date_year=".$annee."&page=".$page."&with_genres=".$genre);
         //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
-        //dump($jsom);
 
+        dump($json);
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
+
 
         // initialisation d'une variable tableau
         $tplArray = array();

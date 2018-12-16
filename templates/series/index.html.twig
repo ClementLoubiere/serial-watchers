@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
+{{ parent() }}
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
 {% endblock %}
 
 {% block body %}
@@ -15,8 +17,8 @@
                     <label for="year">Annee</label>
                     <select id="year" name="first_air_date_year" class="selectpicker filter-select">
                         <option value="0">Aucun</option>
-                        {% for a in 2018..1990 %}#}
-                            <option value="{{ a }}">{{ a }}</option>
+                        {% for ans in 2018..1990 %}
+                            <option value="{{ ans }}">{{ ans }}</option>
                         {% endfor %}
                     </select>
                     </form>
@@ -36,9 +38,9 @@
                 <div class="col">
                     <form method="get">
                     <label for="with_genres">Genres</label>
-                    <select id="with_genres" name="with_genres" class="selectpicker filter-select">
-                        <option selected>Aucun</option>
-                        <option value="10759">Action &amp; Adventure</option>
+                    <select id="with_genres" name="with_genres" multiple class="selectpicker filter-select">
+                        <option >Aucun</option>
+                        <option value="10759" selected>Action &amp; Adventure</option>
                         <option value="16">Animation</option>
                         <option value="35">Comédie</option>
                         <option value="80">Crime</option>
@@ -114,6 +116,7 @@
            this.form.submit();
        });
     </script>
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
 
