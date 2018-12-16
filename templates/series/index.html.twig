@@ -7,28 +7,37 @@
         <div class="col">
             <div class="row">
                 <div class="col">
+                    <form method="get">
                     <label for="annee">Annee</label>
-                    <select name="annee" class="custom-select filter-select">
-                        <option selected>Aucun</option>
+                    <select id="year" name="first_air_date_year" class="custom-select filter-select">
+                        <option value="0" selected>Aucun</option>
+                        {% for a in 2018..1990 %}
+                            <option value="{{ a }}">{{ a }}</option>
+                        {% endfor %}
                     </select>
+                    </form>
                 </div>
                 <div class="col">
                     <form method="get">
-                    <label for="popularite">Popularite</label>
-                    <select name="popularite" class="custom-select filter-select">
-                        <option selected>Aucun</option>
-                        {% for key, value in sort %}
-                            <option name="{{ key }}">{{ value }}</option>
-                        {% endfor %}
-                    </select>
+                        <label for="sort_by">Trier par</label>
+                        <select id="sort_by" name="sort_by" class="custom-select filter-select">
+                            <option selected>Aucun</option>
+                            <option value="popularity.desc">Popularité descendante</option>
+                            <option value="popularity.asc">Popularité ascendante</option>
+                            <option value="vote_average.desc">Note descendante</option>
+                            <option value="vote_average.asc">Note ascendante</option>
+                            <option value="primary_release_date.desc&page=2">Date de sortie descendante</option>
+                            <option value="primary_release_date.asc">Date de sortie ascendante</option>
+                            <option value="title.asc">Titre (A-Z)</option>
+                            <option value="title.desc">Titre (Z-A)</option>
+                        </select>
                     </form>
                 </div>
                 <div class="col">
                     <label for="genre">Genre</label>
                     <select name="genre" class="custom-select filter-select">
                         <option selected>Aucun</option>
-                        <option value="action">Action</option>
-                        <option value="sci">Sci-fi et fantastique</option>
+
                     </select>
                 </div>
             </div>
@@ -83,10 +92,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $('.filter-select').on('change', function () {
-            // soumet le formulaire, lorsqu'une valeur change
-            this.form.submit();
-        })
+       $('.filter-select').on('selected', function () {
+           // soumet le formulaire, lorsqu'une valeur change
+           this.form.submit();
+       });
     </script>
 {% endblock %}
 
