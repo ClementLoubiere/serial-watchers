@@ -25,8 +25,9 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     {% endblock %}
 </head>
-<body>
 
+
+<body>
 
 {#------------------------------ DEBUT HEADER ------------------------------#}
 
@@ -41,20 +42,7 @@
     </a>
 
 
-    <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search"
-                   aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-    <!-- /Navbar Search -->
-    <!-- Navbar -->
+    <!-- Menu -->
     {% if app.user is not null %}
 
         <ul class="navbar-nav ml-auto ml-md-0">
@@ -90,7 +78,10 @@
                 </div>
             </li>
         </ul>
-    {% endif %}
+
+    {% else %}
+
+        {#------------------------------ BOUTONS CONNEXION/INSCRIPTION ------------------------------#}
 
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item no-arrow mx-1">
@@ -106,10 +97,15 @@
             </a>
         </li>
     </ul>
-
+    {% endif %}
 </nav>
 
-{#---------------------- DEBUT MENU ADMIN -----------------------#}
+{#------------------------------ FIN HEADER ------------------------------#}
+
+
+
+
+{#----------------------------- DEBUT SIDEBAR ADMIN -----------------------#}
 
 {% if is_granted('ROLE_ADMIN') %}
 
@@ -302,15 +298,6 @@
             </div>
             <!-- /.container-fluid -->
 
-            <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2018</span>
-                    </div>
-                </div>
-            </footer>
-
         </div>
         <!-- /.content-wrapper -->
 
@@ -327,6 +314,8 @@
 
 
 {% if app.user is not null %}
+
+<!-- Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
@@ -341,15 +330,15 @@
             <h3>{{ app.user }}</h3>
 
         </div>
-
+        {#Menu déroulant#}
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Tableau de bord</span>
-                {# WATCH LIST #}
-                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
 
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    {#USER #}
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Fil d'actualités</h6>
                     <a class="dropdown-item" href="">episodes vus</a>
@@ -369,12 +358,13 @@
                     <a class="dropdown-item" href="{{ path('app_shop_goodies') }}">Goodies</a>
                 </div>
         </li>
+        {#lien déconnexion#}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('app_security_logout') }}">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>déconnexion</span></a>
         </li>
-        a
+        {#lien Modifier profil#}
         <li class="nav-item">
             <a class="nav-link" href="tables.html">
                 <i class="fas fa-cog"></i>
@@ -382,235 +372,10 @@
         </li>
     </ul>
 
-    {#<div id="content-wrapper">#}
-
-    {#<div class="container-fluid">#}
-
-    {#<!-- Breadcrumbs-->#}
-    {#<ol class="breadcrumb">#}
-    {#<li class="breadcrumb-item">#}
-    {#<a href="#">Mon Espace Personnel</a>#}
-    {#</li>#}
-    {#<li class="breadcrumb-item active"></li>#}
-    {#</ol>#}
-
-    {#<!-- Icon Cards-->#}
-    {#<div class="row">#}
-                {#1er vignette#}
-    {#<div class="col-xl-3 col-sm-6 mb-3">#}
-    {#<div class="card text-white o-hidden h-100 bg-blue">#}
-    {#<div class="card-body">#}
-    {#<div class="card-body-icon">#}
-    {#</div>#}
-    {#<div class="mr-5">Historique</div>#}
-    {#</div>#}
-    {#<a class="card-footer text-white clearfix small z-1" href="#">#}
-    {#<span class="float-left">View Details</span>#}
-    {#<span class="float-right">#}
-    {#<i class="fas fa-angle-right"></i>#}
-    {#</span>#}
-    {#</a>#}
-    {#</div>#}
-    {#</div>#}
-                {#2eme vignette#}
-    {#<div class="col-xl-3 col-sm-6 mb-3">#}
-    {#<div class="card text-white bg-yellow o-hidden h-100">#}
-    {#<div class="card-body">#}
-    {#<div class="card-body-icon">#}
-    {#</div>#}
-    {#<div class="mr-5">Favoris</div>#}
-    {#</div>#}
-    {#<a class="card-footer text-white clearfix small z-1" href="#">#}
-    {#<span class="float-left">Plus d'infos</span>#}
-    {#<span class="float-right">#}
-    {#<i class="fas fa-angle-right"></i>#}
-    {#</span>#}
-    {#</a>#}
-    {#</div>#}
-    {#</div>#}
-                {#3eme vignette#}
-    {#<div class="col-xl-3 col-sm-6 mb-3">#}
-    {#<div class="card text-white bg-info o-hidden h-100">#}
-    {#<div class="card-body">#}
-    {#<div class="card-body-icon">#}
-    {#</div>#}
-    {#<div class="mr-5">Nouveautés</div>#}
-    {#</div>#}
-    {#<a class="card-footer text-white clearfix small z-1" href="#">#}
-    {#<span class="float-left">Plus d'infos</span>#}
-    {#<span class="float-right">#}
-    {#<i class="fas fa-angle-right"></i>#}
-    {#</span>#}
-    {#</a>#}
-    {#</div>#}
-    {#</div>#}
-                {#4eme vignette#}
-    {#<div class="col-xl-3 col-sm-6 mb-3">#}
-    {#<div class="card text-white bg-purple o-hidden h-100">#}
-    {#<div class="card-body">#}
-    {#<div class="card-body-icon">#}
-    {#<i class="fas fa-fw fa-life-ring"></i>#}
-    {#</div>#}
-    {#<div class="mr-5">Prochainement</div>#}
-    {#</div>#}
-    {#<a class="card-footer text-white clearfix small z-1" href="#">#}
-    {#<span class="float-left">Plus d'infos</span>#}
-    {#<span class="float-right">#}
-    {#<i class="fas fa-angle-right"></i>#}
-    {#</span>#}
-    {#</a>#}
-    {#</div>#}
-    {#</div>#}
-    {#</div>#}
-
-    {#<!-- Area Chart Example-->#}
-    {#<div class="card mb-3">#}
-    {#<div class="card-header">#}
-    {#<i class="fas fa-chart-area"></i>#}
-    {#Derniers épisodes#}
-    {#</div>#}
-    {#<div class="card-body">#}
-
-    {#<div class="row row-striped">#}
-    {#<div class="col-2 text-right">#}
-                            {#jour#}
-    {#<h1 class="display-4"><span class="badge badge-secondary">23</span></h1>#}
-                            {# Mois #}
-    {#<h2>OCT</h2>#}
-    {#</div>#}
-    {#<div class="col-10">#}
-                            {# nom de la série#}
-    {#<h3 class="text-uppercase"><strong>Nom de la série</strong></h3>#}
-    {#<ul class="list-inline">#}
-                                {#jour de diffusion#}
-    {#<li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday#}
-    {#</li>#}
-                                {#heure de diffusion#}
-    {#<li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM -#}
-    {#2:00 PM#}
-    {#</li>#}
-                                {#numéro de l'épisode diffusé#}
-    {#<li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i>#}
-    {#Cafe#}
-    {#</li>#}
-    {#</ul>#}
-    {#<p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut#}
-    {#labore et dolore magna aliqua.</p>#}
-    {#</div>#}
-    {#</div>#}
-    {#<canvas id="myAreaChart" width="100%" height="30"></canvas>#}
-    {#</div>#}
-                {#lien vers la fiche série#}
-    {#<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>#}
-    {#</div>#}
-
-    {#<!-- DataTables Example -->#}
-    {#<div class="card mb-3">#}
-    {#<div class="card-header">#}
-    {#<i class="fas fa-table"></i>#}
-    {#Data Table Example#}
-    {#</div>#}
-    {#<div class="card-body">#}
-    {#<div class="table-responsive">#}
-    {#<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">#}
-    {#<thead>#}
-    {#<tr>#}
-    {#<th>Name</th>#}
-    {#<th>Position</th>#}
-    {#<th>Office</th>#}
-    {#<th>Age</th>#}
-    {#<th>Start date</th>#}
-    {#<th>Salary</th>#}
-    {#</tr>#}
-    {#</thead>#}
-    {#<tfoot>#}
-    {#<tr>#}
-    {#<th>Name</th>#}
-    {#<th>Position</th>#}
-    {#<th>Office</th>#}
-    {#<th>Age</th>#}
-    {#<th>Start date</th>#}
-    {#<th>Salary</th>#}
-    {#</tr>#}
-    {#</tfoot>#}
-    {#<tbody>#}
-    {#<tr>#}
-    {#<td>Tiger Nixon</td>#}
-    {#<td>System Architect</td>#}
-    {#<td>Edinburgh</td>#}
-    {#<td>61</td>#}
-    {#<td>2011/04/25</td>#}
-    {#<td>$320,800</td>#}
-    {#</tr>#}
-    {#</tbody>#}
-    {#</table>#}
-    {#</div>#}
-    {#</div>#}
-    {#<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>#}
-    {#</div>#}
-
-    {#</div>#}
-    {#<!-- /.container-fluid -->#}
-
-    {#<!-- Sticky Footer -->#}
-    {#<footer class="sticky-footer">#}
-    {#<div class="container my-auto">#}
-    {#<div class="copyright text-center my-auto">#}
-    {#<span>Copyright © Your Website 2018</span>#}
-    {#</div>#}
-    {#</div>#}
-    {#</footer>#}
-
-    {#</div>#}
     {% endif %}
 
-    {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
-    {#---------------------- LOGO LIEN INDEX ---------------------#}
-
-
-
-    {#------------------------------ INSCRIPTION ------------------------------#}
-
-
-
-    {#{% if app.user is null %}#}
-
-    {#<ul class="navbar-nav navbar-collapse col-sm-4" id="navbar-index">#}
-
-    {#<ul class="navbar-nav" id="navbar-index">#}
-    {#<li class="nav-item">#}
-    {#<a href="{{ path('app_security_register') }}" class="nav-link">#}
-    {#Inscription#}
-    {#</a>#}
-    {#</li>#}
-    {#------ CONNEXION ------#}
-    {#<li class="nav-item">#}
-    {#<a href="{{ path('app_security_login') }}" class="nav-link">#}
-    {#Connexion#}
-    {#</a>#}
-    {#</li>#}
-    {#</ul>#}
-    {#{% else %}#}
-    {#Nom de l'utilisateur connecté #}
-    {#<li class="nav-item">#}
-    {#<a class="nav-link">#}
-    {#{{ app.user }}#}
-    {#</a>#}
-    {#</li>#}
-    {#------ DECONNEXION ------#}
-    {#<li class="nav-item">#}
-    {#<a href="{{ path('app_security_logout') }}" class="nav-link">#}
-    {#Déconnexion#}
-    {#</a>#}
-    {#</li>#}
-    {#{% endif %}#}
-    {#</div>#}
-    {#</nav>#}
-
-
     {#---------------------- FIN MENU INTERFACE UTILISATEUR ---------------------#}
-
-    {#--------------------------------- FIN HEADER ------------------------------#}
+    {
 
 
 {# contiendra nos erreurs pour la connexion et l'inscription
@@ -753,9 +518,13 @@
             crossorigin="anonymous"></script>
 
     {#----------------------------------------------------------------------------#}
+    {#Script bootstrap#}
     <script src="{{ asset('lib/bootstrap/bootstrap.min.js') }}"></script>
+    {#Script général#}
     <script src="{{ asset('lib/ajaxapi/ajax.js') }}"></script>
+    {#Script général#}
     <script src="{{ asset('lib/js/script.js') }}"></script>
+    {#Script admin#}
     <script src="{{ asset('lib/js/sb-admin.js') }}"></script>
 
 
