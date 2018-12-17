@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+{% endblock %}
+
 {% block body %}
     {% for tab in fiche %}
     <div class="mt-5 row">
@@ -9,7 +17,7 @@
                     <span class="">{{ tab.network ~ ' ('~tab.country~')' ~ ' | ' ~ tab.seasons ~ ' saisons' }}</span>
                     <p class="lead">
                         {% for genre in nb_genre %}
-                            <span class="badge badge-info">{{ genre.name }}</span>
+                            <span class="badge bg-blue">{{ genre.name }}</span>
                         {% endfor %}
                     </p>
                     <p class="lead my-3">
@@ -24,21 +32,21 @@
                     <div class="row">
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="dropdown text-center">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropSeason" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="col-md-8 text-center">
+                    <select class="selectpicker mb-3">
+                        {#<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropSeason" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Les saisons
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropSeason">
+                        <div class="dropdown-menu">#}
                         {% for num in nb_season %}
                             {% if num.season == '0' %}
-                                <a class="d-none" href="#">{{ 'Saison '~ num.season }}</a>
+                                <option class="d-none" value="{{ 'Saison '~ num.season }}">{{ 'Saison ' ~ num.season }}</option>
                             {% else %}
-                                <a class="dropdown-item" name="saison" href="#">{{ 'Saison '~ num.season }}</a>
+                                <option class="dropdown-item" name="saison" value="{{ 'Saison '~ num.season }}">{{ 'Saison ' ~ num.season }}</option>
                             {% endif %}
                         {% endfor %}
-                        </div>
-                    </div>
+
+                    </select>
                     <table class="table table-striped">
                         <tr>
                             <th>Numéro de l'épisode</th>
@@ -57,4 +65,13 @@
     </div>
     {% endfor %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
 {% endblock %}
