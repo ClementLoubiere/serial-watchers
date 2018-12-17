@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Serie;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,20 +36,6 @@ class SeriesController extends AbstractController
             $page = 1;
         }
 
-        /*if ($request->query->has('sort_by')) {
-            $genre = $request->query->has('sort_by');
-
-
-            if ($sort == 'Note ascendante'){
-                $sort = 'vote_average.asc';
-            } elseif($sort == 'Popularité ascendante') {
-                $sort = 'popularity.asc';
-            }
-
-        } else {
-            $sort = "first_air_date.desc";
-        }*/
-
         // tri
         // j'appelle l'url qui permet de trier
         if ($request->query->has('sort_by')) {
@@ -62,8 +49,7 @@ class SeriesController extends AbstractController
 
         //appel à l'api
         $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
-        //$jsom = "https://api.themoviedb.org/3/".$genre."?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort;
-        //dump($jsom);
+
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);
@@ -140,6 +126,13 @@ class SeriesController extends AbstractController
      */
     public function ficheSerie(Request $request, $id, $season_number)
     {
+        // On va chercher l'utilisateur connecté
+        $userEp = $this->getUser();
+    
+        // On appel l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Episode::class);
+        
         //La clé API
         $api = "f9966f8cc78884142eed6c6d4710717a";
 
@@ -166,7 +159,6 @@ class SeriesController extends AbstractController
             'country' => $result["networks"][0]["origin_country"],
             'seasons' => $result["number_of_seasons"],
             'img' => $baseURI . $result["poster_path"],
-            'season_id' => $result["seasons"][$season_number]["season_number"]
         );
 
         $nb_season = array();
@@ -197,12 +189,56 @@ class SeriesController extends AbstractController
 
                 for ($n = 0; $n < count($resultat["episodes"]); $n++) {
                     $nb_episode[] = array(
+                        'id_episode' => $resultat["episodes"][$n]["id"],
                         'name_episode' => $resultat["episodes"][$n]["name"],
                         'num_episode' => $resultat["episodes"][$n]["episode_number"],
                         'date_episode' => $resultat["episodes"][$n]["air_date"],
                         'season_number' => $resultat["episodes"][$n]["season_number"]
                     );
                 }
+    
+        //------------------- CHECK D'UN EPISODE PAR L'UTILISATEUR ------------------//
+        
+        // Si notre formulaire est en POST
+        if($request->isMethod('POST')) {
+    
+            
+            // On instancie un nouvel objet Episode
+            $addEpisode = new Episode();
+    
+            // On stock dans une variable la requête qui va rechercher le nom qui contient la valeur 'check'
+            $ajoutEp = $request->request->get('check');
+    
+            // On définit dans l'objet episode l'utilisateur connecté et l'idEpisode à l'id de l'épisode que l'utilisateur veut cocher
+            $addEpisode
+                ->setUserEp($userEp)
+                ->setIdEpisode($ajoutEp);
+    
+            // Recherche dans la table épisode une ligne qui combine l'idEpisode avec l'id du user connecté
+            
+            $doublonEp = $repository->findBy(['idEpisode' => $ajoutEp, 'UserEp' => $userEp]);
+            
+            //-------- Condition pour éviter les ajouts de doublon d'épisode
+            if (count($doublonEp) < 1) {
+        
+                // On enregistre en bdd l'objet épsiode
+                $em->persist($addEpisode);
+                $em->flush();
+            } else {
+                $this->addFlash('error', 'Episode déjà coché');
+            }
+        }
+        
+    
+        $user_episodes = $repository->findBy(['UserEp' => $userEp]);
+    
+        $tab_user_episode = [];
+        
+        foreach ($user_episodes as $user_episode) {
+            $tab_user_episode[] = $user_episode->getIdEpisode();
+        }
+        
+        dump($tab_user_episode);
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
@@ -210,7 +246,8 @@ class SeriesController extends AbstractController
             'nb_season' => $nb_season,
             'nb_genre' => $nb_genre,
             'episodes' => $nb_episode,
-            'num_season' => $season_number
+            'num_season' => $season_number,
+            'tableau' => $tab_user_episode
         ));
     }
 
