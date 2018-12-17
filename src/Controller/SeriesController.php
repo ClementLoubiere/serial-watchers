@@ -199,8 +199,11 @@ class SeriesController extends AbstractController
 
         for ($n = 0; $n< count($resultat["episodes"]); $n++) {
             $nb_episode[] = array(
+                'id_episode' => $resultat["episodes"][$n]["id"],
                 'name_episode' => $resultat["episodes"][$n]["name"],
-                'num_episode' => $resultat["episodes"][$n]["episode_number"]
+                'num_episode' => $resultat["episodes"][$n]["episode_number"],
+                'date_episode' => $resultat["episodes"][$n]["air_date"],
+                'season_number' => $resultat["episodes"][$n]['season_number']
             );
         }
 
@@ -212,83 +215,6 @@ class SeriesController extends AbstractController
             'nb_genre' => $nb_genre,
             'episodes' => $nb_episode
         ));
-    }
-
-    //---------------- PAGE DES SERIES AJOUTEES PAR L'UTILISATEUR ------------//
-
-    /**
-     * @Route("/mesSeries")
-     */
-    public function afficherFav()
-    {
-        // on récupère l'utilisateur connecté
-        $user = $this->getUser();
-        
-        // on va chercher dans la table Série les objets users afin de récupérer les Id API qui leur correspond
-        $repository = $this->getDoctrine()->getRepository(Serie::class);
-        $series = $repository->findBy(['user' => $user]);
-        
-        
-        //La clé API
-        $api = "f9966f8cc78884142eed6c6d4710717a";
-    
-        // La taille de l'image
-        $size = "w342";
-        // concaténer avec l'url de l'image
-        $baseURI = "http://image.tmdb.org/t/p/". $size;
-        
-        // On initialise un tableau vide (json_data) et une variable i à 0
-        $json_data = [];
-        $i = 0;
-        
-        // Pour chaque série que le user a ajouter:
-        foreach ($series as $test) {
-            
-            // on définie la variable var à l'id API de la série
-            $var = $test->getIdApi();
-    
-            //appel à l'api
-            $varApi = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
-            
-            // on transforme l'appel api en tableau json
-            $json_table = json_decode($varApi, true);
-    
-            // >On boucle nos différents éléments pour chaque série
-            $json_data[$i]["id"] = $json_table['id'];
-            $json_data[$i]["poster_path"] = $baseURI . $json_table['poster_path'];
-            $json_data[$i]["original_name"] = $json_table['original_name'];
-            $json_data[$i]["fav_id"] = $test->getId();
-            $i++;
-        }
-
-
-        return $this->render('series/mesSeries.html.twig',
-            [
-                'json_data' => $json_data
-            ]);
-    }
-
-    //------------ RETIRER UNE SERIE DE LA PAGE MES SERIES ---------//
-
-    /**
-     * @Route("/mesSeries/{id}")
-     */
-    public function retirerFav($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Serie::class);
-
-        $serie = $repository->find($id);
-
-        if(!is_null($serie)){
-            $em->remove($serie);
-            $em->flush();
-
-            $this->addFlash('success', 'Série supprimée');
-
-            return $this->redirectToRoute('app_series_afficherfav');
-
-        }
     }
 
 
