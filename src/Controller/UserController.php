@@ -22,8 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-
-
     /**
      * @Route("/dashboard")
      */
@@ -42,15 +40,6 @@ class UserController extends AbstractController
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
 //    FONCTION MISE A JOUR PROFIL
@@ -86,7 +75,7 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/dashboard/pages/update-user.html.twig', [
+            'user/profil/update-user.html.twig', [
                 'user' => $user
             ]
         );
@@ -123,11 +112,8 @@ class UserController extends AbstractController
 
         return $this->render(
             'user/series/newSeries.html.twig',
-
             [
-
                 'array' => $tblArray2
-
             ]);
 
     }
@@ -162,14 +148,10 @@ class UserController extends AbstractController
 
         return $this->render(
             'user/series/nextSeries.html.twig',
-
             [
                 'array' => $tblArray3
-
             ]);
-
     }
-
 
 }
 

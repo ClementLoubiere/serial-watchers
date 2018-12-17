@@ -38,10 +38,10 @@ class SeriesController extends AbstractController
         // j'appelle l'url qui permet de trier
         if ($request->query->has('sort_by')) {
             // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
-            $sort = $request->query->get('sort_by');
+            $tri = $request->query->get('sort_by');
 
         } else {
-            $sort = "popularity.desc";
+            $tri = "popularity.desc";
         }
 
         // tri par année
@@ -62,7 +62,7 @@ class SeriesController extends AbstractController
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page.'&sort_by='.$sort."&first_air_date_year=".$annee."&with_genres=".$genre);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page.'&sort_by='.$tri."&first_air_date_year=".$annee."&with_genres=".$genre);
 
 
         // convertit l'api de json en tableau

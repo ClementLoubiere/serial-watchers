@@ -25,11 +25,9 @@ class UserController extends AbstractController
      */
     public function index()
     {
-
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(User::class);
         $users = $repository->findAll();
-
 
         return $this->render(
             'admin/gestion-user/index.html.twig',
@@ -70,7 +68,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/delete-user/{id}")
+     * @Route("/delete-user/{id}", requirements={"id": "\d+"})
      */
     public function deleteUser(User $user)
     {
