@@ -37,18 +37,32 @@ class SeriesController extends AbstractController
         }
 
         // tri
-        // j'appelle l'url qui permet de trier
+        // Est-ce que l'url possède le champ sort_by qui permet de trier
         if ($request->query->has('sort_by')) {
-            // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
-            $sort = $request->query->get('sort_by');
-
+            // Récupérer la valeur selectionnée de la <select> list
+            $tri = $request->query->get('sort_by');
         } else {
-            $sort = "popularity.desc";
+            $tri = "popularity.desc";
+        }
+
+
+        //tri par année
+        if ($request->query->has('first_air_date_year')) {
+            $annee = $request->query->get('first_air_date_year');
+        } else {
+            $annee = '';
+        }
+
+        //tri par genre
+        if ($request->query->has('with_genres')) {
+            $genre = $request->query->get('with_genres');
+        } else {
+            $genre = '';
         }
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=" . $api . "&language=fr-FR&sort_by=" . $tri . "&first_air_date_year=" . $annee . "&page=" . $page . "&with_genres=" . $genre);
 
 
         // convertit l'api de json en tableau
@@ -114,7 +128,9 @@ class SeriesController extends AbstractController
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
             'page' => $page,
-            'sort' => $sort
+            'sort_by' => $tri,
+            'year' => $annee,
+            'genre' => $genre
         ));
 
     }
