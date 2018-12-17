@@ -27,9 +27,7 @@
                 <td class="pt-md-2">{{ user.email }}</td>
                 <td class="pt-md-2">{{ user.gender }}</td>
                 <td class="pt-md-2">{{ user.birthdate | date('d/m/Y') }}</td>
-                <td class="pt-md-2">
-                    {{ user.status }}
-                </td>
+                <td class="pt-md-2">{{ user.status }}</td>
                 <td class="pt-md-2">
                 {% if user.getId() != app.user.getId() %}
                     {% if (user.status == 'ROLE_USER' ) %}
