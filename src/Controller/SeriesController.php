@@ -161,6 +161,7 @@ class SeriesController extends AbstractController
             'img' => $baseURI . $result["poster_path"],
         );
 
+        // Boucle sur les saisons
         $nb_season = array();
 
         for ($j = 0; $j < count($result['seasons']); $j++) {
@@ -169,6 +170,7 @@ class SeriesController extends AbstractController
             );
         }
 
+        //Boucle sur le genre
         $nb_genre = array();
 
         for ($g = 0; $g < count($result["genres"]); $g++) {
@@ -179,23 +181,24 @@ class SeriesController extends AbstractController
 
 
 
-            $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
+        //appel API pour récupérer la saison
+        $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
 
 
-            $resultat = json_decode($episode, true);
+        $resultat = json_decode($episode, true);
 
-            $nb_episode = array();
-
-
-                for ($n = 0; $n < count($resultat["episodes"]); $n++) {
-                    $nb_episode[] = array(
-                        'id_episode' => $resultat["episodes"][$n]["id"],
-                        'name_episode' => $resultat["episodes"][$n]["name"],
-                        'num_episode' => $resultat["episodes"][$n]["episode_number"],
-                        'date_episode' => $resultat["episodes"][$n]["air_date"],
-                        'season_number' => $resultat["episodes"][$n]["season_number"]
-                    );
-                }
+        $nb_episode = array();
+        
+        // Boucle sur les épisodes
+        for ($n = 0; $n < count($resultat["episodes"]); $n++) {
+            $nb_episode[] = array(
+                'id_episode' => $resultat["episodes"][$n]["id"],
+                'name_episode' => $resultat["episodes"][$n]["name"],
+                'num_episode' => $resultat["episodes"][$n]["episode_number"],
+                'date_episode' => $resultat["episodes"][$n]["air_date"],
+                'season_number' => $resultat["episodes"][$n]["season_number"]
+            );
+        }
     
         //------------------- CHECK D'UN EPISODE PAR L'UTILISATEUR ------------------//
         
@@ -230,15 +233,16 @@ class SeriesController extends AbstractController
         }
         
     
+        // On récupère l'id user de la table épisode
         $user_episodes = $repository->findBy(['UserEp' => $userEp]);
     
         $tab_user_episode = [];
         
+        // Boucle sur chaque id user identique , on va chercher les id épisodes correspondant
         foreach ($user_episodes as $user_episode) {
             $tab_user_episode[] = $user_episode->getIdEpisode();
         }
         
-        dump($tab_user_episode);
 
         // appel des indices de tplArray dans test.twig
         return $this->render('series/serie.html.twig', array(
@@ -331,14 +335,18 @@ class SeriesController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Serie::class);
 
+        // on récupère la clé primaire de la table série
         $serie = $repository->find($id);
 
+        // Si l'id que l'on cherche n'est pas null on retire la série
         if(!is_null($serie)){
             $em->remove($serie);
             $em->flush();
 
+            // On affiche un message de confirmation à l'utilisateur
             $this->addFlash('success', 'Série supprimée');
 
+            // On redirige sur l'onglet Mes Séries
             return $this->redirectToRoute('app_series_afficherfav');
 
         }

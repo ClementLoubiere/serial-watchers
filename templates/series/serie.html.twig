@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{# AFFICHAGE D'UNE SERIE #}
+
 {% block body %}
+    {# Affichage des genres, du pays, de l'image de la série, du nom de la série et de sa description #}
     {% for tab in fiche %}
     <div class="mt-5 row">
         <div class="col">
@@ -24,6 +27,9 @@
                     <div class="row">
                     </div>
                 </div>
+                {# Fin affichage série #}
+
+                {# Affichage du select des saisons #}
                 <div class="col-md-8">
                     <div class="dropdown text-center">
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropSeason" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,6 +45,9 @@
                         {% endfor %}
                         </div>
                     </div>
+                    {# Fin affichage select #}
+
+                    {# Affichage des épisodes #}
                     <table class="table table-striped">
                         <tr class="text-center">
                             <th>Numéro de l'épisode</th>
@@ -51,6 +60,7 @@
                             <td>{{ episode.num_episode }}</td>
                             <td>{{ episode.name_episode }}</td>
                             <td>{{ episode.date_episode|date('d/m/Y') }}</td>
+                            {# Formulaire et condition pour le check des épisodes #}
                             <td>
                                 <form method="post">
                                     <input type="hidden" value="{{ episode.id_episode }}" name="check">
@@ -64,24 +74,15 @@
                                         {% endif %}
                                     </button>
                                 </form>
+                                {# Fin formulaire et condition #}
                             </td>
                         </tr>
                             {% endfor %}
                     </table>
+                    {# Fin affichage des épisodes #}
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
-
-{% endblock %}
-
-
-{% block javascripts %}
-{{ parent() }}
-    <script>
-        $('#check').click(function(e){
-        $(this).addClass('text-success').removeClass('text-info');
-        });
-    </script>
 {% endblock %}
