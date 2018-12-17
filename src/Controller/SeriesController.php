@@ -199,6 +199,7 @@ class SeriesController extends AbstractController
                     $nb_episode[] = array(
                         'name_episode' => $resultat["episodes"][$n]["name"],
                         'num_episode' => $resultat["episodes"][$n]["episode_number"],
+                        'date_episode' => $resultat["episodes"][$n]["air_date"],
                         'season_number' => $resultat["episodes"][$n]["season_number"]
                     );
                 }

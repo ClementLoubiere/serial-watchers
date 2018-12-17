@@ -40,16 +40,18 @@
                         </div>
                     </div>
                     <table class="table table-striped">
-                        <tr>
+                        <tr class="text-center">
                             <th>Numéro de l'épisode</th>
                             <th>Nom de l'épisode</th>
+                            <th>Date de sortie</th>
                             <th></th>
                         </tr>
                             {% for episode in episodes %}
                                 {% if tab.season_id == num_season %}
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ episode.num_episode }}</td>
                             <td>{{ episode.name_episode }}</td>
+                            <td>{{ episode.date_episode|date('d/m/Y') }}</td>
                             <td></td>
                         </tr>
                                 {% endif %}
