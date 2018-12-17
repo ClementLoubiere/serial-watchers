@@ -6,26 +6,22 @@
 
     <h1>Editer mon Profil</h1>
 
-    {% block body %}
-        <form method="post">
-            <div>
-                <label>Prénom</label>
-                <input type="text" name="firstname">
-            </div>
-            <div>
-                <label>Nom</label>
-                <input type="text" name="lastname">
-            </div>
-            <div>
-                <label>Nouvel email</label>
-                <input type="text" name="email">
-            </div>
-            <div>
-                <button type="submit">Enregistrer</button>
-            </div>
-        </form>
-    {% endblock %}
-
-
+    <form method="post">
+        <div>
+            <label>Prénom</label>
+            <input type="text" name="firstname">
+        </div>
+        <div>
+            <label>Nom</label>
+            <input type="text" name="lastname">
+        </div>
+        <div>
+            <label>Nouvel email</label>
+            <input type="text" name="email">
+        </div>
+        <div>
+            <button type="submit">Enregistrer</button>
+        </div>
+    </form>
 
 {% endblock %}

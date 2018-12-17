@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+{% endblock %}
+
+
 {# AFFICHAGE D'UNE SERIE #}
 
 {% block body %}
@@ -60,27 +69,27 @@
                             <tr class="text-center">
                             <td>{{ episode.num_episode }}</td>
                             <td>{{ episode.name_episode }}</td>
-                                <td>{{ episode.date_episode|date('d/m/Y') }}</td>
-                                {# Formulaire et condition pour le check des épisodes #}
-                                <td>
-                                    <form method="post">
-                                        <input type="hidden" value="{{ episode.id_episode }}" name="check">
-                                        <button type="submit" class="btn btn-outline-light" style="border-radius: 5px">
-                                            {% if episode.id_episode in tableau %}
-                                                <a class="text-success"
-                                                   href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
-                                                            class="fas fa-eye" id="check"></i>
-                                                </a>
-                                            {% else %}
-                                                <a class="text-info"
-                                                   href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
-                                                            class="fas fa-eye" id="check"></i>
-                                                </a>
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                    {# Fin formulaire et condition #}
-                                </td>
+                            <td>{{ episode.date_episode|date('d/m/Y') }}</td>
+                            {# Formulaire et condition pour le check des épisodes #}
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" value="{{ episode.id_episode }}" name="check">
+                                    <button type="submit" class="btn btn-outline-light" style="border-radius: 5px">
+                                    {% if episode.id_episode in tableau %}
+                                        <a class="text-success"
+                                           href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
+                                                    class="fas fa-eye" id="check"></i>
+                                        </a>
+                                    {% else %}
+                                        <a class="text-info"
+                                           href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
+                                                    class="fas fa-eye" id="check"></i>
+                                        </a>
+                                    {% endif %}
+                                    </button>
+                                </form>
+                                {# Fin formulaire et condition #}
+                            </td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -90,4 +99,14 @@
         </div>
     </div>
     {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
 {% endblock %}
