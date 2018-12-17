@@ -19,9 +19,9 @@ class ShopController extends AbstractController
      */
     public function index()
     {
-
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage de tous les produits par ordre croissant
         $products = $repository->findBy([], ['title' => 'asc'] );
 
         return $this->render(
@@ -39,6 +39,7 @@ class ShopController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'Coffret série'], ['title' => 'asc']);
 
         return $this->render(
@@ -57,6 +58,7 @@ class ShopController extends AbstractController
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'DVD & Blue-ray'], ['title' => 'asc']);
 
         return $this->render(
@@ -74,6 +76,7 @@ class ShopController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'Goodies'], ['title' => 'asc']);
 
         return $this->render(
@@ -90,12 +93,9 @@ class ShopController extends AbstractController
      */
     public function detailProduct($id)
     {
-
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
         $products = $repository->find($id);
-
-        dump($products);
 
         return $this->render(
             'shop/detailproduct.html.twig',

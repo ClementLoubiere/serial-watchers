@@ -4,9 +4,7 @@
     <h1>Gestion des produits</h1>
     <hr>
     <p class="pb-3">
-        <a class="btn btn-success btn-sm" href="{{ path('app_admin_product_edit') }}">
-            Ajouter un produit
-        </a>
+        <a class="btn btn-success btn-sm" href="{{ path('app_admin_product_edit') }}">Ajouter un produit</a>
     </p>
     <table class="table table-hover table-bordered">
         <thead class="thead-dark">
@@ -20,6 +18,7 @@
                 <th width="50px">Supprimer</th>
             </tr>
         </thead>
+        {# Affichage de tous les produits que l'on a en BDD #}
         {% for product in products %}
             <tr>
                 <td class="text-center pt-md-2">{{ product.id }}</td>
@@ -34,12 +33,10 @@
                 </td>
                 <td class="align-middle">
                     <div class="text-center">
-                    <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></a>
+                        <a href="{{ path('app_admin_product_delete', {id:product.id}) }}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></a>
                     </div>
                 </td>
             </tr>
         {% endfor %}
     </table>
-
-
 {% endblock body %}
