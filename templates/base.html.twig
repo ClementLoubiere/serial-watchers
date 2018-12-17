@@ -16,9 +16,6 @@
         <link rel="stylesheet" href="{{ asset('lib/style.css') }}">
         <link rel="stylesheet" href="{{ asset('lib/css/sb-admin.css') }}">
         <link rel="stylesheet" href="{{ asset('lib/css/calendar.css') }}">
-
-        {#------------------------ GOOGLE FONT ----------------------#}
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
@@ -84,91 +81,91 @@
 
     {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
     <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-            <a class="navbar-brand" href="{{ path('app_index_index') }}">
-                <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:50%">
-            </a>
-            <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
-                {% if app.user is not null %}
-                    {#------ PROFIL ------#}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
-                    </li>
-                    {#------ TOUTES LES SERIES ------#}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_series_api') }}">Toutes les series</a>
-                    </li>
-                    {#------ MES SERIES ------#}
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Mes series</a>
-                    </li>
-                    {#------ BOUTIQUE ------#}
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Boutique</a>
-                    </li>
-                    {#Menu déroulant#}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-fw fa-tachometer-alt"></i>
-                            <span>Tableau de bord</span></a>
+        <a class="navbar-brand" href="{{ path('app_index_index') }}">
+            <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:50%">
+        </a>
+        <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
+            {% if app.user is not null %}
+                {#------ PROFIL ------#}
+                <li class="nav-item active">
+                    <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
+                </li>
+                {#------ TOUTES LES SERIES ------#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_series_api') }}">Toutes les series</a>
+                </li>
+                {#------ MES SERIES ------#}
+                <li class="nav-item">
+                    <a class="nav-link" href="">Mes series</a>
+                </li>
+                {#------ BOUTIQUE ------#}
+                <li class="nav-item">
+                    <a class="nav-link" href="">Boutique</a>
+                </li>
+                {#Menu déroulant#}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span></a>
 
-                        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                            {#SERIES #}
-                            <div class="dropdown-divider"></div>
-                            <h6 class="dropdown-header">Séries</h6>
-                            <a class="dropdown-item" href="{{ path('app_series_api') }}">Toutes les séries</a>
-                            <a class="dropdown-item" href="{{ path('app_series_afficherfav') }}">Mes séries</a>
+                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                        {#SERIES #}
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Séries</h6>
+                        <a class="dropdown-item" href="{{ path('app_series_api') }}">Toutes les séries</a>
+                        <a class="dropdown-item" href="{{ path('app_series_afficherfav') }}">Mes séries</a>
 
-                            {# BOUTIQUE #}
-                            <div class="dropdown-divider"></div>
-                            <h6 class="dropdown-header"><a href="{{ path('app_shop_index') }}">La boutique</a></h6>
-                            <a class="dropdown-item" href="{{ path('app_shop_dvd') }}">DVD</a>
-                            <a class="dropdown-item" href="{{ path('app_shop_coffret') }}">Coffrets</a>
-                            <a class="dropdown-item" href="{{ path('app_shop_goodies') }}">Goodies</a>
-                        </div>
-                    </li>
-                {% endif %}
+                        {# BOUTIQUE #}
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header"><a href="{{ path('app_shop_index') }}">La boutique</a></h6>
+                        <a class="dropdown-item" href="{{ path('app_shop_dvd') }}">DVD</a>
+                        <a class="dropdown-item" href="{{ path('app_shop_coffret') }}">Coffrets</a>
+                        <a class="dropdown-item" href="{{ path('app_shop_goodies') }}">Goodies</a>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+
+        {% if app.user is null %}
+            <ul class="navbar-nav">
+                {#------ INSCRIPTION ------#}
+                <li class="nav-item">
+                    <a href="{{ path('app_security_register') }}" class="nav-link">
+                        Inscription
+                    </a>
+                </li>
+                {#------ CONNEXION ------#}
+                <li class="nav-item">
+                    <a href="{{ path('app_security_login') }}" class="nav-link">
+                        Connexion
+                    </a>
+                </li>
             </ul>
-
-            {% if app.user is null %}
-                <ul class="navbar-nav">
-                    {#------ INSCRIPTION ------#}
-                    <li class="nav-item">
-                        <a href="{{ path('app_security_register') }}" class="nav-link">
-                            Inscription
-                        </a>
-                    </li>
-                    {#------ CONNEXION ------#}
-                    <li class="nav-item">
-                        <a href="{{ path('app_security_login') }}" class="nav-link">
-                            Connexion
-                        </a>
-                    </li>
-                </ul>
-            {% else %}
-                {# Nom de l'utilisateur connecté #}
-                <li class="nav-item">
-                    <a class="nav-link">
-                        {{ app.user }}
-                    </a>
-                </li>
-                {#lien Modifier profil#}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-cog"></i>
-                        <span>Modifier profil</span>
-                    </a>
-                </li>
-                {#------ DECONNEXION ------#}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_security_logout') }}">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Déconnexion</span>
-                    </a>
-                </li>
-            </div>
+        {% else %}
+            {# Nom de l'utilisateur connecté #}
+            <li class="nav-item">
+                <a class="nav-link">
+                    {{ app.user }}
+                </a>
+            </li>
+            {#lien Modifier profil#}
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-cog"></i>
+                    <span>Modifier profil</span>
+                </a>
+            </li>
+            {#------ DECONNEXION ------#}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_security_logout') }}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </li>
+        </div>
     </nav>
     {#---------------------- FIN MENU INTERFACE UTILISATEUR ---------------------#}
 
