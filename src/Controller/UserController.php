@@ -72,7 +72,7 @@ class UserController extends AbstractController
         );
 
 
-        return $this->render('index/index.html.twig', array(
+        return $this->render('index/dashboard.html.twig', array(
             'array' => $tplArray,
             'array2' => $tblArray2
         ));
@@ -142,6 +142,7 @@ class UserController extends AbstractController
             //si mon form est valide à partir des annotation dans l'entité Catégory son ok
             if ($form->isValid()) {
 
+                // il manque qqc dans l'entité Playlist par rapport à Serie
                 $playlist->setSerie();
 
                 $em->persist($playlist);
@@ -186,6 +187,7 @@ class UserController extends AbstractController
             );
 
         }*/
+
 
 }
 
