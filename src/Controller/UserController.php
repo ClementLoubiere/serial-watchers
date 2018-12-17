@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Serie;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +24,37 @@ class UserController extends AbstractController
 {
 
 
+    /**
+     * @Route("/dashboard")
+     */
+    public function dashboard()
+    {
+
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->findBy([], ['firstname' => 'asc']);
+
+        return $this->render('user/dashboard.html.twig',
+            [
+                'user' => $user
+            ]
+        );
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 //    FONCTION MISE A JOUR PROFIL
+
     /**
      * @Route("/update-user/{id}")
      * @param Request $request
@@ -65,7 +97,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/newSerie")
+     * @Route("/newseries")
      */
     public function newSerie()
     {
@@ -100,10 +132,14 @@ class UserController extends AbstractController
 
     }
 
-    //    FONCTION PROCHINESSERIES
-    public function nextSerie()
-    {
+    //    FONCTION PROCHAINES SERIES
 
+
+    /**
+     * @Route("/nextseries")
+     */
+    public function nextSeries()
+    {
 
         //pour appeler les nouvelles series:
 
@@ -128,14 +164,11 @@ class UserController extends AbstractController
             'user/series/nextSeries.html.twig',
 
             [
-
                 'array' => $tblArray3
 
             ]);
 
     }
-
-
 
 
 }
