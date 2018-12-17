@@ -70,9 +70,15 @@
          */
         private $series;
 
+        /**
+         * @ORM\OneToMany(targetEntity="App\Entity\Episode", mappedBy="UserEp")
+         */
+        private $episodes;
+
         public function __construct()
         {
             $this->series = new ArrayCollection();
+            $this->episodes = new ArrayCollection();
         }
 
         public function getId(): ?int
@@ -215,6 +221,37 @@
         }
 
         /**
+         * @return Collection|Episode[]
+         */
+        public function getEpisodes(): Collection
+        {
+            return $this->episodes;
+        }
+
+        public function addEpisode(Episode $episode): self
+        {
+            if (!$this->episodes->contains($episode)) {
+                $this->episodes[] = $episode;
+                $episode->setUserEp($this);
+            }
+
+            return $this;
+        }
+
+        public function removeEpisode(Episode $episode): self
+        {
+            if ($this->episodes->contains($episode)) {
+                $this->episodes->removeElement($episode);
+                // set the owning side to null (unless already changed)
+                if ($episode->getUserEp() === $this) {
+                    $episode->setUserEp(null);
+                }
+            }
+
+            return $this;
+        }
+
+        /**
          * String representation of object
          * @link https://php.net/manual/en/serializable.serialize.php
          * @return string the string representation of the object or null
@@ -311,5 +348,6 @@
         {
             return $this->pseudo;
         }
-    
+
+
     }
