@@ -4,7 +4,7 @@
 
 
 
-    {# AFFICHAGE DES SERIES #}
+    {# AFFICHAGE DES SERIES AJOUTEES #}
 
     <div id="content-wrapper">
 
@@ -17,7 +17,8 @@
                     <img src="{{ serie['poster_path'] }}" alt="" class="img-fluid">
 
                     <div class="my-2 d-flex justify-content-between align-items-center">
-                        <a href="{{ path('app_series_ficheserie', {id: serie['id']}) }}" class="btn btn-sm btn-outline-secondary">
+                        <a href="{{ path('app_series_ficheserie', {id: serie['id'], season_number: 1}) }}"
+                           class="btn btn-sm btn-outline-secondary">
                             Voir
                         </a>
                             <a href="{{ path('app_series_retirerfav', {id: serie['fav_id']}) }}">
