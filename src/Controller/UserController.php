@@ -118,50 +118,6 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/playlist")
-     */
-    public function playlist(Request $request)
-    {
-
-        //appel de l'entité manager
-        $em = $this->getDoctrine()->getManager();
-
-        $repository = $em->getRepository(Playlist::class);
-
-
-        $playlists = $repository->findBy([], ['title' => 'asc']);
-
-
-        //création du nouvel objet playlist
-        $playlist = new playlist();
-        $form = $this->createForm(PlaylistType::class, $playlist);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            //si mon form est valide à partir des annotation dans l'entité Catégory son ok
-            if ($form->isValid()) {
-
-                // il manque qqc dans l'entité Playlist par rapport à Serie
-                $playlist->setSerie();
-
-                $em->persist($playlist);
-                $em->flush();
-                $this->addFlash('success', 'Votre playlist a bien été enregistré');
-
-            }
-        }
-
-
-        return $this->render('user/dashboard/pages/playlists.html.twig', [
-            'playlist' => $playlist,
-            'playlists' => $playlists,
-            'form' => $form->createView()
-        ]);
-
-
-    }
-
         /*public function newSerie()
         {
 
