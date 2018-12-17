@@ -46,9 +46,25 @@ class SeriesController extends AbstractController
             $sort = "popularity.desc";
         }
 
+        // tri par année
+        if ($request->query->has('first_air_date_year')) {
+            $annee = $request->query->get('first_air_date_year');
+
+        } else {
+            $annee = "";
+        }
+
+        // tri par genres
+        if ($request->query->has('with_genres')) {
+            $genre = $request->query->get('with_genres');
+
+        } else {
+            $genre = "";
+        }
+
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=". $page. '&sort_by=' .$sort);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page.'&sort_by='.$sort."&first_air_date_year=".$annee."&with_genres=".$genre);
 
 
         // convertit l'api de json en tableau
@@ -114,7 +130,9 @@ class SeriesController extends AbstractController
         return $this->render('series/index.html.twig', array(
             'array' => $tplArray,
             'page' => $page,
-            'sort' => $sort
+            'sort_by' => $tri,
+            'year' => $annee,
+            'genre' => $genre
         ));
 
     }
