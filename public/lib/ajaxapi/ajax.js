@@ -1,5 +1,5 @@
-$(document).ready(function (e) {
-    e.preventDefault();
+$(document).ready(function () {
+
     // appel ajax
 
     /*$('#recherche').on('input', function () {

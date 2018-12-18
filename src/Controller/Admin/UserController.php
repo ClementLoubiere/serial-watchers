@@ -25,11 +25,9 @@ class UserController extends AbstractController
      */
     public function index()
     {
-
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(User::class);
         $users = $repository->findAll();
-
 
         return $this->render(
             'admin/gestion-user/index.html.twig',
@@ -38,6 +36,24 @@ class UserController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("/interface")
+     */
+    public function interfaceAdmin()
+    {
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->findBy([], ['firstname' => 'asc']);
+
+        return $this->render('admin/dashAdmin.html.twig',
+            [
+                'user' => $user
+            ]
+        );
+
+    }
+
 
     /**
      * @Route("/upgrade-status/{id}")
@@ -70,7 +86,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/delete-user/{id}")
+     * @Route("/delete-user/{id}", requirements={"id": "\d+"})
      */
     public function deleteUser(User $user)
     {

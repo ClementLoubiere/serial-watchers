@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {% block stylesheets %}
     {{ parent() }}
 
@@ -10,29 +9,22 @@
 
 {% endblock %}
 
-{# AFFICHAGE DE TOUTES LES SERIES #}
-
 {% block body %}
-    <h1>Découvrez de nouvelles séries</h1>
-
-    <div class="row mb-2">
-        <div class="col">
-            <div class="row">
-                {# Sélection de l'année #}
+    <h1 class="mb-1">Découvrez de nouvelles séries</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-2">
                 <div class="col">
                     <form method="get">
-                        <label for="year">Annee</label>
+                        <label for="year">Année</label>
                         <select id="year" name="first_air_date_year" class="selectpicker filter-select">
                             <option value="0">Aucun</option>
-                            {% for a in 2018..1990 %}#}
-                                <option value="{{ a }}">{{ a }}</option>
+                            {% for ans in 2018..1990 %}
+                                <option value="{{ ans }}">{{ ans }}</option>
                             {% endfor %}
                         </select>
                     </form>
                 </div>
-                {# Fin sélection année #}
-
-                {# Sélection par popularité ou note ou date de sortie #}
                 <div class="col">
                     <form method="get">
                         <label for="sort_by">Trier par</label>
@@ -44,18 +36,17 @@
                             <option value="vote_average.asc">Note ascendante</option>
                             <option value="primary_release_date.desc">Date de sortie descendante</option>
                             <option value="primary_release_date.asc">Date de sortie ascendante</option>
+                            <option value="title.asc">Titre (A-Z)</option>
+                            <option value="title.desc">Titre (Z-A)</option>
                         </select>
                     </form>
                 </div>
-                {# Fin sélection par popularité ou note ou date de sortie #}
-
-                {# Sélection du genre #}
                 <div class="col">
                     <form method="get">
                         <label for="with_genres">Genres</label>
                         <select id="with_genres" name="with_genres" multiple class="selectpicker filter-select">
                             <option>Aucun</option>
-                            <option value="10759">Action &amp; Adventure</option>
+                            <option value="10759" selected>Action &amp; Adventure</option>
                             <option value="16">Animation</option>
                             <option value="35">Comédie</option>
                             <option value="80">Crime</option>
@@ -74,40 +65,35 @@
                         </select>
                     </form>
                 </div>
-                {# Fin sélection du genre #}
             </div>
         </div>
     </div>
 
-    {# Affichage des séries #}
     <div class="col-md-12">
         <div class="row mt-4">
             {% for data in array %}
-                <div class="card col-md-3 shadow-sm">
-                    <h4>{{ data.name }}</h4>
-                    <img src="{{ data.img }}" class="img-fluid">
-                    <div class="card-body">
-                        <p class="card-text">
-                            {{ data.description|slice(0, 110) ~ '...' }}
-                        </p>
-                        {# Chemin vers la fiche Série #}
-                        <div class="my-2 d-flex justify-content-between align-items-center">
+                <div class="col-md-3">
+                    <div class="card shadow-sm">
+                        <img src="{{ data.img }}" class="card-img-top">
+                        <div class="card-body section-card">
+                            <h4>{{ data.name }}</h4>
+                            <p class="card-text">
+                                {{ data.description|slice(0, 90) ~ '...' }}
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="{{ path('app_series_ficheserie', {id: data.id, season_number: 1 }) }}"
                                    class="btn btn-sm btn-outline-secondary">
                                     Voir
                                 </a>
-                                {# Fin chemin vers la fiche série #}
-
-                                {# Bouton Ajouter une série #}
                                 <form method="post">
                                     <input type="hidden" value="{{ data.id }}" name="fav">
-                                    <button type="submit"  class="btn btn-sm btn-outline-secondary btn-addSerie">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
                                         Ajouter
                                     </button>
                                 </form>
                             </div>
-
                             <small class="text-muted">
                                 {{ data.datediff|date('d/m/Y') }}
                             </small>
@@ -119,25 +105,25 @@
             {% endfor %}
         </div>
 
-        {# Pagination #}
-          <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center">
             {% for i in 1..10 %}
-                <li class="page-item {% if i is null %} '' {% else %} 'active' {% endif %}">
+                <li class="page-item {% if i is null %} '' {% elseif i is not null %} 'active' {% endif %}">
                     <a class="page-link " href="{{ path('app_series_api', {page: i}) }}">{{ i }}</a>
                 </li>
             {% endfor %}
         </ul>
+
     </div>
+
 {% endblock %}
 
-{# Script pour les sélecteurs #}
 {% block javascripts %}
     {{ parent() }}
     <script>
         $('.filter-select').on('change', function () {
             // soumet le formulaire, lorsqu'une valeur change
             this.form.submit();
-        })
+        });
     </script>
 
     <!-- Latest compiled and minified JavaScript -->
@@ -145,7 +131,5 @@
 
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
-
 {% endblock %}
-
 

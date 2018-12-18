@@ -1,33 +1,25 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
-
 
     <h1>Editer mon Profil</h1>
 
-
-    {% block body %}
-        <form method="post">
-            <div>
-                <label>Prénom</label>
-                <input type="text" name="firstname">
-            </div>
-            <div>
-                <label>Nom</label>
-                <input type="text" name="lastname">
-            </div>
-            <div>
-                <label>Nouvel email</label>
-                <input type="text" name="email">
-            </div>
-            <div>
-                <button type="submit">Enregistrer</button>
-            </div>
-        </form>
-    {% endblock %}
-
-
+    <form method="post">
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="firstname" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="lastname" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email">Nouvel email</label>
+            <input type="text" id="email" name="email" class="form-control">
+        </div>
+        <div>
+            <button type="submit" class="btn bg-blue">Enregistrer</button>
+        </div>
+    </form>
 
 {% endblock %}

@@ -39,30 +39,32 @@ class SeriesController extends AbstractController
         // tri
         // Est-ce que l'url possède le champ sort_by qui permet de trier
         if ($request->query->has('sort_by')) {
-            // Récupérer la valeur selectionnée de la <select> list
+            // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
             $tri = $request->query->get('sort_by');
+
         } else {
             $tri = "popularity.desc";
         }
 
-
-        //tri par année
+        // tri par année
         if ($request->query->has('first_air_date_year')) {
             $annee = $request->query->get('first_air_date_year');
+
         } else {
-            $annee = '';
+            $annee = "";
         }
 
-        //tri par genre
+        // tri par genres
         if ($request->query->has('with_genres')) {
             $genre = $request->query->get('with_genres');
+
         } else {
-            $genre = '';
+            $genre = "";
         }
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=" . $api . "&language=fr-FR&sort_by=" . $tri . "&first_air_date_year=" . $annee . "&page=" . $page . "&with_genres=" . $genre);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=" . $api . "&language=fr-FR&page=" . $page . '&sort_by=' . $tri . "&first_air_date_year=" . $annee . "&with_genres=" . $genre);
 
 
         // convertit l'api de json en tableau
@@ -196,6 +198,7 @@ class SeriesController extends AbstractController
         }
 
 
+
         //appel API pour récupérer la saison
         $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
 
@@ -219,8 +222,8 @@ class SeriesController extends AbstractController
 
         // Si notre formulaire est en POST
         if ($request->isMethod('POST')) {
-
-
+    
+            
             // On instancie un nouvel objet Episode
             $addEpisode = new Episode();
 
@@ -292,7 +295,7 @@ class SeriesController extends AbstractController
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/" . $size;
-
+        
         // On initialise un tableau vide (json_data) et une variable i à 0
         $json_data = [];
         $i = 0;
