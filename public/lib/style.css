@@ -228,7 +228,14 @@ footer a:hover{
     min-height: 190px;
 }
 
-/****************************HOMEPAGE MOCKUP***************************
+/****************************HOMEPAGE MOCKUP****************************/
 .top_inner{
-    /background: url() no-repeat right bottom;
-}*/
+    background: url("../lib/asset/sw-smartmockups.png") no-repeat right bottom;
+}
+
+
+@media screen and (max-width: 1280px){
+    .top_inner{
+        background: none;
+    }
+}
