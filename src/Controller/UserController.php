@@ -43,14 +43,13 @@ class UserController extends AbstractController
 //    FONCTION MISE A JOUR PROFIL
 
     /**
-     * @Route("/update-user/{id}")
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/update-user")
      */
 
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
+        $id = $this->getUser();
+
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(User::class);
         // objet User dont l'id en bdd est celui reçu dans l'url
@@ -59,6 +58,7 @@ class UserController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $user
+
                 ->setEmail($request->request->get('email'))
                 ->setPseudo($request->request->get('pseudo'))
                 ->setFirstname($request->request->get('firstname'))
