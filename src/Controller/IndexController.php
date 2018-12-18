@@ -25,10 +25,10 @@ class IndexController extends AbstractController
 
         $result = json_decode($json, true);
 
-        $tplArray = array();
+        $tabAccueil = array();
 
         for ($i = 0; $i < count($result['results']); $i++) {
-            $tplArray[] = array(
+            $tabAccueil[] = array(
                 'name' => $result["results"][$i]["original_name"],
                 'datediff' => $result["results"][$i]["first_air_date"],
                 'description' => $result["results"][$i]["overview"],
@@ -57,7 +57,7 @@ class IndexController extends AbstractController
 
 
         return $this->render('index/index.html.twig', array(
-            'array' => $tplArray,
+            'array' => $tabAccueil,
             'array2' => $tblArray2
         ));
 

@@ -38,6 +38,24 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/interface")
+     */
+    public function interfaceAdmin()
+    {
+        $repository = $this->getDoctrine()->getRepository(User::class);
+
+        $user = $repository->findBy([], ['firstname' => 'asc']);
+
+        return $this->render('admin/dashAdmin.html.twig',
+            [
+                'user' => $user
+            ]
+        );
+
+    }
+
+
+    /**
      * @Route("/upgrade-status/{id}")
      */
     public function upgradeStatus(User $user)

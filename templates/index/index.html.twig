@@ -1,10 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{#{% block stylesheets %}#}
-    {#{{ parent() }}#}
-    {#<link rel="stylesheet" href="{{ asset('lib/css/index.css') }}">#}
-{#{% endblock %}#}
-
 
 {% block body %}
 
@@ -52,8 +47,7 @@
                     <a href="{{ path('app_security_register') }}" class="nav-link">
                         <h5 class="font-weight-bold my-4">Inscrivez-vous</h5>
                     </a>
-                    <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.
-                    </p>
+                    <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.</p>
 
                 </div>
                 <!-- Grid column -->
@@ -65,10 +59,7 @@
                     <a href="{{ path('app_security_login') }}" class="nav-link">
                         <h5 class="font-weight-bold my-4">Suivez vos séries favorites</h5>
                     </a>
-                    <p class="grey-text mb-md-0 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Reprehenderit
-                        maiores aperiam minima assumenda deleniti hic.
-                    </p>
+                    <p class="grey-text mb-md-0 mb-5">Ajoutez vos séries favorites</p>
 
                 </div>
                 <!-- Grid column -->
@@ -142,7 +133,6 @@
         </section>
 
         <!-- /Section: Caroussel -->
-
 
     {% endif %}
 

@@ -26,51 +26,43 @@
 {#---------------------- DEBUT MENU ADMIN -----------------------#}
 {# s'il y a un utilisateur connecté et qu'il a le rôle ROLE_ADMIN #}
 {% if is_granted('ROLE_ADMIN') %}
-<nav class="navbar navbar-expand navbar-dark bg-black">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container-fluid navbar-nav">
         <!-- LOGO -->
-        <a class="navbar-brand ml-2 mr-1" href="{{ path('app_index_index') }}">
-            <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" alt="logo" style="width:50%">
-        </a>
-        <a class="navbar-brand">
-            Admin
+        <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="{{ path('app_index_index') }}">
+            ADMIN
         </a>
         <div class="navbar-collapse">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav justify-content-md-start navbar-collapse">
                 <li class="nav-item dropdown">
-                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <!-- Gestion des utilisateurs -->
-                        <h6 class="dropdown-header">Gestion des utilisateurs</h6>
+                    <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Gestion des utilisateurs
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="gestUsers">
                         <a class="dropdown-item" href="{{ path('app_admin_user_index') }}">Gérer les utilisateurs</a>
-
-                        <!-- Gestion des séries -->
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Gestion des séries</h6>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    {# RIEN MIS POUR LE MOMENT #}
+                    <a class="nav-link dropdown-toggle" href="#" id="gestSeries" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Gestion des séries
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="gestSeries">
                         <a class="dropdown-item" href="#">Gérer les séries des utilisateurs</a>
-                        <!-- Gestion de la boutique -->
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Gestion boutique</h6>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="gestBoutique" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Gestion de la boutique
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="gestBoutique">
                         <a class="dropdown-item" href="{{ path('app_admin_product_index') }}">Ajouter un produit</a>
                         <a class="dropdown-item" href="{{ path('app_admin_product_edit') }}">Editer un Produit</a>
                         <a class="dropdown-item" href="{{ path('app_shop_index') }}">Accéder à la boutique</a>
-
-                        <a class="dropdown-item" href="blank.html">Blank Page</a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        Gestion utilisateur
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        Gestion serie
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        Gestion boutique
-                    </a>
                 </li>
             </ul>
         </div>
@@ -81,237 +73,106 @@
 
     {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
     <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+        <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('app_index_index') }}">
-            <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:50%">
+            <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:250px">
         </a>
-        <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-            {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
-            {% if app.user is not null %}
-                {#------ PROFIL ------#}
-                <li class="nav-item active">
-                    <a class="nav-link" href="">Profil <span class="sr-only">(current)</span></a>
-                </li>
-                {#------ TOUTES LES SERIES ------#}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_series_api') }}">Toutes les series</a>
-                </li>
-                {#------ MES SERIES ------#}
-                <li class="nav-item">
-                    <a class="nav-link" href="">Mes series</a>
-                </li>
-                {#------ BOUTIQUE ------#}
-                <li class="nav-item">
-                    <a class="nav-link" href="">Boutique</a>
-                </li>
-                {#Menu déroulant#}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Tableau de bord</span></a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav justify-content-md-start navbar-collapse">
+                    {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
+                    {% if app.user is not null %}
+                        {#------ TOUTES LES SERIES ------#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_series_api') }}">Toutes les series</a>
+                        </li>
+                        {#------ MES SERIES ------#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_series_afficherfav') }}">Mes series</a>
+                        </li>
+                        {#------ BOUTIQUE ------#}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Boutique
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                                <a class="dropdown-item" href="{{ path('app_shop_index') }}">La boutique</a>
+                                <a class="dropdown-item" href="{{ path('app_shop_dvd') }}">DVD</a>
+                                <a class="dropdown-item" href="{{ path('app_shop_coffret') }}">Coffrets</a>
+                                <a class="dropdown-item" href="{{ path('app_shop_goodies') }}">Goodies</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
 
-                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        {#SERIES #}
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Séries</h6>
-                        <a class="dropdown-item" href="{{ path('app_series_api') }}">Toutes les séries</a>
-                        <a class="dropdown-item" href="{{ path('app_series_afficherfav') }}">Mes séries</a>
-
-                        {# BOUTIQUE #}
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header"><a href="{{ path('app_shop_index') }}">La boutique</a></h6>
-                        <a class="dropdown-item" href="{{ path('app_shop_dvd') }}">DVD</a>
-                        <a class="dropdown-item" href="{{ path('app_shop_coffret') }}">Coffrets</a>
-                        <a class="dropdown-item" href="{{ path('app_shop_goodies') }}">Goodies</a>
-                    </div>
-                </li>
-            {% endif %}
-        </ul>
-
-        {% if app.user is null %}
-            <ul class="navbar-nav">
-                {#------ INSCRIPTION ------#}
-                <li class="nav-item">
-                    <a href="{{ path('app_security_register') }}" class="nav-link">
-                        Inscription
-                    </a>
-                </li>
-                {#------ CONNEXION ------#}
-                <li class="nav-item">
-                    <a href="{{ path('app_security_login') }}" class="nav-link">
-                        Connexion
-                    </a>
-                </li>
-            </ul>
-        {% else %}
-            {# Nom de l'utilisateur connecté #}
-            <li class="nav-item">
-                <a class="nav-link">
-                    {{ app.user }}
-                </a>
-            </li>
-            {#lien Modifier profil#}
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-cog"></i>
-                    <span>Modifier profil</span>
-                </a>
-            </li>
-            {#------ DECONNEXION ------#}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_security_logout') }}">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Déconnexion</span>
-                </a>
-            </li>
+                <ul class="navbar-nav justify-content-end navbar-collapse col-sm-4" id="navbar-index">
+                {% if app.user is null %}
+                    <ul class="navbar-nav">
+                        {#------ INSCRIPTION ------#}
+                        <li class="nav-item">
+                            <a href="{{ path('app_security_register') }}" class="nav-link">
+                                Inscription
+                            </a>
+                        </li>
+                        {#------ CONNEXION ------#}
+                        <li class="nav-item">
+                            <a href="{{ path('app_security_login') }}" class="nav-link">
+                                Connexion
+                            </a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav">
+                        {# Nom de l'utilisateur connecté #}
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                {{ app.user }}
+                            </a>
+                        </li>
+                        {#lien Modifier profil#}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    Profil
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="gestUsers">
+                                    <a class="dropdown-item" href="{{ path('app_admin_user_interfaceadmin') }}">Accéder au profil</a>
+                                    <a class="dropdown-item" href="{{ path('app_user_updateuser') }}">Modifier le profil</a>
+                                </div>
+                            </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    Profil
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="gestUsers">
+                                    <a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Accéder au profil</a>
+                                    {# MANQUE UN PARAMETRE
+                                    <a class="dropdown-item" href="{{ path('app_user_updateuser') }}">Modifier le profil</a>#}
+                                </div>
+                            </li>
+                        </li>
+                        {% endif %}
+                        {#------ DECONNEXION ------#}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_security_logout') }}">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Déconnexion</span>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
     {#---------------------- FIN MENU INTERFACE UTILISATEUR ---------------------#}
 
     {#--------------------------------- FIN HEADER ------------------------------#}
 </header>
-
-{#----------------------------- DEBUT INTERFACE ADMIN -----------------------#}
-
-{% if is_granted('ROLE_ADMIN') %}
-
-    <div id="wrapper">
-        <!-- Contenu tableau de bord admin -->
-        <div id="content-wrapper">
-            <div class="container-fluid">
-                <!-- Icon Cards-->
-                <div class="row">
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        <div class="card text-white o-hidden h-100 bg-blue">
-                            <div class="card-body">
-                                <div class="card-body-icon"></div>
-                                <div class="mr-5">26 New Messages!</div>
-                            </div>
-                            <a class="card-footer text-white clearfix small z-1" href="#">
-                                <span class="float-left">View Details</span>
-                                <span class="float-right">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        <div class="card text-white bg-yellow o-hidden h-100">
-                            <div class="card-body">
-                                <div class="card-body-icon"></div>
-                                <div class="mr-5">11 New Tasks!</div>
-                            </div>
-                            <a class="card-footer text-white clearfix small z-1" href="#">
-                                <span class="float-left">View Details</span>
-                                <span class="float-right">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        <div class="card text-white bg-info o-hidden h-100">
-                            <div class="card-body">
-                                <div class="card-body-icon"></div>
-                                <div class="mr-5">123 New Orders!</div>
-                            </div>
-                            <a class="card-footer text-white clearfix small z-1" href="#">
-                                <span class="float-left">View Details</span>
-                                <span class="float-right">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 mb-3">
-                        <div class="card text-white bg-purple o-hidden h-100">
-                            <div class="card-body">
-                                <div class="card-body-icon">
-                                    <i class="fas fa-fw fa-life-ring"></i>
-                                </div>
-                                <div class="mr-5">13 New Tickets!</div>
-                            </div>
-                            <a class="card-footer text-white clearfix small z-1" href="#">
-                                <span class="float-left">View Details</span>
-                                <span class="float-right">
-                                    <i class="fas fa-angle-right"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Area Chart Example-->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area"></i>
-                        Area Chart Example
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myAreaChart" width="100%" height="30"></canvas>
-                    </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-
-                <!-- DataTables Example -->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Data Table Example
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /.content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
-    {#---------------------- FIN INTERFACE ADMIN -----------------------#}
-
-
-{% endif %}
 
 {# contiendra nos erreurs pour la connexion et l'inscription
  de même il centrera notre contenu #}
@@ -444,15 +305,6 @@
 
     {# ----------------------------CDN JQUERY----------------------------------- #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-     {#<script>
-        jQuery(document).ready(function () {
-            $('[data-toggle=offcanvas]').click(function () {
-                $('.row-offcanvas').toggleClass('active');
-            });
-        });
-    </script>#}
-
 
     {# -------------------------Script Bootstrap-------------------------------- #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
