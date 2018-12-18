@@ -64,8 +64,6 @@ class SecurityController extends AbstractController
 
         if(!empty($errors)){
             $this->addFlash('error', 'Les identifiants sont incorrects');
-        } else {
-            $this->redirectToRoute('app_admin_user_index');
         }
 
         return $this->render('security/login.html.twig',

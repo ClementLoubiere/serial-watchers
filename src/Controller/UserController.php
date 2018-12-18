@@ -58,12 +58,11 @@ class UserController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $user
-
-                ->setEmail($request->request->get('email'))
                 ->setPseudo($request->request->get('pseudo'))
+                ->setEmail($request->request->get('email'))
                 ->setFirstname($request->request->get('firstname'))
                 ->setLastname($request->request->get('lastname'))
-                ->setBirthdate($request->request->get('birthdate'));
+            ;
 
             //$emailDuForm = $request->request->get('email');
             //$user->setEmail($emailDuForm);

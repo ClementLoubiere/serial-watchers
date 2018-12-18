@@ -27,12 +27,15 @@
 {# s'il y a un utilisateur connecté et qu'il a le rôle ROLE_ADMIN #}
 {% if is_granted('ROLE_ADMIN') %}
 <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="container-fluid navbar-nav">
         <!-- LOGO -->
         <a class="navbar-brand col-sm-2 col-md-1 mr-0" href="{{ path('app_index_index') }}">
             ADMIN
         </a>
-        <div class="navbar-collapse">
+        <div class="navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav justify-content-md-start navbar-collapse">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
@@ -64,10 +67,21 @@
     {#---------------------- DEBUT MENU INTERFACE UTILISATEUR ---------------------#}
     <nav class="navbar navbar-expand-lg navbar-dark bg-black">
         <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path('app_index_index') }}">
-            <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:250px">
-        </a>
-            <div class="collapse navbar-collapse">
+        {# RESPONSIVITE #}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            {% if app.user is not null %}
+                <a class="navbar-brand" href="{{ path('app_series_api') }}" >
+                    <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:250px">
+                </a>
+                {% else %}
+                    <a class="navbar-brand" href="{{ path('app_index_index') }}" >
+                        <img src="{{ asset('lib/asset/serial-watcher-logoVlight.png') }}" class="d-inline-block align-top" alt="logo" style="width:250px">
+                    </a>
+            {% endif %}
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav justify-content-md-start navbar-collapse">
                     {# si l'utilisateur n'est pas connecté, on ne l'affiche pas#}
                     {% if app.user is not null %}
@@ -132,18 +146,15 @@
                                 </div>
                             </li>
                         {% else %}
-                        <li class="nav-item">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    Profil
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="gestUsers">
-                                    <a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Accéder au profil</a>
-                                    {# MANQUE UN PARAMETRE
-                                    <a class="dropdown-item" href="{{ path('app_user_updateuser') }}">Modifier le profil</a>#}
-                                </div>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="gestUsers" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Profil
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="gestUsers">
+                                <a class="dropdown-item" href="{{ path('app_user_dashboard') }}">Accéder au profil</a>
+                                <a class="dropdown-item" href="{{ path('app_user_updateuser') }}">Modifier le profil</a>
+                            </div>
                         </li>
                         {% endif %}
                         {#------ DECONNEXION ------#}
