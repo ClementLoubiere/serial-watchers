@@ -5,19 +5,20 @@
     <hr>
     <table class="table table-hover table-bordered">
         <thead class="thead-dark">
-        <tr>
-            <th class="text-center">Id</th>
-            <th class="text-center">Pseudo</th>
-            <th class="text-center">Nom</th>
-            <th class="text-center">Prénom</th>
-            <th class="text-center">Email</th>
-            <th class="text-center">Sexe</th>
-            <th class="text-center">Date d'anniversaire</th>
-            <th class="text-center">Status</th>
-            <th class="text-center">Modification des status</th>
-            <th class="text-center">Supprimer</th>
-        </tr>
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Pseudo</th>
+                <th class="text-center">Nom</th>
+                <th class="text-center">Prénom</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Sexe</th>
+                <th class="text-center">Date d'anniversaire</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Modification des status</th>
+                <th class="text-center">Supprimer</th>
+            </tr>
         </thead>
+        {# Affichage de tous les Utilisateurs que l'on a dans la Base De Donnée #}
         {% for user in users %}
             <tr>
                 <td class="text-center pt-md-2">{{ user.id }}</td>
@@ -29,19 +30,23 @@
                 <td class="pt-md-2">{{ user.birthdate | date('d/m/Y') }}</td>
                 <td class="pt-md-2">{{ user.status }}</td>
                 <td class="pt-md-2">
-                {% if user.getId() != app.user.getId() %}
-                    {% if (user.status == 'ROLE_USER' ) %}
-                        <div class="text-center">
-                            <a class="btn btn-outline-success" href="{{ path('app_admin_user_upgradestatus', {id:user.id}) }}" >Passer en admin</a>
-                        </div>
+                    {# Gestion de la modification du role 'Status' des utilisateurs (admin ou user simple) #}
+                    {# Permet de ne pas pouvoir modifier son propre role #}
+                    {% if user.getId() != app.user.getId() %}
+                        {% if (user.status == 'ROLE_USER' ) %}
+                            <div class="text-center">
+                                <a class="btn btn-outline-success" href="{{ path('app_admin_user_upgradestatus', {id:user.id}) }}" >Passer en admin</a>
+                            </div>
+                        {% endif %}
+                        {% if (user.status() == 'ROLE_ADMIN') %}
+                            <div class="text-center">
+                                <a class="btn btn-outline-info" href="{{ path('app_admin_user_downgradestatus', {id:user.id}) }}" >Passer en user</a>
+                            </div>
+                        {% endif %}
                     {% endif %}
-                    {% if (user.status() == 'ROLE_ADMIN') %}
-                        <div class="text-center">
-                            <a class="btn btn-outline-info" href="{{ path('app_admin_user_downgradestatus', {id:user.id}) }}" >Passer en user</a>
-                        </div>
-                    {% endif %}
-                {% endif %}
+                </td>
                 <td>
+                    {# Gestion de la suppression d'un utilisateur #}
                     {% if user.getId() != app.user.getId() %}
                         <div class="text-center">
                             <a class="btn btn-danger" href="{{ path('app_admin_user_deleteuser', {id:user.id}) }}" >Supprimer</a>
@@ -51,6 +56,4 @@
             </tr>
         {% endfor %}
     </table>
-
-
 {% endblock body %}
