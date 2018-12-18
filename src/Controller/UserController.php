@@ -9,11 +9,13 @@
 namespace App\Controller;
 
 
+use App\Entity\Episode;
 use App\Entity\Serie;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/user")
@@ -31,13 +33,63 @@ class UserController extends AbstractController
 
         $user = $repository->findBy([], ['firstname' => 'asc']);
 
-        return $this->render('user/dashboard.html.twig',
-            [
-                'user' => $user
-            ]
+        //afficher date
+        $test = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::LONG);
+        $test->setPattern('d  MMMM Y ');
+        $date = new \DateTime();
+        dump($test->format($date));
+
+
+        // On va chercher l'utilisateur connecté
+        $userEp = $this->getUser();
+
+        // On appel l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Episode::class);
+
+        //La clé API
+        $api = "f9966f8cc78884142eed6c6d4710717a";
+
+        // La taille de l'image
+        $size = "w342";
+        // concaténer avec l'url de l'image
+        $baseURI = "http://image.tmdb.org/t/p/" . $size;
+
+        //appel à l'api
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR");
+
+
+        // convertit l'api de json en tableau
+        $result = json_decode($json, true);
+
+        // initialisation d'une variable tableau
+        $ficheArray = array();
+
+        // itération des différents indices qu'on va récupérer
+
+        // itération des différents indices qu'on va récupérer
+        $ficheArray[] = array(
+            'id' => $result["id"],
+            'name' => $result["original_name"],
+//
+            'language' => $result["original_language"],
+            'date' => $result["first_air_date"],
+            "episode_run_time" => $result["episode_run_time"]
+//
         );
 
+
+        // appel des indices de tplArray dans test.twig
+        return $this->render('user/dashboard.html.twig', array(
+            'fiche' => $ficheArray,
+            'user' => $user,
+            'date' => $date
+        ));
+
+
     }
+
 
 
 //    FONCTION MISE A JOUR PROFIL
@@ -61,8 +113,7 @@ class UserController extends AbstractController
                 ->setPseudo($request->request->get('pseudo'))
                 ->setEmail($request->request->get('email'))
                 ->setFirstname($request->request->get('firstname'))
-                ->setLastname($request->request->get('lastname'))
-            ;
+                ->setLastname($request->request->get('lastname'));
 
             //$emailDuForm = $request->request->get('email');
             //$user->setEmail($emailDuForm);

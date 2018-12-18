@@ -4,7 +4,8 @@
     {{ parent() }}
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
 
 {% endblock %}
 
@@ -28,7 +29,7 @@
                     <form method="get">
                         <label for="sort_by">Trier par</label>
                         <select id="sort_by" name="sort_by" class="selectpicker filter-select">
-                            <option >Aucun</option>
+                            <option>Aucun</option>
                             <option value="popularity.desc">Popularité descendante</option>
                             <option value="popularity.asc">Popularité ascendante</option>
                             <option value="vote_average.desc">Note descendante</option>
@@ -80,7 +81,8 @@
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="{{ path('app_series_ficheserie', {id: data.id, season_number: 1 }) }}" class="btn btn-sm btn-outline-secondary">
+                                <a href="{{ path('app_series_ficheserie', {id: data.id, season_number: 1 }) }}"
+                                   class="btn btn-sm btn-outline-secondary">
                                     Voir
                                 </a>
                                 <form method="post">
