@@ -35,34 +35,36 @@ class SeriesController extends AbstractController
         } else {
             $page = 1;
         }
-    
+
         // tri
         // Est-ce que l'url possède le champ sort_by qui permet de trier
         if ($request->query->has('sort_by')) {
-            // Récupérer la valeur selectionnée de la <select> list
+            // si la requete vaut 'sort_by' alors elle récupère sa valeur dans le tableau
             $tri = $request->query->get('sort_by');
+
         } else {
             $tri = "popularity.desc";
         }
-    
-    
-        //tri par année
-        if($request->query->has('first_air_date_year')) {
+
+        // tri par année
+        if ($request->query->has('first_air_date_year')) {
             $annee = $request->query->get('first_air_date_year');
+
         } else {
-            $annee = '';
+            $annee = "";
         }
-    
-        //tri par genre
-        if($request->query->has('with_genres')) {
+
+        // tri par genres
+        if ($request->query->has('with_genres')) {
             $genre = $request->query->get('with_genres');
+
         } else {
-            $genre = '';
+            $genre = "";
         }
 
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&sort_by=".$tri."&first_air_date_year=".$annee."&page=".$page."&with_genres=".$genre);
+        $json = file_get_contents("https://api.themoviedb.org/3/discover/tv?api_key=".$api."&language=fr-FR&page=".$page.'&sort_by='.$tri."&first_air_date_year=".$annee."&with_genres=".$genre);
 
 
         // convertit l'api de json en tableau
@@ -82,24 +84,24 @@ class SeriesController extends AbstractController
                 'img' => $baseURI.$result["results"][$i]["poster_path"]
             );
         }
-        
+
         //------------------- AJOUT DE SERIE DANS LA SECTION MES SERIES PAR L'UTILISATEUR ------------------//
-    
+
         // Si notre formulaire est en POST
         if($request->isMethod('POST')) {
-        
+
             // On va chercher l'utilisateur connecté
             $user = $this->getUser();
-        
+
             // On appel l'entity manager
             $em = $this->getDoctrine()->getManager();
-        
+
             // On instancie un nouvel objet Série
             $serie = new Serie();
-            
+
             // On stock dans une variable la requête qui va rechercher le nom qui contient la valeur 'fav'
             $ajout = $request->request->get('fav');
-        
+
             // On définit dans l'objet série l'utilisateur connecté et l'idApi à l'id de la série que l'utilisateur veut ajouter
             $serie
                 ->setUser($user)
@@ -320,7 +322,7 @@ class SeriesController extends AbstractController
 
         dump($json_table);
 
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/".$var."?api_key=".$api."&language=fr-FR");
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
 
         // convertit l'api de json en tableau
         $result = json_decode($json, true);

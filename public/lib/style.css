@@ -1,5 +1,5 @@
 /*****************@import google font********************/
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900');
 /********************************************************/
 
 html, body {
@@ -8,7 +8,10 @@ html, body {
 
 
 h1, h2, h3, p, a, ul, li{
-    font-family: 'Lato', sans-serif;
+
+
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
     margin: 0;
     padding: 0;
 }
@@ -32,8 +35,25 @@ a:hover{
 
 .grey-text {
     color: #C4C9C6;
-
 }
+/** background-color **/
+
+.bg-red{
+    color: #fff;
+    background-color: #f15c5c;
+}
+
+.bg-yellow{
+    color: #fff;
+    background-color: #ffcc4c;
+}
+
+.bg-blue{
+    color: #fff;
+    background-color: #19aad1;
+}
+
+
 
 /************************HEADER****************************/
 nav {
@@ -177,6 +197,8 @@ body, html, .row-offcanvas {
         top: 0;
     }
 }
+
+
 /************************FOOTER**************************/
 
 footer{
@@ -198,4 +220,22 @@ footer a:hover{
 
 .footer-copyright {
     background-color: #222326;
+}
+
+
+/************************AFFICHAGE DES SERIES**************************/
+.section-card{
+    min-height: 190px;
+}
+
+/****************************HOMEPAGE MOCKUP****************************/
+.top_inner{
+    background: url("../lib/asset/sw-smartmockups.png") no-repeat right bottom;
+}
+
+
+@media screen and (max-width: 1280px){
+    .top_inner{
+        background: none;
+    }
 }

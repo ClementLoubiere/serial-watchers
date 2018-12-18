@@ -219,7 +219,7 @@
             }
             return $this;
         }
-    
+
         /**
          * @return Collection|Episode[]
          */
@@ -227,17 +227,17 @@
         {
             return $this->episodes;
         }
-    
+
         public function addEpisode(Episode $episode): self
         {
             if (!$this->episodes->contains($episode)) {
                 $this->episodes[] = $episode;
                 $episode->setUserEp($this);
             }
-        
+
             return $this;
         }
-    
+
         public function removeEpisode(Episode $episode): self
         {
             if ($this->episodes->contains($episode)) {
@@ -247,7 +247,7 @@
                     $episode->setUserEp(null);
                 }
             }
-        
+
             return $this;
         }
 
@@ -348,6 +348,6 @@
         {
             return $this->pseudo;
         }
-        
-    
+
+
     }
