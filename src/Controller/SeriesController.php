@@ -300,7 +300,6 @@ class SeriesController extends AbstractController
         $i = 0;
 
         $nb_season = array();
-
         // Pour chaque série que le user a ajouter:
         foreach ($series as $idApi) {
             
@@ -331,8 +330,6 @@ class SeriesController extends AbstractController
                 );
             }
         }
-
-
 
 
         return $this->render('series/mesSeries.html.twig',

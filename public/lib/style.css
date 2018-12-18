@@ -36,19 +36,20 @@ a:hover{
 .grey-text {
     color: #C4C9C6;
 }
+
 /** background-color **/
 
-.bg-red{
+.bg-red {
     color: #fff;
     background-color: #f15c5c;
 }
 
-.bg-yellow{
+.bg-yellow {
     color: #fff;
     background-color: #ffcc4c;
 }
 
-.bg-blue{
+.bg-blue {
     color: #fff;
     background-color: #19aad1;
 }
@@ -224,18 +225,18 @@ footer a:hover{
 
 
 /************************AFFICHAGE DES SERIES**************************/
-.section-card{
+.section-card {
     min-height: 190px;
 }
 
 /****************************HOMEPAGE MOCKUP****************************/
-.top_inner{
+.top_inner {
     background: url("../lib/asset/sw-smartmockups.png") no-repeat right bottom;
 }
 
 
-@media screen and (max-width: 1280px){
-    .top_inner{
+@media screen and (max-width: 1280px) {
+    .top_inner {
         background: none;
     }
 }
