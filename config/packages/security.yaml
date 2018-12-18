@@ -30,12 +30,14 @@ security:
                 # route du formulaire de login
                 login_path: app_security_login
                 check_path: app_security_login
+                default_target_path: app_series_api
 
             logout:
                 # route définie dans config/routes.yaml
                 path: app_security_logout
                 #route de la redirection après déconnexion
                 target: app_index_index
+
 
             provider: db
 

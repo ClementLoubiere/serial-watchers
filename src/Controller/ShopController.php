@@ -13,15 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShopController extends AbstractController
 {
-
     /**
      * @Route("")
      */
     public function index()
     {
-
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage de tous les produits par ordre croissant
         $products = $repository->findBy([], ['title' => 'asc'] );
 
         return $this->render(
@@ -39,6 +38,7 @@ class ShopController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'Coffret série'], ['title' => 'asc']);
 
         return $this->render(
@@ -57,6 +57,7 @@ class ShopController extends AbstractController
 
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'DVD & Blue-ray'], ['title' => 'asc']);
 
         return $this->render(
@@ -74,10 +75,29 @@ class ShopController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Product::class);
 
+        // affichage des produits par catégorie
         $products = $repository->findBy(['category' => 'Goodies'], ['title' => 'asc']);
 
         return $this->render(
             'shop/goodies.html.twig',
+            [
+                'products' => $products
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/detail-product/{id}")
+     */
+    public function detailProduct($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Product::class);
+
+        $products = $repository->find($id);
+
+        return $this->render(
+            'shop/detailproduct.html.twig',
             [
                 'products' => $products
             ]

@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('lib/css/shop.css') }}">
+{% endblock %}
 
+{% block body %}
     <ul class="nav nav-pills nav-fill pt-3">
         <li class="nav-item bg-light">
             <a class="nav-link" href="{{path('app_shop_index')}}">Tous les produits</a>
@@ -20,16 +24,23 @@
     <div class="products">
         <div class="container">
             <div class="row products_row">
+                {# Affichage des produits #}
                 {% for product in products %}
                     <div class="col-xl-4 col-md-6">
                         <div class="product">
-                            <div class="product_image product_content"><img src="{{ asset('lib/asset/' ~ product.image) }}" alt="" width="280" height="295" class="pl-5 pb-3 pt-3"></div>
+                            <div class="product_image product_content">
+                                <img src="{{ asset('lib/asset/' ~ product.image) }}" alt="" width="280" height="295" class="pl-5 pb-3 pt-3">
+                            </div>
                             <div class="product_content">
                                 <div class="product_info d-flex flex-row align-items-start justify-content-start">
                                     <div>
                                         <div>
-                                            <div class="product_name"><a href="">{{ product.title }}</a></div>
-                                            <div class="product_category"><a href="">{{ product.category }}</a></div>
+                                            <div class="product_name">
+                                                <a href="">{{ product.title }}</a>
+                                            </div>
+                                            <div class="product_category">
+                                                <a href="">{{ product.category }}</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="ml-auto text-right">
@@ -51,7 +62,7 @@
                                 <div class="product_buttons">
                                     <div class="text-right d-flex flex-row align-items-start justify-content-start">
                                         <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
-                                            <p><a href="{{ path('app_product_index') }}"><i class="fas fa-search"></i></a></p>
+                                            <p><a href="{{ path('app_shop_detailproduct', {id:product.id}) }}"><i class="fas fa-search"></i></a></p>
                                         </div>
                                         <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
                                             <p><a href=""><i class="fas fa-cart-plus"></i></a></p>

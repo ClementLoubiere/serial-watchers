@@ -2,9 +2,7 @@
     
     namespace App\Entity;
 
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\Mapping as ORM;
-    use Doctrine\Common\Collections\Collection;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\SerieRepository")
@@ -25,18 +23,13 @@
         private $idApi;
 
         /**
-         * @var Collection
+         * @var User
          * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="series")
          * @ORM\JoinColumn(nullable=false)
          */
         private $user;
     
         
-        public function __construct()
-        {
-            $this->user = new ArrayCollection();
-        }
-
         public function getId(): ?int
         {
             return $this->id;
@@ -54,7 +47,7 @@
             return $this;
         }
 
-        public function getUser(): ArrayCollection
+        public function getUser(): ?User
         {
             return $this->user;
         }
@@ -65,9 +58,7 @@
 
             return $this;
         }
-        
-        
-    
+
         public function __toString()
         {
             return $this->idApi;

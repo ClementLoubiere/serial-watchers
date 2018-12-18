@@ -6,3 +6,9 @@
 app_security_logout:
   path: /deconnexion
 
+# config/routes.yaml
+acme_privacy:
+  path:         /privacy
+  controller:   Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: static/privacy.html.twig

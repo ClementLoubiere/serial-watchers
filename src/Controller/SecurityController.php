@@ -39,14 +39,12 @@ class SecurityController extends AbstractController
 
                 $this->addFlash('success', 'Votre compté est créé');
 
-                return $this->redirectToRoute('app_index_index');
+                return $this->redirectToRoute('app_security_login');
 
             } else {
                 $this->addFlash('error', 'Le formulaire contient des erreurs');
             }
         }
-
-
 
         return $this->render('security/register.html.twig',
             [
@@ -66,8 +64,6 @@ class SecurityController extends AbstractController
 
         if(!empty($errors)){
             $this->addFlash('error', 'Les identifiants sont incorrects');
-        } else {
-            $this->redirectToRoute('app_admin_user_index');
         }
 
         return $this->render('security/login.html.twig',
