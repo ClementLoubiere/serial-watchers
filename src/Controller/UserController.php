@@ -128,7 +128,7 @@ class UserController extends AbstractController
     }
 
 
-//    FONCTION NOUVEAUTES SERIES
+//    FONCTION SERIES POPULAIRES
 
 
     /**
@@ -137,24 +137,29 @@ class UserController extends AbstractController
     public function newSerie()
     {
 
-        //pour appeler les nouvelles series:
+        //pour appeler les series populaires:
 
         $api = "f9966f8cc78884142eed6c6d4710717a";
+        $size = "w342";
+        $baseURI = 'http://image.tmdb.org/t/p/' . $size;
 
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=" . $api . "&language=fr-FR&page=1");
 
         $result2 = json_decode($json, true);
 
         $SerieNew = array();
 
-        $SerieNew[] = array(
-            'name' => $result2["original_name"],
-            'datediff' => $result2["first_air_date"],
-            'description' => $result2["next_episode_to_air"]["overview"],
-            'country' => $result2["origin_country"],
-            'episodes' => $result2['number_of_episodes'],
-            'seasons' => $result2['number_of_seasons']
-        );
+        for ($i = 0; $i < count($result2['results']); $i++) {
+            $SerieNew[] = array(
+                'id' => $result2['results'][$i]["id"],
+                'img' => $baseURI . $result2['results'][$i]['poster_path'],
+                'name' => $result2['results'][$i]["original_name"],
+                'datediff' => $result2['results'][$i]["first_air_date"],
+                'description' => $result2['results'][$i]["overview"],
+                'country' => $result2['results'][$i]["origin_country"]
+            );
+        }
 
 
         return $this->render(
@@ -194,7 +199,7 @@ class UserController extends AbstractController
                 'name' => $result3['results'][$i]["original_name"],
                 'datediff' => $result3['results'][$i]["first_air_date"],
                 'description' => $result3['results'][$i]["overview"],
-                'country' => $result3['results'][$i]["origin_country"],
+                'country' => $result3['results'][$i]["origin_country"]
             );
         }
 
