@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ShopController extends AbstractController
 {
-
     /**
      * @Route("")
      */

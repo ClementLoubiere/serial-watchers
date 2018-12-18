@@ -1,10 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{#{% block stylesheets %}#}
-    {#{{ parent() }}#}
-    {#<link rel="stylesheet" href="{{ asset('lib/css/index.css') }}">#}
-{#{% endblock %}#}
-
 
 {% block body %}
 
@@ -13,24 +8,27 @@
           top Section
         ============================-->
         <section class="top_section">
-            <div class="container">
-                <div class="top_content">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="top_left_cont">
-                                <h2 class="display-4 font-weight-bold my-1">Découvrez et suivez vos séries en ligne</h2>
-                                <p class="lead my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                                <a href="#" class="btn btn-outline-info">Voir nos services</a>
+            <div class="top_inner">
+                <div class="container">
+                    <div class="top_content">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="top_left_cont">
+                                    <h2 class="display-4 font-weight-bold my-1">Découvrez et suivez vos séries en ligne</h2>
+                                    <p class="lead my-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                        eiusmod tempor
+                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                    <a href="#" class="btn btn-outline-info">Voir nos services</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-5">
+                            <div class="col-md-5">
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </section>
 
         <!--==========================
@@ -52,8 +50,7 @@
                     <a href="{{ path('app_security_register') }}" class="nav-link">
                         <h5 class="font-weight-bold my-4">Inscrivez-vous</h5>
                     </a>
-                    <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.
-                    </p>
+                    <p class="grey-text mb-md-0 mb-5">Créez un compte gratuit chez SerialWatchers.</p>
 
                 </div>
                 <!-- Grid column -->
@@ -65,10 +62,7 @@
                     <a href="{{ path('app_security_login') }}" class="nav-link">
                         <h5 class="font-weight-bold my-4">Suivez vos séries favorites</h5>
                     </a>
-                    <p class="grey-text mb-md-0 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Reprehenderit
-                        maiores aperiam minima assumenda deleniti hic.
-                    </p>
+                    <p class="grey-text mb-md-0 mb-5">Ajoutez vos séries favorites</p>
 
                 </div>
                 <!-- Grid column -->
@@ -110,7 +104,7 @@
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        {% for data in array|slice(0, 4) %}
+                        {% for data in array|slice(4, 4) %}
                             <div class="col-md-3 col-sm-6">
                                 <a href="#" class="thumbnail">
                                     <img src="{{ data.img }}" alt="Image" class="img-fluid img-thumbnail">
@@ -121,7 +115,7 @@
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        {% for data in array|slice(0, 4) %}
+                        {% for data in array|slice(8, 4) %}
                             <div class="col-md-3 col-sm-6">
                                 <a href="#" class="thumbnail">
                                     <img src="{{ data.img }}" alt="Image" class="img-fluid img-thumbnail">
@@ -142,7 +136,6 @@
         </section>
 
         <!-- /Section: Caroussel -->
-
 
     {% endif %}
 

@@ -9,8 +9,8 @@
 namespace App\Controller;
 
 
-use App\Entity\Playlist;
-use App\Form\PlaylistType;
+use App\Entity\Serie;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,74 +22,34 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-
     /**
-     * @Route("/")
-     *
-    public function index()
+     * @Route("/dashboard")
+     */
+    public function dashboard()
     {
+        $repository = $this->getDoctrine()->getRepository(User::class);
 
+        $user = $repository->findBy([], ['firstname' => 'asc']);
 
-        /*** POPULAR SERIES */
-
-        /*$api = "f9966f8cc78884142eed6c6d4710717a";
-
-        $baseURI = "http://image.tmdb.org/t/p/";
-        $size = "w342";
-
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/popular?api_key=" . $api . "&language=en-US&page=1");
-
-        $result = json_decode($json, true);
-
-        $tplArray = array();
-
-        for ($i = 0; $i < count($result['results']); $i++) {
-            $tplArray[] = array(
-                'name' => $result["results"][$i]["original_name"],
-                'datediff' => $result["results"][$i]["first_air_date"],
-                'description' => $result["results"][$i]["overview"],
-                'img' => $baseURI . $size . $result["results"][$i]["poster_path"],
-                'genre' => $result["results"][$i]["genre_ids"]
-            );
-        }
-
-
-        /*** LAST SERIES */
-
-        /*$json2 = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
-
-        $result2 = json_decode($json2, true);
-
-        $tblArray2 = array();
-
-        $tblArray2[] = array(
-            'name' => $result2["original_name"],
-            'datediff' => $result2["first_air_date"],
-            'description' => $result2["next_episode_to_air"]["overview"],
-            'country' => $result2["origin_country"],
-            'nb_episodes' => $result2['number_of_episodes'],
-            'nb_seasons' => $result2['number_of_seasons']
+        return $this->render('user/dashboard.html.twig',
+            [
+                'user' => $user
+            ]
         );
 
-
-        return $this->render('index/index.html.twig', array(
-            'array' => $tplArray,
-            'array2' => $tblArray2
-        ));
+    }
 
 
-    }*/
+//    FONCTION MISE A JOUR PROFIL
 
-
-  /**
-     * @Route("/update-user/{id}")
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
+    /**
+     * @Route("/update-user")
      */
 
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
+        $id = $this->getUser();
+
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(User::class);
         // objet User dont l'id en bdd est celui reçu dans l'url
@@ -98,6 +58,7 @@ class UserController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $user
+
                 ->setEmail($request->request->get('email'))
                 ->setPseudo($request->request->get('pseudo'))
                 ->setFirstname($request->request->get('firstname'))
@@ -112,81 +73,90 @@ class UserController extends AbstractController
         }
 
         return $this->render(
-            'user/dashboard/pages/update-user.html.twig', [
+            'user/profil/update-user.html.twig', [
                 'user' => $user
             ]
         );
     }
 
+
+//    FONCTION NOUVEAUTES SERIES
+
+
     /**
-     * @Route("/playlist")
+     * @Route("/newseries")
      */
-    public function playlist(Request $request)
+    public function newSerie()
     {
 
-        //appel de l'entité manager
-        $em = $this->getDoctrine()->getManager();
+        //pour appeler les nouvelles series:
 
-        $repository = $em->getRepository(Playlist::class);
+        $api = "f9966f8cc78884142eed6c6d4710717a";
 
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
 
-        $playlists = $repository->findBy([], ['title' => 'asc']);
+        $result2 = json_decode($json, true);
 
+        $SerieNew = array();
 
-        //création du nouvel objet playlist
-        $playlist = new playlist();
-        $form = $this->createForm(PlaylistType::class, $playlist);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            //si mon form est valide à partir des annotation dans l'entité Catégory son ok
-            if ($form->isValid()) {
-
-                // il manque qqc dans l'entité Playlist par rapport à Serie
-                $playlist->setSerie();
-
-                $em->persist($playlist);
-                $em->flush();
-                $this->addFlash('success', 'Votre playlist a bien été enregistré');
-
-            }
-        }
+        $SerieNew[] = array(
+            'name' => $result2["original_name"],
+            'datediff' => $result2["first_air_date"],
+            'description' => $result2["next_episode_to_air"]["overview"],
+            'country' => $result2["origin_country"],
+            'episodes' => $result2['number_of_episodes'],
+            'seasons' => $result2['number_of_seasons']
+        );
 
 
-        return $this->render('user/dashboard/pages/playlists.html.twig', [
-            'playlist' => $playlist,
-            'playlists' => $playlists,
-            'form' => $form->createView()
-        ]);
-
+        return $this->render(
+            'user/series/newSeries.html.twig',
+            [
+                'new' => $SerieNew
+            ]);
 
     }
 
-        /*public function newSerie()
-        {
-
-            //pour appeler les nouvelles series:
-
-            $api = "f9966f8cc78884142eed6c6d4710717a";
+    //    FONCTION PROCHAINES SERIES
 
 
-            $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR&page=1");
+    /**
+     * @Route("/nextseries")
+     */
+    public function nextSeries()
+    {
 
-            $result2 = json_decode($json, true);
+        //pour appeler les nouvelles series:
 
-            $tblArray2 = array();
+        $api = "f9966f8cc78884142eed6c6d4710717a";
 
+        $size = "w342";
+        $baseURI = 'http://image.tmdb.org/t/p/' . $size;
 
-            $tblArray2[] = array(
-                'name' => $result2["original_name"],
-                'datediff' => $result2["first_air_date"],
-                'description' => $result2["next_episode_to_air"]["overview"],
-                'country' => $result2["origin_country"],
-                'episodes' => $result2['number_of_episodes'],
-                'seasons' => $result2['number_of_seasons']
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/on_the_air?api_key=" . $api . "&language=fr-FR&page=1");
+
+        $result3 = json_decode($json, true);
+
+        $SerieNext = array();
+
+        for ($i = 0; $i < count($result3['results']); $i++) {
+            $SerieNext[] = array(
+                'id' => $result3['results'][$i]["id"],
+                'img' => $baseURI . $result3['results'][$i]['poster_path'],
+                'name' => $result3['results'][$i]["original_name"],
+                'datediff' => $result3['results'][$i]["first_air_date"],
+                'description' => $result3['results'][$i]["overview"],
+                'country' => $result3['results'][$i]["origin_country"],
             );
+        }
 
-        }*/
+
+        return $this->render(
+            'user/series/nextSeries.html.twig',
+            [
+                'next' => $SerieNext
+            ]);
+    }
 
 }
 

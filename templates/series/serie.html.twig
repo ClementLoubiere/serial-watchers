@@ -1,6 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+{% endblock %}
+
+
+{# AFFICHAGE D'UNE SERIE #}
+
 {% block body %}
+    {# Affichage des genres, du pays, de l'image de la série, du nom de la série et de sa description #}
     {% for tab in fiche %}
     <div class="mt-5 row">
         <div class="col">
@@ -24,6 +36,9 @@
                     <div class="row">
                     </div>
                 </div>
+                {# Fin affichage série #}
+
+                {# Affichage du select des saisons #}
                 <div class="col-md-8">
                     <div class="dropdown text-center">
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropSeason" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,29 +49,64 @@
                             {% if num.season == '0' %}
                                 <a class="d-none" href="#">{{ 'Saison '~ num.season }}</a>
                             {% else %}
-                                <a class="dropdown-item" name="saison" href="#">{{ 'Saison '~ num.season }}</a>
+                                <a class="dropdown-item" name="saison"
+                                   href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: num.season }) }}">{{ 'Saison '~ num.season }}</a>
                             {% endif %}
                         {% endfor %}
                         </div>
                     </div>
+                    {# Fin affichage select #}
+
+                    {# Affichage des épisodes #}
                     <table class="table table-striped">
-                        <tr>
+                        <tr class="text-center">
                             <th>Numéro de l'épisode</th>
                             <th>Nom de l'épisode</th>
+                            <th>Date de sortie</th>
                             <th></th>
                         </tr>
                         {% for episode in episodes %}
-                        <tr>
+                            <tr class="text-center">
                             <td>{{ episode.num_episode }}</td>
                             <td>{{ episode.name_episode }}</td>
-                            <td></td>
+                            <td>{{ episode.date_episode|date('d/m/Y') }}</td>
+                            {# Formulaire et condition pour le check des épisodes #}
+                            <td>
+                                <form method="post">
+                                    <input type="hidden" value="{{ episode.id_episode }}" name="check">
+                                    <button type="submit" class="btn btn-outline-light" style="border-radius: 5px">
+                                    {% if episode.id_episode in tableau %}
+                                        <a class="text-success"
+                                           href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
+                                                    class="fas fa-eye" id="check"></i>
+                                        </a>
+                                    {% else %}
+                                        <a class="text-info"
+                                           href="{{ path('app_series_ficheserie', {id: tab.id_api, season_number: episode.season_number}) }}"><i
+                                                    class="fas fa-eye" id="check"></i>
+                                        </a>
+                                    {% endif %}
+                                    </button>
+                                </form>
+                                {# Fin formulaire et condition #}
+                            </td>
                         </tr>
                         {% endfor %}
                     </table>
+                    {# Fin affichage des épisodes #}
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
 {% endblock %}
