@@ -30,61 +30,59 @@ class UserController extends AbstractController
     public function dashboard()
     {
         $repository = $this->getDoctrine()->getRepository(User::class);
-
+    
         $user = $repository->findBy([], ['firstname' => 'asc']);
-
+    
         //afficher date
-        $test = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::LONG);
-        $test->setPattern('d  MMMM Y ');
-        $date = new \DateTime();
-        dump($test->format($date));
-
-
-        // On va chercher l'utilisateur connecté
-        $userEp = $this->getUser();
-
-        // On appel l'entity manager
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Episode::class);
-
-        //La clé API
-        $api = "f9966f8cc78884142eed6c6d4710717a";
-
+        $formatter = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::LONG);
+        $formatter->setPattern('MMMM');
+        $now = new \DateTime();
+        $month = $formatter->format($now);
+    
+    
         // La taille de l'image
         $size = "w342";
         // concaténer avec l'url de l'image
         $baseURI = "http://image.tmdb.org/t/p/" . $size;
-
+        
+        //La clé API
+        $api = "f9966f8cc78884142eed6c6d4710717a";
+    
         //appel à l'api
-
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR");
-
-
+    
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/airing_today?api_key=" . $api . "&language=fr-FR");
+    
+    
         // convertit l'api de json en tableau
-        $result = json_decode($json, true);
-
+        $results = json_decode($json, true);
+    dump($results);
         // initialisation d'une variable tableau
         $ficheArray = array();
-
+    
         // itération des différents indices qu'on va récupérer
-
+    
         // itération des différents indices qu'on va récupérer
-        $ficheArray[] = array(
-            'id' => $result["id"],
-            'name' => $result["original_name"],
-//
-            'language' => $result["original_language"],
-            'date' => $result["first_air_date"],
-            "episode_run_time" => $result["episode_run_time"]
-//
-        );
-
-
+    
+        foreach ($results['results'] as $result) {
+//            $lastAirDate = new \DateTime($result["last_air_date"]);
+        
+            $ficheArray[] = array(
+                'id' => $result["id"],
+                'name' => $result["original_name"],
+                'language' => $result["original_language"],
+                'img' => $baseURI . $result["poster_path"]
+//                'date' => $lastAirDate,
+//                'month' => $formatter->format($lastAirDate),
+//                "episode_run_time" => $result["episode_run_time"]
+            );
+        
+        }
         // appel des indices de tplArray dans test.twig
         return $this->render('user/dashboard.html.twig', array(
             'fiche' => $ficheArray,
             'user' => $user,
-            'date' => $date
+            'date' => $now,
+            'month' => $month
         ));
 
 
