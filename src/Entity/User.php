@@ -53,10 +53,12 @@
          * @ORM\Column(type="datetime")
          */
         private $birthdate;
+
         /**
          * @ORM\Column(type="string", length=45)
          */
         private $status = 'ROLE_USER';
+
         /**
          * Mot de passe pour intéragir avec le formulaire d'inscription
          *
@@ -156,7 +158,7 @@
             return $this->birthdate;
         }
 
-        public function setBirthdate(\DateTimeInterface $birthdate): self
+        public function setBirthdate(\DateTimeInterface $birthdate = null) : self
         {
             $this->birthdate = $birthdate;
             return $this;
