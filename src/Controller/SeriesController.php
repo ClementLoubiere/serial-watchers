@@ -298,7 +298,8 @@ class SeriesController extends AbstractController
         // On initialise un tableau vide (json_data) et une variable i à 0
         $json_data = [];
         $i = 0;
-        
+
+        $nb_season = array();
         // Pour chaque série que le user a ajouter:
         foreach ($series as $idApi) {
             
@@ -317,19 +318,17 @@ class SeriesController extends AbstractController
             $json_data[$i]["original_name"] = $json_table['original_name'];
             $json_data[$i]["fav_id"] = $idApi->getId();
             $i++;
-        }
 
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
+            $json = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
 
-        // convertit l'api de json en tableau
-        $result = json_decode($json, true);
+            // convertit l'api de json en tableau
+            $result = json_decode($json, true);
 
-        $nb_season = array();
-
-        for ($j = 0; $j < count($result['seasons']); $j++) {
-            $nb_season[] = array(
-                'season' => $result["seasons"][$j]["season_number"]
-            );
+            for ($j = 0; $j < count($result['seasons']); $j++) {
+                $nb_season[] = array(
+                    'season' => $result["seasons"][$j]["season_number"]
+                );
+            }
         }
 
 
