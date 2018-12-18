@@ -202,7 +202,6 @@ class SeriesController extends AbstractController
         //appel API pour récupérer la saison
         $episode = file_get_contents("https://api.themoviedb.org/3/tv/" . $id . "/season/" . $season_number . "?api_key=" . $api . "&language=fr-FR");
 
-
         $resultat = json_decode($episode, true);
 
         $nb_episode = array();
@@ -319,8 +318,6 @@ class SeriesController extends AbstractController
             $json_data[$i]["fav_id"] = $idApi->getId();
             $i++;
         }
-
-        dump($json_table);
 
         $json = file_get_contents("https://api.themoviedb.org/3/tv/" . $var . "?api_key=" . $api . "&language=fr-FR");
 
