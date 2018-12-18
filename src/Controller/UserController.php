@@ -15,6 +15,7 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/user")
@@ -31,6 +32,12 @@ class UserController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
 
         $user = $repository->findBy([], ['firstname' => 'asc']);
+
+        //afficher date
+        $test = new \IntlDateFormatter('fr_FR', \IntlDateFormatter::LONG, \IntlDateFormatter::LONG);
+        $test->setPattern('d  MMMM Y ');
+        $date = new \DateTime();
+        dump($test->format($date));
 
 
         // On va chercher l'utilisateur connecté
@@ -49,7 +56,8 @@ class UserController extends AbstractController
         $baseURI = "http://image.tmdb.org/t/p/" . $size;
 
         //appel à l'api
-        $json = file_get_contents("https://api.themoviedb.org/3/tv/airing_today?api_key=" . $api . "&language=en-US&page=1");
+
+        $json = file_get_contents("https://api.themoviedb.org/3/tv/latest?api_key=" . $api . "&language=fr-FR");
 
 
         // convertit l'api de json en tableau
@@ -59,22 +67,26 @@ class UserController extends AbstractController
         $ficheArray = array();
 
         // itération des différents indices qu'on va récupérer
-        for ($i = 0; $i < count($result['results']); $i++) {
+
             // itération des différents indices qu'on va récupérer
             $ficheArray[] = array(
-                'id' => $result["results"][$i]["id"],
-                'name' => $result["results"][$i]["original_name"],
-                'datediff' => $result["results"][$i]["first_air_date"],
-                'description' => $result["results"][$i]["overview"],
+                'id' => $result["id"],
+                'name' => $result["original_name"],
+//
+                'language' => $result["original_language"],
+                'date' => $result["first_air_date"],
+                "episode_run_time" => $result["episode_run_time"]
+//
             );
 
-        }
 
         // appel des indices de tplArray dans test.twig
         return $this->render('user/dashboard.html.twig', array(
             'fiche' => $ficheArray,
-            'user' => $user
+            'user' => $user,
+            'date' => $date
         ));
+
 
     }
 
