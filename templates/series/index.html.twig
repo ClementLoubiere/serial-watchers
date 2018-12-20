@@ -32,8 +32,12 @@
                             <option>Aucun</option>
                             <option value="popularity.desc">Popularité descendante</option>
                             <option value="popularity.asc">Popularité ascendante</option>
+                            <option value="vote_average.desc">Note descendante</option>
+                            <option value="vote_average.asc">Note ascendante</option>
                             <option value="primary_release_date.desc">Date de sortie descendante</option>
                             <option value="primary_release_date.asc">Date de sortie ascendante</option>
+                            <option value="title.asc">Titre (A-Z)</option>
+                            <option value="title.desc">Titre (Z-A)</option>
                         </select>
                     </form>
                 </div>
@@ -119,6 +123,7 @@
         $('.filter-select').on('change', function () {
             // soumet le formulaire, lorsqu'une valeur change
             this.form.submit();
+
         });
     </script>
 
